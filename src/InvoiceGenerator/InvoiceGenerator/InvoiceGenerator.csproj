@@ -46,14 +46,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="ClientDetailsEntryScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ClientDetailsEntryScreen.Designer.cs">
+      <DependentUpon>ClientDetailsEntryScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceGenerationScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InvoiceGenerationScreen.Designer.cs">
+      <DependentUpon>InvoiceGenerationScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StartScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartScreen.Designer.cs">
+      <DependentUpon>StartScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ClientDetailsEntryScreen.resx">
+      <DependentUpon>ClientDetailsEntryScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InvoiceGenerationScreen.resx">
+      <DependentUpon>InvoiceGenerationScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StartScreen.resx">
+      <DependentUpon>StartScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

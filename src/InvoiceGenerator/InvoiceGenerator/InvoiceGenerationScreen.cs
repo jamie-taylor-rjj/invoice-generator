@@ -10,11 +10,18 @@ using System.Windows.Forms;
 
 namespace InvoiceGenerator
 {
-    public partial class Form1 : Form
+    public partial class InvoiceGenerationScreen : Form
     {
-        public Form1()
+        public InvoiceGenerationScreen()
         {
             InitializeComponent();
         }
+
+        #region ButtonClicks
+        private void btn_Exit_Click(object sender, EventArgs e)
+        {
+            this.Close(); // Closes the current form 'InvoiceGenerationScreen'
+        }
+        #endregion
     }
 }
