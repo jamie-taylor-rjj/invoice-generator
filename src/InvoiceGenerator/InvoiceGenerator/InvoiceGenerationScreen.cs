@@ -18,10 +18,25 @@ namespace InvoiceGenerator
         }
 
         #region ButtonClicks
+        private void btn_Back_Click(object sender, EventArgs e)
+        {
+            // Create an instance of a new form 'NewStartScreen'
+            StartScreen NewStartScreen = new StartScreen();
+            // Hides the current form 'InvoiceGenerationScreen'
+            this.Hide();
+            // When the 'NewStartScreen' is closed, close the current form 'InvoiceGenerationScreen'
+            NewStartScreen.FormClosed += (s, args) => this.Close();
+            // Show the 'NewStartScreen' to the screen
+            NewStartScreen.Show();
+            // Opens the 'NewStartScreen' in the same location as where the 'InvoiceGenerationScreen' was closed
+            NewStartScreen.Location = this.Location;
+        }
+
         private void btn_Exit_Click(object sender, EventArgs e)
         {
             this.Close(); // Closes the current form 'InvoiceGenerationScreen'
         }
         #endregion
+
     }
 }
