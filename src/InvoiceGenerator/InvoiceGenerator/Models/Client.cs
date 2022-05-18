@@ -14,4 +14,5 @@ namespace InvoiceGenerator.Models
         public string ContactName { get; set; }
         public string ContactEmail { get; set; }
     }
+
 }
