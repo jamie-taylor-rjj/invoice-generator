@@ -162,15 +162,15 @@ Puts you into the invoice-generator file
 ```
 Shows all fines within folder except for the hidden ones
 ```
--ls -lha
+- ls -lha
 ```
 Shows all files within folder including the hidden ones
 ```
--mkdir src
+- mkdir src
 ```
 Makes a directory called src
 ```
--rmdir src
+- rmdir src
 ```
 Removes a directory called src
 ```
