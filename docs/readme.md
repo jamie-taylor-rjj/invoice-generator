@@ -135,3 +135,78 @@ Parameterised queries can be used for any situation where untrusted input appear
 .NET Multi-platform App UI (.NET MAUI) is a cross-platform framework for creating native mobile and desktop apps with C# and XAML.
 Using .NET MAUI, you can develop apps that can run on Android, IOS, macOS and Windows from a single shared code-base
 ```
+
+## Cmder:
+
+- cd c:\Source
+```
+Puts you into the Source file
+```
+- gh auth
+```
+Authenticates the user so you don't have to constantly login
+```
+- gh repo clone Adam-Wilcock/invoice-generator
+```
+Pulls the repository from GitHub and puts it into your folder
+```
+- git clone https://github.com/Adam-Wilcock/invoice-generator.git
+```
+Does same as above line
+```
+- cd invoice-generator\
+```
+Puts you into the invoice-generator file
+```
+- ls
+```
+Shows all fines within folder except for the hidden ones
+```
+-ls -lha
+```
+Shows all files within folder including the hidden ones
+```
+-mkdir src
+```
+Makes a directory called src
+```
+-rmdir src
+```
+Removes a directory called src
+```
+- touch readme.md
+```
+Creates a file (touch is an OS command for creating files)
+```
+- git add .
+```
+Adds a change in the working directory to the staging area
+```
+- git status
+```
+Displays that state of the working directory and the staging area, lets you see which changes have been staged, which haven't and which files aren't being tracked by
+```
+- git commit -m "Initial commit of code base" 
+```
+Save changes to the local repository
+```
+- git config user.name "Adam Wilcock"
+```
+Set name of committer to "Adam Wilcock"
+```
+- git config user.email "adamwilcock10@gmail.com"
+```
+Set email of committer to "adamwilcock10@gmail.com"
+```
+- git push
+```
+Used to upload local repository content to a remote repository
+```
+- git reset -- hard
+```
+Resets your commit to the last saved changes, throws away all your committed changes (Removes only uncommitted files)
+```
+- git reset --hard HEAD-1
+```
+This will destroy the commit and undo your work (Only works if you have not pushed yet)
+```
