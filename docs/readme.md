@@ -43,7 +43,7 @@ Branches are merged into other branches using Pull Requests. A Pull Request (or 
 PRs can be accepted with or without comments, or they can be denied. When a PR is accepted, the changes in the source branch are merged into the destination branch. When a PR is denied, the changes are not merged. Comments on a PR allow the reviewer to ask questions to and leave advice for the creator of the PR. The creator is then asked to either respond to the comments or make any requested changes.
 ```
 
-### Forks
+### Forks:
 ```
 A fork is a copy of a repository that you manage. A fork lets you make changes to a project without affecting the original repository. You have the ability to fetch uodates from or submit changes to the original repository with pull requests.
 Forking a repository is similar to copying a repository, with two major differences:
@@ -52,7 +52,7 @@ You can use a pull request to suggest changes from your user-owned fork to the o
 You can also bring changes from the upstream repository to your local fork by synchronising your fork with the upstream repository (original repository in its GitHub instance).
 ```
 
-### Pull Requests
+### Pull Requests:
 ```
 Pull Requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
 After you initialise a pull request, you will see a review page that shows a high-level overview of the changes between your branch, (the compare branch) and the repository's base branch. You can add a summary of the proposed changes, review the changes made by commits, add labels, milestones, add assignees and @mention individual contributors or teams.
@@ -61,11 +61,77 @@ Once you've created a pull request, you can push commits from your topic branch 
 Other contributors can review your proposed changes, add review comments, contribute to the pull request discussion and add commits to the pull request.
 ```
 
-### Commits
+### Commits:
 ```
 Similar to saving a file that's been edited, a commit records changes to one or more files in your branch. Git assigns each commit a unique ID, called a SHA or hash that identifies:
 > The specific changes
 > When the changes were made
 > Who created the changes
 When you make a commit, you must include a commit message that briefly describes the changes.
+```
+
+## Entity Frameworking:
+```
+Entity framework core is a modern object-database mapper for .NET. It supports LINQ queries, change tracking, updates and schema migrations. Entity Framework core works with many database, including SQL Database (on-premises and Azure), SQLite, MySQL, PostgreSQL and Azure Cosmos DB.
+Entity Framework is an open-source ORM framework for .NET applications supported by Microsoft. It enables developers to work with data using objects of domain specific classes without focusing on the underlying database tables and columns where this data is stored. With the Entity Framework, developers can work at a higher level of abstraction when they deal with data and can create and maintain data-oriented applications with less code compared with traditional applications.
+Official Definition: "Entity Framework is an object-relational mapper (O/RM) that enables .NET developers to work with a database using .NET objects. It eliminates the need for most of the data-access code that developers usually need to write".
+```
+
+## ORM Framework:
+```
+Object Relational Mapping (ORM) is a technique (Design Pattern) of accessing a relational database from an object- oriented language. The most important reason to use an ORM is so that you can have rich, object oriented business model and still be able to store it and write effective queries quickly against a relational database.
+```
+
+## SQL Injections:
+
+[PortSwigger](https://portswigger.net/web-security/sql-injection)
+
+```
+SQL Injection is a web security vulnerability that allows an attacker to interfere with the queries that an
+application makes to its database. It generally allows an attacker to view data that they are not normally able to
+retrieve. This may include data belonging to other users, or any other data that the application itself is able to
+access. In many cases, an attacker can modify or delete this data, causing persistent changes to the application's
+content. In some cases, an attacker can escalate an SQL injection attack to compromise the underlying server or other
+back-end infrastructure or perform a denial-of-service attack.
+```
+
+### SQL Injection Examples:
+```
+Retrieving hidden data, where you can modify an SQL query to return additional results.
+Subverting application logic, where you can change a query to interfere with the application's logic.
+UNION attacks, where you can retrieve data from different database tables.
+Examining the database, where you can extract information about the version and structure of the database.
+Blind SQL injection, where the results of a query you control are not returned in the application's responses.
+```
+
+### SQL Injection Preventions:
+
+Use parameterised queries rather than string concatenation within the query.
+```
+Example of code that is vulnerable:
+
+String query = "SELECT * FROM products
+WHERE category = '" + input + "'";
+
+Statement statement = connection.createStatement();
+
+ResultSet resultSet =
+statement.executeQuery(query);
+```
+The code above is vulnerable to SQL Injection because the user input is concatenated directly into the query. The code above can be written in a way that easily prevents the user input from interfering with the query structure.
+```
+Example of code that is less vulnerable:
+
+PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE category = ?");
+
+statement.setString(1, input);
+
+ResultSet resultSet = statement.executeQuery();
+```
+Parameterised queries can be used for any situation where untrusted input appears as data within the query including the WHERE clause and values in an INSERT and UPDATE statement. Parameterised queries cannot be used to handle untrusted input in other parts of the query such as Table or Column names or the ORDER BY clause.
+
+## .NET MAUI:
+```
+.NET Multi-platform App UI (.NET MAUI) is a cross-platform framework for creating native mobile and desktop apps with C# and XAML.
+Using .NET MAUI, you can develop apps that can run on Android, IOS, macOS and Windows from a single shared code-base
 ```
