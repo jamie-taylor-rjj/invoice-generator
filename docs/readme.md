@@ -174,6 +174,10 @@ Makes a directory called src
 ```
 Removes a directory called src
 ```
+- rm -rf src
+```
+Removes a directory called src
+```
 - touch readme.md
 ```
 Creates a file (touch is an OS command for creating files)
@@ -206,7 +210,7 @@ Used to upload local repository content to a remote repository
 ```
 Resets your commit to the last saved changes, throws away all your committed changes (Removes only uncommitted files)
 ```
-- git reset --hard HEAD-1
+- git reset --hard HEAD~1
 ```
 This will destroy the commit and undo your work (Only works if you have not pushed yet)
 ```
