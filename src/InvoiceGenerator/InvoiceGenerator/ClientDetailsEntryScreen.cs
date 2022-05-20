@@ -1,5 +1,4 @@
-﻿using InvoiceGenerator.Models;
-using System.Net.Mail;
+﻿using InvoiceGenerator.BusinessLogic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,29 +33,46 @@ namespace InvoiceGenerator
 
         private void btn_Create_Click(object sender, EventArgs e)
         {
-            using (var context = new InvoiceDBContext())    // using statement is discarded once the squiggly brackets have been passed, saves memory
+            ValidationUI validationUI = new ValidationUI();          // ValidationUI methods will return the boolean values for the variables, this determines if they are actually valid or not
+            ValidationBLogic validationBLogic = new ValidationBLogic();  // ValidationBLogic methods will return the error messages for the variables
+
+            bool[] validDetails = validationUI.validateUserDetails(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text); // Check for white space or null values for all inputs
+            string[] validDetailsErrorMsgs = validationBLogic.validateUserDetails(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text);    // Obtain error messages for all the inputs
+
+            if (validDetails[0] && validDetails[1] && validDetails[2] && validDetails[3])   // If all checks are passed, do below
             {
-                context.Database.EnsureCreated();   // Ensures database is created
+                validDetailsErrorMsgs = validationBLogic.validateUserDetails(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text);
+                showUserDetailsErrorMsgs(validDetails, validDetailsErrorMsgs); // Hide error messages as they are valid
 
-                bool validUserDetails = validateUserDetails();
-                bool validEmailFormat = validateEmailFormatting();
+                bool validEmailFormat = validationUI.validateEmailFormat(txt_contactEmail.Text);    // Check if the email input is of the correct format
+                string validEmailFormatErrorMsg = validationBLogic.validateEmailFormat(txt_contactEmail.Text);  // Obtain error message for the email input
 
-                if (validUserDetails && validEmailFormat)
+                if (validEmailFormat)   // If the email is valid and user details are valid, insert new client
                 {
-                    var client = new Client     // Acts as an intialiser
+                    validEmailFormatErrorMsg = validationBLogic.validateEmailFormat(txt_contactEmail.Text);
+                    showEmailFormatErrorMsg(validEmailFormat, validEmailFormatErrorMsg);    // Hide error messages as they are valid
+
+                    var service = new ClientService();
+
+                    service.AddClients(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text);   // Call method in business logic layer to add a new client
+
+                    string message = "Client created successfully!";
+                    string caption = "Success!";
+                    DialogResult digalogResult = MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); // Show confirmation message to the user, obtain result from it
+
+                    if (digalogResult == DialogResult.OK) // Upon user pressing OK, do below...
                     {
-                        ClientName = txt_clientName.Text,
-                        ClientAddress = txt_clientAddress.Text,
-                        ContactName = txt_contactName.Text,
-                        ContactEmail = txt_contactEmail.Text,
-                    };
-
-                    context.Clients.Add(client);    // Add the client details
-
-                    context.SaveChanges();  // Save it
-
-                    MessageBox.Show("Saved!");
+                        clearTextBoxes(); // Reset all text boxes so user can enter a new client
+                    }
                 }
+                else    // If email is not valid, do below...
+                {
+                    showEmailFormatErrorMsg(validEmailFormat, validEmailFormatErrorMsg);    // Show email format error message or hide them if they are valid
+                }
+            }
+            else    // If user details aren't valid (White space or null values)
+            {
+                showUserDetailsErrorMsgs(validDetails, validDetailsErrorMsgs); // Show user details error messages or hide them if they are valid
             }
         }
 
@@ -67,23 +83,15 @@ namespace InvoiceGenerator
 
         private void btn_View_Click(object sender, EventArgs e)
         {
-            using (var context = new InvoiceDBContext())    // Using statement is discarded once the squishy brackets have been passed, saves memory
-            {
-                context.Database.EnsureCreated();   // Ensures database is created
+            var service = new ClientService();
+            
+            var viewModels = service.GetClients(); // Obtain all the client details from the database
+            dtaGridDetails.DataSource = viewModels; // Fill the data grid with all the client details
 
-                var clients = context.Clients.ToList(); // Assign a bunch of client objects to a list
-
-                var viewModels = new List<ClientViewModel>();
-                foreach (var db in clients)
-                {
-                    viewModels.Add(ClientViewModel.FromDbModel(db));    // Add the client details to a list
-                }
-                dtaGridDetails.DataSource = viewModels; // Show all the client details on a datagrid
-                //dtaGridDetails.DataSource = context.Clients.ToList();
-                //context.SaveChanges();
-
-                MessageBox.Show("Viewed!");
-            }
+            string message = "Clients viewed successfully!";
+            string caption = "Success!";
+            MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); // Show confirmation message to user
+            
         }
 
         private void btn_Exit2_Click(object sender, EventArgs e)
@@ -110,79 +118,106 @@ namespace InvoiceGenerator
         {
             pnl_enterDetails.Hide();
             pnl_viewDetails.Hide();
+            btn_Previous.Hide();
+            btn_Next.Hide();
+            lbl_pageNo.Hide();
+            lbl_clientNameError.Hide();
+            lbl_clientAddressError.Hide();
+            lbl_contactNameError.Hide();
+            lbl_contactEmailError.Hide();
+            txt_clientNameError.Hide();
+            txt_clientAddressError.Hide();
+            txt_contactNameError.Hide();
+            txt_contactEmailError.Hide();
         }
 
-        #region Validation
-        private bool validateUserDetails()
+        private void clearTextBoxes()
         {
-            bool clientNameOk, clientAddressOk, contactNameOk, contactEmailOk;
-            clientNameOk = clientAddressOk = contactNameOk = contactEmailOk = true;   // Set all values to 'true'
+            // Reset all the textboxes
+            txt_clientName.Text = String.Empty;
+            txt_clientAddress.Text = String.Empty;
+            txt_contactName.Text = String.Empty;
+            txt_contactEmail.Text = String.Empty;
+            txt_clientName.Focus(); // Put the mouse cursor in the first text box
+        }
 
-            if (String.IsNullOrWhiteSpace(txt_clientName.Text))
+        #region ErrorMessages
+        private void showUserDetailsErrorMsgs(bool[] validDetails, string[] validDetailsErrorMsgs)
+        {
+            if (validDetails[0] == false)   // If the client name is empty, throw error
             {
-                txt_clientName.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);  // Set colour of text box to red
-                txt_clientName.Focus(); // Put mouse cursor in the text box
-                clientNameOk = false;   // Set to false as it was invalid
-                string message = "Client Name must not be empty!";
-                string caption = "Error!";
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);    // Informative error message displayed to user
+                txt_clientName.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);  // Make client name text box red to visibly show error
+                txt_clientName.Focus();     // Put mouse cursor in the client name text box
+                lbl_clientNameError.Show();
+                txt_clientNameError.Show();
+                txt_clientNameError.Text = validDetailsErrorMsgs[0]; // Fill text box wth the client name error message
             }
-            if (String.IsNullOrWhiteSpace(txt_clientAddress.Text))
+            else if (validDetails[0] == true)
+            {
+                txt_clientName.BackColor = Color.White;
+                lbl_clientNameError.Hide();
+                txt_clientNameError.Hide();
+            }
+            if (validDetails[1] == false)   // If the client address is empty, throw error
             {
                 txt_clientAddress.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
                 txt_clientAddress.Focus();
-                clientAddressOk = false;
-                string message = "Client Address must not be empty!";
-                string caption = "Error!";
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                lbl_clientAddressError.Show();
+                txt_clientAddressError.Show();
+                txt_clientAddressError.Text = validDetailsErrorMsgs[1]; // Fill text box with client address error message
             }
-            if (String.IsNullOrWhiteSpace(txt_contactName.Text))
+            else if (validDetails[1] == true)
+            {
+                txt_clientAddress.BackColor = Color.White;
+                lbl_clientAddressError.Hide();
+                txt_clientAddressError.Hide();
+            }
+            if (validDetails[2] == false)   // If the contact name is empty, throw error
             {
                 txt_contactName.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
                 txt_contactName.Focus();
-                contactNameOk = false;
-                string message = "Contact Name should not be empty!";
-                string caption = "Error!";
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                lbl_contactNameError.Show();
+                txt_contactNameError.Show();
+                txt_contactNameError.Text = validDetailsErrorMsgs[2];   // Fill text box with contact name error message
             }
-            if (String.IsNullOrWhiteSpace(txt_contactEmail.Text))
+            else if (validDetails[2] == true)
+            {
+                txt_contactName.BackColor = Color.White;
+                lbl_contactNameError.Hide();
+                txt_contactNameError.Hide();
+            }
+            if (validDetails[3] == false)   // If the contact email is empty, throw error
             {
                 txt_contactEmail.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
                 txt_contactEmail.Focus();
-                contactEmailOk = false;
-                string message = "Contact Email should not be empty!";
-                string caption = "Error!";
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                lbl_contactEmailError.Show();
+                txt_contactEmailError.Show();
+                txt_contactEmailError.Text = validDetailsErrorMsgs[3];  // Fill text box with contact email error message
             }
-
-            if (clientNameOk == false || clientAddressOk == false || contactNameOk == false || contactEmailOk == false) // If any checks are failed, return false 
+            else if (validDetails[3] == true)
             {
-                return false;
-            }
-            else
-            {
-                return true;
+                txt_contactEmail.BackColor = Color.White;
+                lbl_contactEmailError.Hide();
+                txt_contactEmailError.Hide();
             }
         }
 
-        private bool validateEmailFormatting()
+        private void showEmailFormatErrorMsg(bool validEmailFormat, string validEmailFormatErrorMsg)
         {
-            bool emailValid = false;
-            try
+            if (validEmailFormat == false)  // If the contact email is not formatted correctly, throw error
             {
-                MailAddress isValidEmail = new MailAddress(txt_contactEmail.Text);
-                emailValid = true;
+                txt_contactEmail.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
+                txt_contactEmail.Focus();
+                lbl_contactEmailError.Show();
+                txt_contactEmailError.Show();
+                txt_contactEmailError.Text = validEmailFormatErrorMsg;  // Fill text box with contact email format error message
             }
-            catch (FormatException)
+            else if (validEmailFormat == true)
             {
-                txt_contactEmail.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA); // Set the colour of the text box to red
-                txt_contactEmail.Focus();   // Put the mouse cursor in the text box
-                emailValid = false;
-                string message = "Contact Email must be formatted correctly!";
-                string caption = "Error!";
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);    // Informative error message displayed to user
+                txt_contactEmail.BackColor = Color.White;
+                lbl_contactEmailError.Hide();
+                txt_contactEmailError.Hide();
             }
-            return emailValid;
         }
         #endregion
 
