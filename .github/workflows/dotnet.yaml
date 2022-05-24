@@ -15,16 +15,18 @@ jobs:
   ## Create a build job
   build:
 
-    ## The first two sections (strategy and runs-on) define a machine and operating system
-    ## to run this CI/CD pipeline on.
+    ## The first two sections (strategy and runs-on) define a machine and operating
+    ## system to run this CI/CD pipeline on.
     ## Each kob uses it's own strategy.
 
-    ## We want to make sure that our build image runs both x86 and x64
+    ## We want to make sure that our build image runs only on x64 architecture.
+    ## This is because we only want an x64 build of the application (as can be
+    ## seen in our build and publish steps below)
     strategy:
       ## The matrix value here allows us to provide a number of different values.
       ## But for our purposes, we only need to supply the CPU architecture
       matrix:
-        targetplatform: [x86, x64]
+        targetplatform: [x64]
     
     ## We want out build image to run Windows vLatest
     ## This will change, once we migrate away from WinForms. It's not possible
