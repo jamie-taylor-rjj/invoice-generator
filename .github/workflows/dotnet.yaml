@@ -57,6 +57,16 @@ jobs:
         ## pre-release builds
         dotnet-version: '6.0.x'
         include-prerelease: false
+      ## Set a number of environment variables for the .NET tooling (these need
+      ## to be set on our first step which uses the .NET tooling in order to take
+      ## effect).
+      ## We're setting these so that our logs are shorter, easier to read, and
+      ## so that builds are around 1-2 second faster than normally. 
+      env:
+        ## removes logo and telemetry message from first run of dotnet cli 
+        DOTNET_NOLOGO: 1
+        ## opt-out of .NET tooling telemetry being sent to Microsoft 
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     ## Now we need to restore any NuGet packages that we rely on in order to build
     ## or run the application
@@ -84,7 +94,7 @@ jobs:
     ## In this command we're:
     ##  - Hardcoding the release format to Windows 64 bit (-r win-x64)
     ##  - Ensuring that we can boot the application without having to install
-    ##    a .NET runtime (--self-contained)
+    ##    a .NET runtime (--sc)
     ##  - Copying the output to a directory called "publish" in the root of the
     ##    source directory (-o publish) 
     ##  -  Ensuring that the packaged version of the application is the Release
@@ -92,7 +102,7 @@ jobs:
     ##  - Ensuring that the .NET tooling doesn't waste time restoring any NuGet
     ##    packages before publishing, as we've already done this
     - name: publish
-      run: dotnet publish -r win-x64 --self-contained -o ../../../publish -c Release
+      run: dotnet publish -r win-x64 --sc -o ../../../publish -c Release
       working-directory: ${{env.working-directory}}
     
     ## Now that we have everything built and packaged, we want to create a build
