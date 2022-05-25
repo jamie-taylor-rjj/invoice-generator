@@ -1,4 +1,4 @@
-﻿namespace InvoiceGenerator.Domain
+﻿namespace InvoiceGenerator.Domain.Models
 {
     public class LineItem
     {

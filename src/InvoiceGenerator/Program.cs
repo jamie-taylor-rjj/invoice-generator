@@ -1,4 +1,5 @@
 ﻿using InvoiceGenerator.BusinessLogic;
+using InvoiceGenerator.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows.Forms;
@@ -34,7 +35,8 @@ namespace InvoiceGenerator
                 .AddTransient<StartScreen>()
                 // Here we are saying that whenever a constructor calls for an IClientService, the
                 // DI Container should create a new instance of the ClientService and pass that in
-                .AddTransient<IClientService, ClientService>();
+                .AddTransient<IClientService, ClientService>()
+                .AddTransient<IInvoiceDbContext, InvoiceDbContext>();
         }
         /// <summary>
         /// The main entry point for the application.

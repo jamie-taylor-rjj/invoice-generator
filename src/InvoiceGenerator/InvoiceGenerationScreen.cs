@@ -79,8 +79,6 @@ namespace InvoiceGenerator
 
         private void fillComboBox()
         {
-            var service = new ClientService();
-
             var listOfClients = new List<ClientNameViewModel>()
             {
                 new ClientNameViewModel
@@ -90,7 +88,7 @@ namespace InvoiceGenerator
                 }
             };
 
-            var listFromDb = service.GetClientNames();
+            var listFromDb = _clientService.GetClientNames();
 
             listOfClients.AddRange(listFromDb);
 

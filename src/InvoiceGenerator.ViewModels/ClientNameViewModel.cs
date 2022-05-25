@@ -1,4 +1,6 @@
-﻿namespace InvoiceGenerator.ViewModels
+﻿using InvoiceGenerator.Domain.Models;
+
+namespace InvoiceGenerator.ViewModels
 {
     public class ClientNameViewModel
     {
@@ -7,7 +9,7 @@
         public Guid Id { get; set; }
         public string ClientName { get; set; }
 
-        public static ClientNameViewModel FromDbModel(InvoiceGenerator.Domain.Client dbModel)
+        public static ClientNameViewModel FromDbModel(Client dbModel)
         {
             return new ClientNameViewModel
             {
