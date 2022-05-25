@@ -7,7 +7,7 @@ using System.Text;
 
 namespace InvoiceGenerator.BusinessLogic
 {
-    public class ClientService
+    public class ClientService : IClientService
     {
         public List<ClientViewModel> GetClients()
         {
@@ -27,7 +27,7 @@ namespace InvoiceGenerator.BusinessLogic
 
             }
         }
-        
+
         public List<ClientNameViewModel> GetClientNames()
         {
             using (var context = new InvoiceDBContext())

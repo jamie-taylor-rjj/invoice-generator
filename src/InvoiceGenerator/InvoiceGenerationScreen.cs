@@ -16,9 +16,11 @@ namespace InvoiceGenerator
     {
         private readonly string DEFAULT_SELECT_STRING = "--SELECT--";
 
-        public InvoiceGenerationScreen()
+        private readonly IClientService _clientService;
+        public InvoiceGenerationScreen(IClientService clientService)
         {
             InitializeComponent();
+            _clientService = clientService;
             fillComboBox();
         }
 
@@ -63,7 +65,7 @@ namespace InvoiceGenerator
         private void btn_Back_Click(object sender, EventArgs e)
         {
             // Create an instance of a new form 'NewStartScreen'
-            StartScreen NewStartScreen = new StartScreen();
+            StartScreen NewStartScreen = new StartScreen(_clientService);
             // Hides the current form 'InvoiceGenerationScreen'
             this.Hide();
             // When the 'NewStartScreen' is closed, close the current form 'InvoiceGenerationScreen'
