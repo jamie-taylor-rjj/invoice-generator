@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace InvoiceGenerator.BusinessLogic
+namespace InvoiceGenerator.Domain
 {
     public class Client
     {

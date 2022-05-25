@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using InvoiceGenerator.Domain;
 
-namespace InvoiceGenerator.BusinessLogic
+namespace InvoiceGenerator.ViewModels
 {
     public class ClientViewModel
     {

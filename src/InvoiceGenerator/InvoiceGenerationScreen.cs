@@ -1,4 +1,5 @@
 ﻿using InvoiceGenerator.BusinessLogic;
+using InvoiceGenerator.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InvoiceGenerator.BusinessLogic
+namespace InvoiceGenerator.Domain
 {
     public class Invoice
     {

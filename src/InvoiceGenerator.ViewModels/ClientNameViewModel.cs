@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InvoiceGenerator.BusinessLogic
+namespace InvoiceGenerator.ViewModels
 {
     public class ClientNameViewModel
     {
@@ -13,7 +13,7 @@ namespace InvoiceGenerator.BusinessLogic
         public Guid Id { get; set; }
         public string ClientName { get; set; }
 
-        public static ClientNameViewModel FromDbModel(Client dbModel)
+        public static ClientNameViewModel FromDbModel(InvoiceGenerator.Domain.Client dbModel)
         {
             return new ClientNameViewModel
             {
