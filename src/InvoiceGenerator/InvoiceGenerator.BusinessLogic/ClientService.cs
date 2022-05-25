@@ -22,6 +22,25 @@ namespace InvoiceGenerator.BusinessLogic
                     viewModels.Add(ClientViewModel.FromDbModel(db)); // Add the client details to a list
                 }
                 return viewModels;
+
+            }
+        }
+        
+        public List<ClientNameViewModel> GetClientNames()
+        {
+            using (var context = new InvoiceDBContext())
+            {
+                context.Database.EnsureCreated();
+
+                var clientNames = context.Clients.ToList();
+
+                var nameModels = new List<ClientNameViewModel>();
+
+                foreach (var db in clientNames)
+                {
+                    nameModels.Add(ClientNameViewModel.FromDbModel(db));
+                }
+                return nameModels;
             }
         }
 
@@ -45,5 +64,6 @@ namespace InvoiceGenerator.BusinessLogic
                 context.SaveChanges();  // Save the changes made to the database
             }
         }
+
     }
 }

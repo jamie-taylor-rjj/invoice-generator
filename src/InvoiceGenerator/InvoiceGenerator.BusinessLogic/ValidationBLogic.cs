@@ -51,5 +51,78 @@ namespace InvoiceGenerator.BusinessLogic
 
             return emailFormatErrorMsg; // Return error message
         }
+
+        public string validateComboBoxChoice(string comboBoxChoice)
+        {
+            string comboBoxChoiceErrorMsg = "No error!";
+
+            if (comboBoxChoice == "Please Select:") // If user has not selexted a client, throw error
+            {
+                comboBoxChoiceErrorMsg = "Please select a client!";    // Make error message
+            }
+
+            return comboBoxChoiceErrorMsg; // Return error message
+        }
+
+        public string[] validateLineItemDetails(string lineItemDescription, string lineItemCost, string lineItemQuantity)
+        {
+            string lineItemDescriptionErrorMsg = "No error!", lineItemCostErrorMsg = "No error!", lineItemQuantityErrorMsg = "No error!";
+            
+            if (String.IsNullOrWhiteSpace(lineItemDescription)) // If the line item description is empty, throw error
+            {
+                lineItemDescriptionErrorMsg = "Line Item Description must not be empty!"; // Make error message
+            }
+            if (String.IsNullOrWhiteSpace(lineItemCost))
+            {
+                lineItemCostErrorMsg = "Line Item Cost must not be empty!";
+            }
+            if (String.IsNullOrWhiteSpace(lineItemQuantity))
+            {
+                lineItemQuantityErrorMsg = "Line Item Quantity must not be empty!";
+            }
+
+            string[] errorMessages = { lineItemDescriptionErrorMsg, lineItemCostErrorMsg, lineItemQuantityErrorMsg };
+
+            return errorMessages;   // Return all the error messages
+        }
+
+        public string checkCost(string lineItemCost)
+        {
+            double result;
+            string validCostErrorMsg;
+
+            bool validParse = double.TryParse(lineItemCost, out result); // Try convert lineItemCost input to a double
+
+            if (validParse) // If the parse was successful...
+            {
+                validCostErrorMsg = "Line Item Cost must be a decimal number!"; // Make error message
+            }
+            else // If the parse was not successful..
+            {
+                validCostErrorMsg = "No error!"; // No error
+            }
+
+            return validCostErrorMsg; // Return error message
+        }
+
+        public string checkQuantity(string lineItemQuantity)
+        {
+            int result;
+            string validQuantityErrorMsg;
+
+            bool validParse = int.TryParse(lineItemQuantity, out result); // Try convert lineItemQuantity input to an int
+
+            if (validParse) // If the parse was successful...
+            {
+                validQuantityErrorMsg = "Line Item Cost must be an integer!"; // Make error message
+            }
+            else // If the parse was not successful...
+            {
+                validQuantityErrorMsg = "No error!"; // No error
+            }
+
+            return validQuantityErrorMsg; // Return error message
+        }
+
     }
 }

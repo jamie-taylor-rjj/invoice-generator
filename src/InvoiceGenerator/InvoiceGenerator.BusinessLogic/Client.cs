@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,5 +12,6 @@ namespace InvoiceGenerator.BusinessLogic
         public string ClientAddress { get; set; }
         public string ContactName { get; set; }
         public string ContactEmail { get; set; }
+        //public ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
     }
 }

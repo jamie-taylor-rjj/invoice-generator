@@ -41,7 +41,6 @@ namespace InvoiceGenerator
 
             if (validDetails[0] && validDetails[1] && validDetails[2] && validDetails[3])   // If all checks are passed, do below
             {
-                validDetailsErrorMsgs = validationBLogic.validateUserDetails(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text);
                 showUserDetailsErrorMsgs(validDetails, validDetailsErrorMsgs); // Hide error messages as they are valid
 
                 bool validEmailFormat = validationUI.validateEmailFormat(txt_contactEmail.Text);    // Check if the email input is of the correct format
@@ -49,7 +48,6 @@ namespace InvoiceGenerator
 
                 if (validEmailFormat)   // If the email is valid and user details are valid, insert new client
                 {
-                    validEmailFormatErrorMsg = validationBLogic.validateEmailFormat(txt_contactEmail.Text);
                     showEmailFormatErrorMsg(validEmailFormat, validEmailFormatErrorMsg);    // Hide error messages as they are valid
 
                     var service = new ClientService();
@@ -67,12 +65,12 @@ namespace InvoiceGenerator
                 }
                 else    // If email is not valid, do below...
                 {
-                    showEmailFormatErrorMsg(validEmailFormat, validEmailFormatErrorMsg);    // Show email format error message or hide them if they are valid
+                    showEmailFormatErrorMsg(validEmailFormat, validEmailFormatErrorMsg);    // Show email format error message
                 }
             }
-            else    // If user details aren't valid (White space or null values)
+            else    // If user details aren't valid (White space or null values), do below...
             {
-                showUserDetailsErrorMsgs(validDetails, validDetailsErrorMsgs); // Show user details error messages or hide them if they are valid
+                showUserDetailsErrorMsgs(validDetails, validDetailsErrorMsgs); // Show user details error messages
             }
         }
 
@@ -91,7 +89,16 @@ namespace InvoiceGenerator
             string message = "Clients viewed successfully!";
             string caption = "Success!";
             MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); // Show confirmation message to user
-            
+        }
+
+        private void btn_Previous_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Next_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void btn_Exit2_Click(object sender, EventArgs e)
@@ -121,14 +128,6 @@ namespace InvoiceGenerator
             btn_Previous.Hide();
             btn_Next.Hide();
             lbl_pageNo.Hide();
-            lbl_clientNameError.Hide();
-            lbl_clientAddressError.Hide();
-            lbl_contactNameError.Hide();
-            lbl_contactEmailError.Hide();
-            txt_clientNameError.Hide();
-            txt_clientAddressError.Hide();
-            txt_contactNameError.Hide();
-            txt_contactEmailError.Hide();
         }
 
         private void clearTextBoxes()
@@ -148,57 +147,50 @@ namespace InvoiceGenerator
             {
                 txt_clientName.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);  // Make client name text box red to visibly show error
                 txt_clientName.Focus();     // Put mouse cursor in the client name text box
-                lbl_clientNameError.Show();
-                txt_clientNameError.Show();
-                txt_clientNameError.Text = validDetailsErrorMsgs[0]; // Fill text box wth the client name error message
+                string message = validDetailsErrorMsgs[0];
+                string caption = "Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); // Display error message box to user
             }
             else if (validDetails[0] == true)
             {
                 txt_clientName.BackColor = Color.White;
-                lbl_clientNameError.Hide();
-                txt_clientNameError.Hide();
             }
             if (validDetails[1] == false)   // If the client address is empty, throw error
             {
                 txt_clientAddress.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
                 txt_clientAddress.Focus();
-                lbl_clientAddressError.Show();
-                txt_clientAddressError.Show();
-                txt_clientAddressError.Text = validDetailsErrorMsgs[1]; // Fill text box with client address error message
+                string message = validDetailsErrorMsgs[1];
+                string caption = "Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (validDetails[1] == true)
             {
                 txt_clientAddress.BackColor = Color.White;
-                lbl_clientAddressError.Hide();
-                txt_clientAddressError.Hide();
             }
             if (validDetails[2] == false)   // If the contact name is empty, throw error
             {
                 txt_contactName.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
                 txt_contactName.Focus();
-                lbl_contactNameError.Show();
-                txt_contactNameError.Show();
-                txt_contactNameError.Text = validDetailsErrorMsgs[2];   // Fill text box with contact name error message
+                string message = validDetailsErrorMsgs[2];
+                string caption = "Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
             }
             else if (validDetails[2] == true)
             {
                 txt_contactName.BackColor = Color.White;
-                lbl_contactNameError.Hide();
-                txt_contactNameError.Hide();
             }
             if (validDetails[3] == false)   // If the contact email is empty, throw error
             {
                 txt_contactEmail.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
                 txt_contactEmail.Focus();
-                lbl_contactEmailError.Show();
-                txt_contactEmailError.Show();
-                txt_contactEmailError.Text = validDetailsErrorMsgs[3];  // Fill text box with contact email error message
+                string message = validDetailsErrorMsgs[3];
+                string caption = "Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (validDetails[3] == true)
             {
                 txt_contactEmail.BackColor = Color.White;
-                lbl_contactEmailError.Hide();
-                txt_contactEmailError.Hide();
             }
         }
 
@@ -208,18 +200,15 @@ namespace InvoiceGenerator
             {
                 txt_contactEmail.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
                 txt_contactEmail.Focus();
-                lbl_contactEmailError.Show();
-                txt_contactEmailError.Show();
-                txt_contactEmailError.Text = validEmailFormatErrorMsg;  // Fill text box with contact email format error message
+                string message = validEmailFormatErrorMsg;
+                string caption = "Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else if (validEmailFormat == true)
             {
                 txt_contactEmail.BackColor = Color.White;
-                lbl_contactEmailError.Hide();
-                txt_contactEmailError.Hide();
             }
         }
         #endregion
-
     }
 }
