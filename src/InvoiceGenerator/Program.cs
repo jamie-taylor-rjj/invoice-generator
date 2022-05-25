@@ -52,6 +52,8 @@ namespace InvoiceGenerator
 
             using (ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider())
             {
+                // Manually get the instance of the StartScreen class which was injected
+                // into out DI container and use that to run the application with
                 var startScreen = serviceProvider.GetService<StartScreen>();
                 Application.Run(startScreen);
             }
