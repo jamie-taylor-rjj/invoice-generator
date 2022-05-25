@@ -1,0 +1,125 @@
+name: 'Build and publish pipeline'
+
+## Only builds when someone pushes to or PRs against main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  ## Create a build job
+  build:
+
+    ## The first two sections (strategy and runs-on) define a machine and operating
+    ## system to run this CI/CD pipeline on.
+    ## Each kob uses it's own strategy.
+
+    ## We want to make sure that our build image runs only on x64 architecture.
+    ## This is because we only want an x64 build of the application (as can be
+    ## seen in our build and publish steps below)
+    strategy:
+      ## The matrix value here allows us to provide a number of different values.
+      ## But for our purposes, we only need to supply the CPU architecture
+      matrix:
+        targetplatform: [x64]
+    
+    ## We want out build image to run Windows vLatest
+    ## This will change, once we migrate away from WinForms. It's not possible
+    ## to build WinForms applications on anything but Windows
+    runs-on: windows-latest
+
+    ## env variables are variables that we can refer to in different parts of our
+    ## build pipeline
+    env:
+      working-directory: ./src/InvoiceGenerator/InvoiceGenerator
+
+    ## The Steps section is where we define the steps required to run this job on
+    ## the target machine.
+    steps:
+
+    ## The first thing we need to do is get the latest code out from git, otherwise
+    ## we can't build anything
+    - name: Checkout the code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    
+    ## Next we need to ensure that we have the .NET tooling installed.
+    - name: Install the .NET SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        ## Ensure that we have AT LEAST version 6.0 of .NET, but don't include any
+        ## pre-release builds
+        dotnet-version: '6.0.x'
+        include-prerelease: false
+      ## Set a number of environment variables for the .NET tooling (these need
+      ## to be set on our first step which uses the .NET tooling in order to take
+      ## effect).
+      ## We're setting these so that our logs are shorter, easier to read, and
+      ## so that builds are around 1-2 second faster than normally. 
+      env:
+        ## removes logo and telemetry message from first run of dotnet cli 
+        DOTNET_NOLOGO: 1
+        ## opt-out of .NET tooling telemetry being sent to Microsoft 
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    ## Now we need to restore any NuGet packages that we rely on in order to build
+    ## or run the application
+    - name: Install code level dependencies
+      run: dotnet restore
+      working-directory: ${{env.working-directory}}
+    
+    ## Building is next. Note the use of both the --configuration and
+    ## --no-restore flags.
+    ## The first flag sets the build configuration. We want Release here as it
+    ## will produce a smaller binary than a Debug (which is the default) build.
+    ## When running a Release build, the compiler will optimise your code and
+    ## remove any debugging statements that it adds in order to make debugging
+    ## easier - note: its still possible to debug Release code.
+    ## The second flag tells the .NET tooling not to attempt to restore any NuGet
+    ## packages. This is a time saving operation, as we restored them in the
+    ## previous step.
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      working-directory: ${{env.working-directory}}
+    
+    ## Now that we have the binary built, we want to publish it. A publish
+    ## action takes the built binary, grabs any runtime required libraries,
+    ## then copies everything to the output directory.
+    ## In this command we're:
+    ##  - Hardcoding the release format to Windows 64 bit (-r win-x64)
+    ##  - Ensuring that we can boot the application without having to install
+    ##    a .NET runtime (--sc)
+    ##  - Copying the output to a directory called "publish" in the root of the
+    ##    source directory (-o publish) 
+    ##  -  Ensuring that the packaged version of the application is the Release
+    ##     build only (-c Release)
+    ##  - Ensuring that the .NET tooling doesn't waste time restoring any NuGet
+    ##    packages before publishing, as we've already done this
+    - name: publish
+      run: dotnet publish -r win-x64 --sc -o ../../../publish -c Release
+      working-directory: ${{env.working-directory}}
+    
+    ## Now that we have everything built and packaged, we want to create a build
+    ## artifact. A build artifact is something that a user/consumer can download
+    ## as a result of the build.
+    ## Build artifacts will always be available to download on the GitHub actions
+    ## results page.
+    ## This means that we don't have to build the code ourself and ship it to the
+    ## user. They can simply head to the download page and grab the zip file
+    ## called "invoice-generator", and it will have everything that they need to
+    ## run the app.
+    - uses: actions/upload-artifact@v2
+      if: ${{ success() }}
+      with:
+        name: invoice-generator
+        path: ${{ github.workspace }}/publish/*
+    
+    ## In future versions of this pipeline, we'll create a GitHub Release and put
+    ## the invoice-generator zip file there. Releases are show on the repo homepage
+    ## on the right-hand side (assuming a left-to-right culture).
+    ## However, this build pipeline will do for now.
