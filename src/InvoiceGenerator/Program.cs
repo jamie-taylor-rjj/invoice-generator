@@ -1,5 +1,7 @@
 ﻿using InvoiceGenerator.BusinessLogic;
 using InvoiceGenerator.Domain;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows.Forms;
@@ -13,7 +15,7 @@ namespace InvoiceGenerator
         /// to be injected into the running application for us.
         /// </summary>
         /// <param name="services"></param>
-        private static void ConfigureServices(IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services, string connectionString)
         {
             // Adding a dependecy to the IServiceCollection will ensure that .NET
             // can inject it into any class we need. You will see this in the class
@@ -36,7 +38,14 @@ namespace InvoiceGenerator
                 // Here we are saying that whenever a constructor calls for an IClientService, the
                 // DI Container should create a new instance of the ClientService and pass that in
                 .AddTransient<IClientService, ClientService>()
-                .AddTransient<IInvoiceDbContext, InvoiceDbContext>();
+                .AddDbContext<InvoiceDbContext>(options => options.UseSqlServer(connectionString));
+        }
+
+        private static IConfiguration BuildDefaultConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            return builder.Build();
         }
         /// <summary>
         /// The main entry point for the application.
@@ -48,9 +57,8 @@ namespace InvoiceGenerator
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.SetCompatibleTextRenderingDefault(false);
 
-
             var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
+            ConfigureServices(serviceCollection, BuildDefaultConfiguration().GetConnectionString("invoiceConnectionString"));
 
             using (ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider())
             {
