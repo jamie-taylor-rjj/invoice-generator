@@ -312,14 +312,14 @@
             // 
             // combox_clientNames
             // 
+            this.combox_clientNames.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combox_clientNames.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.combox_clientNames.FormattingEnabled = true;
             this.combox_clientNames.Location = new System.Drawing.Point(35, 92);
             this.combox_clientNames.Name = "combox_clientNames";
             this.combox_clientNames.Size = new System.Drawing.Size(273, 31);
             this.combox_clientNames.TabIndex = 20;
-            this.combox_clientNames.Text = "Please Select:";
-            this.combox_clientNames.SelectedIndexChanged += new System.EventHandler(this.combox_clientNames_SelectedIndexChanged);
+            this.combox_clientNames.SelectedValueChanged += new System.EventHandler(this.combox_clientNames_SelectedValueChanged);
             // 
             // InvoiceGenerationScreen
             // 

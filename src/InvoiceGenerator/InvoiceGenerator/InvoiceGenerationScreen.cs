@@ -13,6 +13,7 @@ namespace InvoiceGenerator
 {
     public partial class InvoiceGenerationScreen : Form
     {
+        private readonly string DEFAULT_SELECT_STRING = "--SELECT--";
 
         public InvoiceGenerationScreen()
         {
@@ -84,7 +85,11 @@ namespace InvoiceGenerator
 
             var listOfClients = new List<ClientNameViewModel>()
             {
-
+                new ClientNameViewModel
+                {
+                    ClientName = DEFAULT_SELECT_STRING,
+                    Id = Guid.NewGuid(),
+                }
             };
 
             var listFromDb = service.GetClientNames();
@@ -92,12 +97,23 @@ namespace InvoiceGenerator
             listOfClients.AddRange(listFromDb);
 
             combox_clientNames.DataSource = listOfClients;
-            combox_clientNames.DisplayMember = "ClientName";
+            combox_clientNames.DisplayMember = nameof(ClientNameViewModel.ClientName);
+            combox_clientNames.ValueMember = nameof(ClientNameViewModel.Id);
             pnl_invoiceGenerationDetails.Hide();
         }
 
-        private void combox_clientNames_SelectedIndexChanged(object sender, EventArgs e)
+        private void combox_clientNames_SelectedValueChanged(object sender, EventArgs e)
         {
+            var selectedClientViewModel = (ClientNameViewModel)combox_clientNames.SelectedItem;
+            if (string.Equals(DEFAULT_SELECT_STRING, selectedClientViewModel.ClientName, StringComparison.OrdinalIgnoreCase))
+            {
+                // Drop out here, as the user has selected the default item in the list
+                // OR we're still populating the list
+                // (the SelectedValueChanged and SelectedIndexChanged events fire when the
+                // first item is added to the list
+                return;
+            }
+
             // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             ValidationUI validationUI = new ValidationUI();          // ValidationUI methods will return the boolean values for the variables, this determines if they are actually valid or not
             ValidationBLogic validationBLogic = new ValidationBLogic();  // ValidationBLogic methods will return the error messages for the variables
@@ -124,24 +140,12 @@ namespace InvoiceGenerator
 
             pnl_invoiceGenerationDetails.Show();
 
-            string otherClientChoice = combox_clientNames.SelectedItem.ToString();
-            string otherDateToday = DateTime.Today.ToString("dd-mm-yyyy");
-            txt_invoiceRef.Text = $"{otherClientChoice}-{otherDateToday}";
+            var clientName = selectedClientViewModel.ClientName;
+            var todayAsString = DateTime.Today.ToString("dd-mm-yyyy");
+            txt_invoiceRef.Text = $"RJJ-{clientName}-{todayAsString}";
 
-            int selectedIndex = combox_clientNames.SelectedIndex;
-            Object selectedItem = combox_clientNames.SelectedItem;
+            // You should be able to use selectedClientViewModel to do all the things you need
 
-            MessageBox.Show("Selected Item Text: " + selectedItem.ToString() + "\n" +
-                "Index: " + selectedIndex.ToString());
-
-            // ComboBoxItem doesn't appear to exist in WinForms
-            ComboBox cmb = (ComboBox)sender;
-
-            int otherSelectedIndex = cmb.SelectedIndex;
-            int otherSelectedValue = (int)cmb.SelectedValue;
-
-            ComboBoxItem selectedClient = (ComboBoxItem)cmb.SelectedItem;
-            MessageBox.Show(String.Format("Index: [{0}] ClientName={1}; Value={2}", otherSelectedIndex, selectedClient.Text, otherSelectedValue));
         }
 
         #region ErrorMessages
@@ -230,5 +234,14 @@ namespace InvoiceGenerator
         }
         #endregion
 
+        //private void combox_clientNames_SelectedValueChanged(object sender, EventArgs e)
+        //{
+        //    var selected = (int)combox_clientNames.SelectedIndex;
+        //    var name = (ClientNameViewModel)combox_clientNames.SelectedItem;
+        //    if (name !=null)
+        //    {
+
+        //    }
+        //}
     }
 }
