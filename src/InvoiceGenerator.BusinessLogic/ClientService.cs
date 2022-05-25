@@ -1,4 +1,5 @@
 ﻿using InvoiceGenerator.Domain;
+using InvoiceGenerator.Domain.Models;
 using InvoiceGenerator.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ namespace InvoiceGenerator.BusinessLogic
 {
     public class ClientService : IClientService
     {
-        private readonly IInvoiceDbContext _invoiceDbContext;
+        private readonly InvoiceDbContext _invoiceDbContext;
 
-        public ClientService(IInvoiceDbContext invoiceDbContext)
+        public ClientService(InvoiceDbContext invoiceDbContext)
         {
             _invoiceDbContext = invoiceDbContext;
         }
