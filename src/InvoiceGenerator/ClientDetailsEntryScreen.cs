@@ -1,21 +1,20 @@
 ﻿using InvoiceGenerator.BusinessLogic;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace InvoiceGenerator
 {
     public partial class ClientDetailsEntryScreen : Form
     {
-        public ClientDetailsEntryScreen()
+        private readonly IClientService _clientService;
+
+        // We're asking the DI container to find a class which satisfies the
+        // IClientService interface and inject it in here.
+        public ClientDetailsEntryScreen(IClientService clientService)
         {
             InitializeComponent();
+            _clientService = clientService;
         }
 
         #region ButtonClicks
@@ -50,9 +49,8 @@ namespace InvoiceGenerator
                 {
                     showEmailFormatErrorMsg(validEmailFormat, validEmailFormatErrorMsg);    // Hide error messages as they are valid
 
-                    var service = new ClientService();
-
-                    service.AddClients(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text);   // Call method in business logic layer to add a new client
+                    // Here we are using the injected class which matches the IClientService interface
+                    _clientService.AddClients(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text);   // Call method in business logic layer to add a new client
 
                     string message = "Client created successfully!";
                     string caption = "Success!";
@@ -81,9 +79,8 @@ namespace InvoiceGenerator
 
         private void btn_View_Click(object sender, EventArgs e)
         {
-            var service = new ClientService();
-            
-            var viewModels = service.GetClients(); // Obtain all the client details from the database
+            // Here we are using the injected class which matches the IClientService interface          
+            var viewModels = _clientService.GetClients(); // Obtain all the client details from the database
             dtaGridDetails.DataSource = viewModels; // Fill the data grid with all the client details
 
             string message = "Clients viewed successfully!";
@@ -109,7 +106,7 @@ namespace InvoiceGenerator
         private void btn_Back_Click(object sender, EventArgs e)
         {
             // Create an instance of a new form 'NewStartScreen'
-            StartScreen NewStartScreen = new StartScreen();
+            StartScreen NewStartScreen = new StartScreen(_clientService);
             // Hides the current form 'ClientDetailsEntryScreen'
             this.Hide();
             // When the 'NewStartScreen' is closed, close the current form 'ClientDetailsEntryScreen'

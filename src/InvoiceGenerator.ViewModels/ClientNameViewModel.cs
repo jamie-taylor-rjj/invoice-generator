@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InvoiceGenerator.Domain.Models;
 
 namespace InvoiceGenerator.ViewModels
 {
@@ -13,7 +9,7 @@ namespace InvoiceGenerator.ViewModels
         public Guid Id { get; set; }
         public string ClientName { get; set; }
 
-        public static ClientNameViewModel FromDbModel(InvoiceGenerator.Domain.Client dbModel)
+        public static ClientNameViewModel FromDbModel(Client dbModel)
         {
             return new ClientNameViewModel
             {

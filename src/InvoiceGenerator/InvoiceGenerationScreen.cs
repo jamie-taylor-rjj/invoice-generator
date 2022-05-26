@@ -2,12 +2,7 @@
 using InvoiceGenerator.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace InvoiceGenerator
@@ -16,9 +11,11 @@ namespace InvoiceGenerator
     {
         private readonly string DEFAULT_SELECT_STRING = "--SELECT--";
 
-        public InvoiceGenerationScreen()
+        private readonly IClientService _clientService;
+        public InvoiceGenerationScreen(IClientService clientService)
         {
             InitializeComponent();
+            _clientService = clientService;
             fillComboBox();
         }
 
@@ -63,7 +60,7 @@ namespace InvoiceGenerator
         private void btn_Back_Click(object sender, EventArgs e)
         {
             // Create an instance of a new form 'NewStartScreen'
-            StartScreen NewStartScreen = new StartScreen();
+            StartScreen NewStartScreen = new StartScreen(_clientService);
             // Hides the current form 'InvoiceGenerationScreen'
             this.Hide();
             // When the 'NewStartScreen' is closed, close the current form 'InvoiceGenerationScreen'
@@ -82,8 +79,6 @@ namespace InvoiceGenerator
 
         private void fillComboBox()
         {
-            var service = new ClientService();
-
             var listOfClients = new List<ClientNameViewModel>()
             {
                 new ClientNameViewModel
@@ -93,7 +88,7 @@ namespace InvoiceGenerator
                 }
             };
 
-            var listFromDb = service.GetClientNames();
+            var listFromDb = _clientService.GetClientNames();
 
             listOfClients.AddRange(listFromDb);
 

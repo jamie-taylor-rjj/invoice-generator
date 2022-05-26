@@ -1,4 +1,4 @@
-﻿using InvoiceGenerator.Domain;
+﻿using InvoiceGenerator.Domain.Models;
 
 namespace InvoiceGenerator.ViewModels
 {
