@@ -382,4 +382,19 @@ Many software businesses will have an appointed QA (Quality Assurance) automatio
 
 #### Why is Automation needed?
 
-Automation benefits 
+Automation benefits product development. That's because when software, an app, or another product can be designed and produced more efficiently, it makes way for continuous development once it's been launched. Essentially, the business will be able to work on more software and products, even with the same amount of team members, thanks to automation. Not only does this mean they perfect the final products they put out, but it also means they are creating new software all the time.
+
+#### What are the benefits of Automation Testing?
+
+- Detailed reporting capabilites
+Automation Testing uses well-crafted test cases for various scenarios. These scripted sequences can be incredibly high in-depth, and provide detailed reports that simply would't be possible when done by a human. Not to mention providing them in a shorter amount of time.
+- Improved bug detection
+One of the main reasons to test a product is to detect bugs and other defects. Automation Testing makes this process an easier one. It's also able to analyse a wider test coverage than humans may be able to.
+- Simplifies testing
+Testing is a routine part of the operations of most SaaS and tech companies. Making it as simple as possible is key. Using automation is extremely beneficial. When automating test tools, the test scripts and be reused. Manual testing calls for a single code line to be written for the same test case, each time it needs to be run.
+- Speeds up the testing process
+Machines and automated technology work faster than humans. Along with improved accuracy, this is why we use them. In turn, this shortens your software development life cycles.
+- Reduces human intervention
+Tests can be run at any time of day, even overnight, without needing humans to oversee it. Plus, when it's conducted automatically, this can also reduce the risk of human error.
+- Saves time and money
+Testing can be time-consuming. Though automation may require an initial investment, it can save money in the long run to become more cost-effective. Team members use their time in other areas and are no longer required to carry out manual testing in many situations. This improves their workflow.
