@@ -294,6 +294,7 @@ Unit Tests can be performed manually or automated. Those employing a manual meth
 ##### Smoke Testing
 
 [Wikepedia-Smoke Testing](https://en.wikipedia.org/wiki/Smoke_testing_(software))
+
 [GlobalAppTesting-Smoke Testing](https://www.globalapptesting.com/blog/the-ultimate-guide-to-smoke-testing)
 
 Smoke testing is preliminary testing to reveal simple failures severe enough to, for example, reject a prospective software release. Smoke tests are a subset of test cases that cover the most important functionality of a component or system, used to aid assessment of whether main functions of the software appear to work correctly.
