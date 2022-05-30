@@ -228,6 +228,25 @@ Using the above, you only have to change which controller class you're using in 
 
 ## Testing
 
+### What is Testing?
+
+Testing is an integral part of the Software Development Life Cycle (SDLC). Often times, testing will be done in both the Design Phase and the Testing Phase. The Design Phase comes before the Development Phase and the Testing Phase comes after the Development Phase.
+
+#### Design Phase
+
+In the Design Phase of the SDLC, you start of with creating the interfaces which will be used, this can be done on paper or electronically. After that you create your data requirements and these will consist of Entity-Relationship-Diagrams, Data Dictionaries and Data Flow Diagrams. Once you have done that, you create your algorithms and these are often done in either flow charts or pseudocode. Once you have done that you can finally move on to the Testing part of the Design Phase. In the Design Phase, you create a Test Plan/Strategy which demonstrates a thorough and detailed understanding of:
+1. How the components interrelate
+2. The order in which components should be tested
+3. The types of tests that are required
+
+#### Testing Phase
+
+In the Testing Phase of the SDLC, you refer back to the Test Plan/Strategy that you created and test your entire solution. On the Test Plan/Strategy, you should have two empty columns on the end of it, one for the actual results and one for the evidence of these results.
+You go through your entire solution using different testing techniques and thoroughly test it all.
+You could use different testing techniques such as: White Box & Black Box Testing, Unit Testing and Smoke Testing.
+
+After you have carried out all your tests and fixed any errors, you will go through regression testing which is where you test to see if any changes you made to fix a problem haven't created any errors elsewhere.
+
 ### Different types of testing
 
 #### Functional Testing
