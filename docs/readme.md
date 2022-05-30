@@ -214,10 +214,10 @@ public class Game
   
   public void ReadController
   {
-    if (_controller.Jump())
-    {
-        // Do jump
-    }
+      if (_controller.Jump())
+      {
+          // Do jump
+      }
   }
 }
 ```
