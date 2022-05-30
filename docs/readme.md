@@ -338,3 +338,31 @@ Unit Tests can be performed manually or automated. Those employing a manual meth
    - Actual Results
    - Changes Made
    - Retests/Regression Testing following changes made
+
+### Test-Driven Development
+
+[Wikepedia-Test-Driven Development](https://en.wikipedia.org/wiki/Test-driven_development)
+
+Test-Driven Development (TDD) is a software development process relying on software requirements being converted to test cases before software is fully developed, and tracking all software development by repeatedly testing the software against all test cases. This is as opposed to software being developed first and test cases created later.
+
+#### Test-Driven Development Cycle
+
+1. Add a test
+The adding of a new feature begins by writing a test that passes if the feature's specifications are met. The developer can discover these specifications by asking about use cases and user stories. A key benefit of Test-Driven Development is that it makes the developer focus on requirements before writing code. This is a contrast with the usual practive, where unit tests are only written after code.
+2. Run all tests. The new test should fail for expected reasons
+This shows that the new code is actually needed for the desired feature. It validates that the test harness is working correctly. It rules out the possibility that the new test is flawed and will always pass.
+A test harness (automated test framework) is a collection of software and test data configured to test a program unit by running it under varying conditions and monitoring its behaviour and outputs.
+3. Write the simplest code that passes the new test
+Inelegant or hard code is acceptable, as long as it passes the test. 
+4. All tests should now pass
+If any fail, the new code must be revised until they pass. This ensures the new code meets the test requirements and does not break existing features.
+5. Refractor as needed, using tests after each refractor to ensure that functionality is preserved.
+   - Examples of refactoring:
+     - Moving code to where it most logically belongs
+     - Removing duplicate code
+     - Making names self-documenting
+     - Splitting methods into smaller pieces
+     - Re-arranging inheritance hierarchies
+Code is refactored for readability and maintainability. In particular, hard-coded test data should be removed. Running the test suite after each refactor helps ensure that no existing functionality is broken.
+6. Repeat
+The cycle above is repeated for each new piece of funcionality. Tests should be small, incremental with commits made often. That way, if new code fails some tests, the programmer can simply undo or revert rather than debug excessively.
