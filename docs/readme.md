@@ -363,6 +363,7 @@ If any fail, the new code must be revised until they pass. This ensures the new 
      - Making names self-documenting
      - Splitting methods into smaller pieces
      - Re-arranging inheritance hierarchies
+
 Code is refactored for readability and maintainability. In particular, hard-coded test data should be removed. Running the test suite after each refactor helps ensure that no existing functionality is broken.
 6. Repeat
 The cycle above is repeated for each new piece of funcionality. Tests should be small, incremental with commits made often. That way, if new code fails some tests, the programmer can simply undo or revert rather than debug excessively.
