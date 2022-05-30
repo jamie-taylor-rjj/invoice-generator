@@ -191,7 +191,7 @@ public class PS5Controller :  IController
 {
   public void Jump()
   {
-      // When the user presses X
+    // When the user presses X
   }
 }
 
@@ -199,7 +199,7 @@ public class XboxSeriesXController :  IController
 {
   public void Jump()
   {
-      // When the user presses A
+    // When the user presses A
   }
 }
 
@@ -214,11 +214,11 @@ public class Game
   
   public void ReadController
   {
-      if (_controller.Jump())
-      {
-          // Do jump
-      }
-   }
+    if (_controller.Jump())
+    {
+        // Do jump
+    }
+  }
 }
 ```
 
