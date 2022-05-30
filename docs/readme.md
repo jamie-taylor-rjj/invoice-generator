@@ -375,3 +375,5 @@ The cycle above is repeated for each new piece of funcionality. Tests should be 
 
 #### What is Automation Testing?
 
+Automated Testing is the process of testing software and other tech products to ensure it meets strict requirements. Essentially, it's a test to double-check that the equipment or software does exactly what it was designed to do. It tests for bugs. defects and any other issues that can arise with product development.
+Although some types 
