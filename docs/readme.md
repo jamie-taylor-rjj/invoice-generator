@@ -178,7 +178,7 @@ The above is a bit of a trivial example, just remember that GetClients isn't ret
 For further explanation, you could imagine Dependency Injection in a games context:
 If you are building a cross platform game, you don't want to have code which reads an Xbox Series X controller and separate code which reads a PS5 controller - mainly because most of the buttons are the same. So, you could come up with an IController interface which exposes each of the buttons, then two classes which implement that interface PS5 controller and Xbox Series X Controller.
 
-```
+```csharp
 public interface IController
 {
   Jump();
