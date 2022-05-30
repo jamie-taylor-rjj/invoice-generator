@@ -368,3 +368,10 @@ Code is refactored for readability and maintainability. In particular, hard-code
 
 6. Repeat
 The cycle above is repeated for each new piece of funcionality. Tests should be small, incremental with commits made often. That way, if new code fails some tests, the programmer can simply undo or revert rather than debug excessively.
+
+### Automated Testing
+
+[Global App Testing](https://www.globalapptesting.com/blog/what-is-automation-testing)
+
+#### What is Automation Testing?
+
