@@ -273,14 +273,14 @@ Using the above, you only have to change which controller class you're using in 
 
 1. Purpose of the Identified Test
 2. Test Data:
-  - Valid Test Data
-  - Invalid Test Data
-  - Valid Extreme Text Data
-  - Invalid Extreme Test Data
-  - Erroneous Test Data
+    - Valid Test Data
+    - Invalid Test Data
+    - Valid Extreme Text Data
+    - Invalid Extreme Test Data
+    - Erroneous Test Data
 3. Pre-requisite to each test
 4. Expected Test Results
 5. Update the Plan to Include:
-  - Actual Results
-  - Changes Made
-  - Retests/Regression Testing following changes made
+    - Actual Results
+    - Changes Made
+    - Retests/Regression Testing following changes made
