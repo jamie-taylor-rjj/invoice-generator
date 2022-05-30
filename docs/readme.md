@@ -258,7 +258,7 @@ After you have carried out all your tests and fixed any errors, you will go thro
 
 ##### Unit Testing
 
-[Tech Target-Unit Testing]([https://www.atlassian.com/git](https://www.techtarget.com/searchsoftwarequality/definition/unit-testing#:~:text=Unit%20testing%20is%20a%20software,developers%20and%20sometimes%20QA%20staff.))
+[Tech Target-Unit Testing](https://www.techtarget.com/searchsoftwarequality/definition/unit-testing#:~:text=Unit%20testing%20is%20a%20software,developers%20and%20sometimes%20QA%20staff.)
 
 Unit Testing is a software development process in which the smallest testable parts of a solution, called units are individually tested. The main objective of unit testing is to isolate written code to test and determine if it works as intended.
 
