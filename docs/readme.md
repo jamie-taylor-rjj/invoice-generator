@@ -158,3 +158,70 @@ Using .NET MAUI, you can develop apps that can run on Android, IOS, macOS and Wi
 - `git reset -- hard` - Resets your commit to the last saved changes, throws away all your committed changes (Removes only uncommitted files)
 - `git clean -fd` - Deletes any untracked (i.e. haven't been added with `git add`) files and directories
 - `git reset --hard HEAD~1 - This will destroy the commit and undo your work (Only works if you have not pushed yet)
+
+## Dependency Injection
+
+When we create a new concrete class, we use the **new** keywork. With dependency injection, rather than relying on using the **new** keyword to create new concrete classes, we ask a Dependency Injection framework (.NET has one built in) to inject one for us. The bonus for using this is that we can create an **interface** (which is different to a user interface) and pass that around.
+The beauty of using interfaces is that they don't tell the consumer (the UI is a consumer of the ClientService and the ClientService is a consumer of the InvoiceDBContext) how the thing it's calling works, just how to call it.
+An example of this would be a power socket. If you look at the power socket that your laptop is plugged into. You don't need to know how the power comes out of that socket, just that by plugging in a power adaptor, you'll get power. That's Dependency Injection.
+
+Using Dependency Injection within this project would allow us to inject the database context rather than creating a new one with the keywork **new**, you can swap it for something else and your app never needs to know.
+
+If you were to invert the dependency, you could change the ICLientRepository without having to worry about changing the ClientService. This means that you can silently, and quickly make changes to whatever implements the IClientRepository without the ClientService needing to know.
+
+It also means that you can inject a mocked version of the IClientRepository for testing purposes.
+
+Let's say you wanted to create an automatic test which checks that the GetClients method returns not just a list of ClientViewModels, but that each of them are set to the correct values. You would create a temporary class which performs a certain way, inject it into the ClientService, then call the ClientService's GetClients method and check that it hasn't done anything weird to the data.
+
+The above is a bit of a trivial example, just remember that GetClients isn't returning the actual Client Database models. It's returning a list of ClientViewModels based on the contents of the Client database models. What if someone came along and changed the FromDbModel to alter the string values before returning the ClientViewModel. You could run the app with every possible Client model from the database, but that could take minutes. Whereas an automatic test will take around 50ms and will tell you instantly if something isn't right.
+
+For further explanation, you could imagine Dependency Injection in a games context:
+If you are building a cross platform game, you don't want to have code which reads an Xbox Series X controller and separate code which reads a PS5 controller - mainly because most of the buttons are the same. So, you could come up with an IController interface which exposes each of the buttons, then two classes which implement that interface PS5 controller and Xbox Series X Controller.
+
+```
+public interface IController
+{
+  Jump();
+  Melee();
+  Reload();
+  SwitchWeapon();
+}
+
+public class PS5Controller :  IController
+{
+  public void Jump()
+  {
+      // When the user presses X
+  }
+}
+
+public class XboxSeriesXController :  IController
+{
+  public void Jump()
+  {
+      // When the user presses A
+  }
+}
+
+public class Game
+{
+  private readonly IController _controller
+  
+  public Game(IController controller)
+  {
+      _contoller = controller;
+  }
+  
+  public void ReadController
+  {
+      if (_controller.Jump())
+      {
+          // Do jump
+      }
+   }
+}
+```
+
+The above would be similar for PC as well. The Jump() method would called when the user presses the space bar.
+
+Using the above, you only have to change which controller class you're using in one place: **The Composition Root**. This is the place where you set up Dependency Injection - where we tell .NET which class to inject in.
