@@ -225,3 +225,62 @@ public class Game
 The above would be similar for PC as well. The Jump() method would called when the user presses the space bar.
 
 Using the above, you only have to change which controller class you're using in one place: **The Composition Root**. This is the place where you set up Dependency Injection - where we tell .NET which class to inject in.
+
+## Testing
+
+### Different types of testing
+
+#### Functional Testing
+
+1. Unit Testing
+2. Smoke Testing
+3. Integration Testing
+4. System Testing
+
+#### Non-Functional Testing
+
+1. Availability Testing
+2. Compatibility Testing
+3. Configuration Testing
+4. Load Testing
+
+#### Front-End Testing
+
+1. Code/Script Performance and Functionality
+2. Browser Compatibility
+3. Operating System Compatibility
+4. Cross-Browser Performance
+5. Formatting and Rendering
+6. Loading Times
+7. Responsiveness
+
+#### Security Testing
+
+1. Vulnerability Scanning
+2. Static Analysis
+3. Dynamic Analysis
+4. Integration Analysis
+
+### Testing Techniques
+
+1. Acceptance Testing
+2. Alpha Testing
+3. Beta Testing
+4. Black Box Testing
+5. White Box Testing
+
+### Appropriate Tests and Test Data
+
+1. Purpose of the Identified Test
+2. Test Data:
+  - Valid Test Data
+  - Invalid Test Data
+  - Valid Extreme Text Data
+  - Invalid Extreme Test Data
+  - Erroneous Test Data
+3. Pre-requisite to each test
+4. Expected Test Results
+5. Update the Plan to Include:
+  - Actual Results
+  - Changes Made
+  - Retests/Regression Testing following changes made
