@@ -256,6 +256,41 @@ After you have carried out all your tests and fixed any errors, you will go thro
 3. Integration Testing
 4. System Testing
 
+##### Unit Testing
+
+[Tech Target-Unit Testing]([https://www.atlassian.com/git](https://www.techtarget.com/searchsoftwarequality/definition/unit-testing#:~:text=Unit%20testing%20is%20a%20software,developers%20and%20sometimes%20QA%20staff.))
+
+Unit Testing is a software development process in which the smallest testable parts of a solution, called units are individually tested. The main objective of unit testing is to isolate written code to test and determine if it works as intended.
+
+Unit Testing is an extremely important step in the development process, because if done correctly, it can help detect early flaws in code which may be more difficult to find in later testing stages.
+
+Unit Testing is a component of Test-Driven-Development, a methodology that takes a meticulous approach to building a solution by means of continual testing.
+
+###### How Unit Tests Work
+
+A unit test typically comprises of three stages: Plan, Cases & Scripting and the Unit Test itself. In the first step, the unit test is prepared and reviewed. The next step is for the test cases and scripts to be made, then the code is tested.
+
+Each test case is tested independently in an isolated environment to ensure a lack of dependencies in the code. The software developer should code criteria to verify each test case and a testing framework that can be used to report any failed tests. Unit Tests should be performed frequently and can be done manually or automated.
+
+###### Types of Unit Testing
+
+Unit Tests can be performed manually or automated. Those employing a manual method may have an instinctual document made detailing each step in the process. However, automated testing is the more common method to unit tests. Automated approaches commonly use a testing framework to develop test cases. These frameworks are also set to flag and report any failed test cases while also providing a summary of test cases.
+
+###### Advantages of Unit Testing
+
+- The earlier a problem is identified, the fewer compound errors occur.
+- Costs of fixing a problem early can quickly outweigh the cost of fixing it later.
+- Debugging process are made easier.
+- Developers can quickly make changes to the code base.
+- Developers can also re-use code, migrating it to new projects
+
+###### Disadvantages of Unit Testing
+
+- Tests will not uncover every bug
+- Unit Tests only test sets of data and it's functionality - it will not catch errors in integration.
+- More lines of test code may need to be written to test one line of code - creating a potential time investment.
+- Unit Testing may have a steep learning curve, for example, having to learn how to use specific automated software tools.
+
 #### Non-Functional Testing
 
 1. Availability Testing
