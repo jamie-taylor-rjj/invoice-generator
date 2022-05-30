@@ -376,4 +376,10 @@ The cycle above is repeated for each new piece of funcionality. Tests should be 
 #### What is Automation Testing?
 
 Automated Testing is the process of testing software and other tech products to ensure it meets strict requirements. Essentially, it's a test to double-check that the equipment or software does exactly what it was designed to do. It tests for bugs. defects and any other issues that can arise with product development.
-Although some types 
+Although some types of testing, such as regression or functional testing can be done manually, there are greater benefits of doing it automatically. Automation Testing can be run at any time of the day. It uses scripted sequences to examine the software. It then reports on what's been found, and this information can be compared with earlier test runs. Automation developers generally write in the following programming language: C#, JavaScript and Ruby.
+
+Many software businesses will have an appointed QA (Quality Assurance) automation tester. They design and write the test scripts in the beginning stages. The QA automation tester will work with automation test engineers and product developers to actually test the software and products. They will form a team and control the test automation intiatives and use different types of test automation frameworks to establish the best one for successful test automation.
+
+#### Why is Automation needed?
+
+Automation benefits 
