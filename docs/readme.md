@@ -291,6 +291,27 @@ Unit Tests can be performed manually or automated. Those employing a manual meth
 - More lines of test code may need to be written to test one line of code - creating a potential time investment.
 - Unit Testing may have a steep learning curve, for example, having to learn how to use specific automated software tools.
 
+##### Smoke Testing
+
+[Wikepedia-Smoke Testing](https://en.wikipedia.org/wiki/Smoke_testing_(software))
+[GlobalAppTesting-Smoke Testing](https://www.globalapptesting.com/blog/the-ultimate-guide-to-smoke-testing)
+
+Smoke testing is preliminary testing to reveal simple failures severe enough to, for example, reject a prospective software release. Smoke tests are a subset of test cases that cover the most important functionality of a component or system, used to aid assessment of whether main functions of the software appear to work correctly.
+
+###### Why is Smoke Testing important?
+
+Without smoke tests, it's a waste of time to run other tests. In short, smoke testing is important because it's an indicator of whether a build is even ready for formal testing. Without it, major issues slip through the cracks and have the chance to stay within a build for longer - that's why smoke testing lets developers squash bugs early on.
+
+###### Benefits of Smoke Testing
+
+- System stability
+It's incredibly useful to be able to verify, reliably and early on, that your builds are stable. This makes them more usable at later stages, and reduces the amount of work developers have to put into manually searching for and reporting bugs late into the development cycle.
+- Simple process
+One of the biggest advantages of smoke tests is that they're very easy to conduct. Due to their simplicity, smoke tests are compatible with just about every testing methodology you could think to combine them with.
+- Identifies bugs easily
+The fewer bugs that make it to the users, the better. That's why it's important to catch bugs as early as possible; it gives developers more time to fix them and ensures that the most prominent ones never make it to end-users.
+By smoke testing often, you can ensure that your software is relatively bug-free when it rolls out. At the very least, you can promise your users that you've already caught and fixed any potentially harmful bugs.
+
 #### Non-Functional Testing
 
 1. Availability Testing
