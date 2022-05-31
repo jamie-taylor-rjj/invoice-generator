@@ -157,7 +157,7 @@ Using .NET MAUI, you can develop apps that can run on Android, IOS, macOS and Wi
 - `git push` - Used to upload local repository content to a remote repository
 - `git reset -- hard` - Resets your commit to the last saved changes, throws away all your committed changes (Removes only uncommitted files)
 - `git clean -fd` - Deletes any untracked (i.e. haven't been added with `git add`) files and directories
-- `git reset --hard HEAD~1 - This will destroy the commit and undo your work (Only works if you have not pushed yet)
+- `git reset --hard HEAD~1` - This will destroy the commit and undo your work (Only works if you have not pushed yet)
 
 ## Dependency Injection
 
