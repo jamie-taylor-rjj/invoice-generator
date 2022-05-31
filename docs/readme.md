@@ -495,3 +495,13 @@ Testing can be time-consuming. Though automation may require an initial investme
 ### CI/CD Pipeline?
 
 #### What is a CI/CD Pipeline?
+
+A continuous integration and continuous deployment (CI/CD) pipleine is a series of steps that must be performed in order to deliver a new version of software. CI/CD pipelines are a practice focused on improving software delivery throughout the software development life cycle via automation.
+
+By automating Ci/CD throughout development, testing, production and monitoring phases of the software development life cycle, organisations are able to develop higher quality code, faster. Although it's possible to manually execute each of the steps of a CI/CD pipeline, the true value of CI/CD pipiles realised through automation.
+
+#### What is a CI/CD Pipeline? Explained further
+
+A pipeline is a process that drives software development through a path of building, testing, and deploying code, also known as CI/CD. By automating the process, the objective is to minimize human error and maintain a consistent process for how software is released. Tools that are included in the pipeline could include compiling code, unit tests, code analysis, security and binaries creation. For containerized environments, this pipeline would also include packaging the code into a container image to be deployed across a hybrid cloud.
+
+CI/CD is the backbone of a DevOps methodology, bringing developers and IT operations teams together to deploy software. As custom applications become key to how companies differentiate, the rate at which code can be released has become a competitive differentiator.
