@@ -491,3 +491,7 @@ Machines and automated technology work faster than humans. Along with improved a
 Tests can be run at any time of day, even overnight, without needing humans to oversee it. Plus, when it's conducted automatically, this can also reduce the risk of human error.
 - Saves time and money
 Testing can be time-consuming. Though automation may require an initial investment, it can save money in the long run to become more cost-effective. Team members use their time in other areas and are no longer required to carry out manual testing in many situations. This improves their workflow.
+
+### CI/CD Pipeline?
+
+#### What is a CI/CD Pipeline?
