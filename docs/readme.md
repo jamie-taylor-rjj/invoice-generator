@@ -476,6 +476,61 @@ Forward Compatibility Testing
 
 Forward Compatibility Testing is a process to verify the behaviour and compatibility of the developed hardware or software with the newer versions of the hardware or software. Forward compatibility testing is a bit harder to predict as the changes that will be made in the newer versions are not known.
 
+##### Configuration Testing
+
+[guru99-Configuration Testing](https://www.guru99.com/configuration-testing.html#:~:text=Configuration%20Testing%20is%20a%20software,without%20any%20defects%20or%20flaws.)
+
+###### What is Configuration Testing?
+
+Configuration Testing is a software technique in which the software application is tested with multiple combinations of software and hardware in order to evaluate the functional requirements and find out optimal configurations under which the software application works without any defects or flaws.
+
+###### What are the objectives of Configuration Testing?
+
+The objectives of configuration testing is to:
+
+- Validating the application to determine if it fulfills the configurability requirements
+- Manually causing failures which help in identifying the defects that are not efficiently found during testing (Ex: changing the regional settings of the system like Time Zone, Language, Date time formats, etc.)
+- Determine an optimal configuration of the application under test.
+- Analyzing the system performance by adding or modifying the hardware resources like Load Balancers, increase or decrease in memory size, connecting various printer models, etc.
+- Analyzing system Efficiency based on the prioritization, how efficiently the tests were performed with the resources available to achieve the optimal system configuration.
+- Verification of the system in a geographically distributed Environment to verify how effectively the system performs.
+- For Ex: Server at a different location and clients at a different location, the system should work fine irrespective of the system settings.
+- Verifying how easily the bugs are reproducible irrespective of the configuration changes.
+- Ensuring how traceable the application items are by properly documenting and maintaining the versions which are easily identifiable.
+- Verifying how manageable the application items are throughout the software development life cycle.
+
+###### How would you do Configuration Testing?
+
+In this section, we will discuss the strategy that needs to be followed for configuration testing types and there are two types of configuration testing as mentioned below.
+
+- Software Configuration Testing
+- Hardware Configuration Testing
+
+Software Configuration Testing
+
+Software configuration testing is testing the Application under test with multiple OS, different software updates, etc. Software Configuration testing is very time consuming as it takes time to install and uninstall different software’s that is used for the testing.
+
+One of the approaches that is followed to test the software configuration is to test on Virtual Machines. Virtual Machine is an Environment that is installed on software and acts like a Physical Hardware and users will have the same feel as of a Physical Machine. Virtual Machines simulates real-time configurations.
+
+Instead of Installing and uninstalling the software in multiple physical machines which is time-consuming, it’s always better to install the application/software in the virtual machine and continue testing. This process can be performed by having multiple virtual machines, which simplifies the job of a tester.
+
+Software configuration testing can typically begin when:
+
+- Configurability requirements to be tested are specified
+- Test Environment is ready
+- Testing Team is well trained in configuration testing
+- Build released is unit and Integration test passed
+
+Hardware Configuration Testing
+
+Hardware configuration testing is generally performed in labs, where we find physical machines with different hardware attached to them.
+
+Whenever a build is released, the software has to be installed in all the physical machines where the hardware is attached, and the test suite has to be run on each machine to ensure that the application is working fine.
+
+To perform the above task a significant amount of effort is required to install the software on each machine, attach the hardware and manually running or even to automate the above said process and running the test suite.
+
+Also, while performing hardware configuration test, we specify the type of hardware to be tested, and there are a lot of computer hardware and peripherals which make it quite impossible to run all of them. So it becomes the duty of the tester to analyze what hardware is mostly used by users and try to make the testing based on the prioritization.
+
 #### Front-End Testing
 
 1. Code/Script Performance and Functionality
