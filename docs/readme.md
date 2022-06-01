@@ -423,6 +423,22 @@ Commercial system testing tools include froglogic's Squish and Inflectra's Spira
 3. Configuration Testing
 4. Load Testing
 
+##### Availability Testing
+
+[TestMatick-Availability Testing](https://testmatick.com/software-testing-glossary/availability-testing/#:~:text=Availability%20Testing%20which%20is%20also,to%20the%20service%20level%20agreement.)
+[Microsoft Documentation-Availability and Resiliency](https://docs.microsoft.com/en-us/azure/architecture/framework/resiliency/testing)
+[The Test Therapist-Availability Testing](https://thetesttherapist.com/2021/03/15/availability-testing-what-how-and-why/)
+
+###### What is Availability Testing?
+
+Availability Testing is a kind of performance testing in which the application runs for a set period of time and collects failure events and repair times and compares the availability percentage to the service level agreement.
+
+Availability describes the amount of time when an application runs in a healthy state without significant downtime.
+
+###### Why do we Availability Testing?
+
+The target here is to measure and collect data in case of application/database failure, and to make sure that your application setup is properly configured and with a reasonable downtime which will not affect your customers badly in case of unplanned failures or downtime.
+
 #### Front-End Testing
 
 1. Code/Script Performance and Functionality
