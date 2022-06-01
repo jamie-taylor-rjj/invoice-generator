@@ -2,15 +2,20 @@ name: 'Build and publish pipeline'
 
 ## Only builds when someone pushes to or PRs against main
 on:
-  ## Temporarily disabled builds on push to main ahead of develop
-  ## branch merge - develop has a slightly different directory
-  ## structure to main
+  ## Temporarily disabled builds for this action, ahead of the
+  ## develop branch merge - develop has a slightly different
+  ## directory structure to main.
+  ## When completed, delete the newly created push rule and
+  ## un-comment the push and pull_request lines underneath it
+  push:
+    branches-ignore:
+      - '**'
   # push:
     # branches:
       # - main
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - main
 
 jobs:
 
