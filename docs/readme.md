@@ -306,10 +306,13 @@ Without smoke tests, it's a waste of time to run other tests. In short, smoke te
 ###### Benefits of Smoke Testing
 
 - System stability
+
 It's incredibly useful to be able to verify, reliably and early on, that your builds are stable. This makes them more usable at later stages, and reduces the amount of work developers have to put into manually searching for and reporting bugs late into the development cycle.
 - Simple process
+
 One of the biggest advantages of smoke tests is that they're very easy to conduct. Due to their simplicity, smoke tests are compatible with just about every testing methodology you could think to combine them with.
 - Identifies bugs easily
+
 The fewer bugs that make it to the users, the better. That's why it's important to catch bugs as early as possible; it gives developers more time to fix them and ensures that the most prominent ones never make it to end-users.
 By smoke testing often, you can ensure that your software is relatively bug-free when it rolls out. At the very least, you can promise your users that you've already caught and fixed any potentially harmful bugs.
 
