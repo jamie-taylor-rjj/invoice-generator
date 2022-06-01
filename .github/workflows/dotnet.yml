@@ -2,9 +2,12 @@ name: 'Build and publish pipeline'
 
 ## Only builds when someone pushes to or PRs against main
 on:
-  push:
-    branches:
-      - main
+  ## Temporarily disabled builds on push to main ahead of develop
+  ## branch merge - develop has a slightly different directory
+  ## structure to main
+  # push:
+    # branches:
+      # - main
   pull_request:
     branches:
       - main
@@ -35,7 +38,7 @@ jobs:
     ## env variables are variables that we can refer to in different parts of our
     ## build pipeline
     env:
-      working-directory: ./src/InvoiceGenerator/InvoiceGenerator
+      working-directory: ./src/InvoiceGenerator
 
     ## The Steps section is where we define the steps required to run this job on
     ## the target machine.
