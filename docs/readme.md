@@ -515,7 +515,7 @@ Software configuration testing is testing the Application under test with multip
 
 One of the approaches that is followed to test the software configuration is to test on Virtual Machines. Virtual Machine is an Environment that is installed on software and acts like a Physical Hardware and users will have the same feel as of a Physical Machine. Virtual Machines simulates real-time configurations.
 
-Instead of Installing and uninstalling the software in multiple physical machines which is time-consuming, it’s always better to install the application/software in the virtual machine and continue testing. This process can be performed by having multiple virtual machines, which simplifies the job of a tester.
+Instead of installing and uninstalling the software in multiple physical machines which is time-consuming, it’s always better to install the application/software in the virtual machine and continue testing. This process can be performed by having multiple virtual machines, which simplifies the job of a tester.
 
 Software configuration testing can typically begin when:
 
