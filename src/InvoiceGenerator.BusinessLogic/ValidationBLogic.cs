@@ -91,11 +91,11 @@ namespace InvoiceGenerator.BusinessLogic
 
             if (validParse) // If the parse was successful...
             {
-                validCostErrorMsg = "Line Item Cost must be a decimal number!"; // Make error message
+                validCostErrorMsg = "No error!"; // No error
             }
             else // If the parse was not successful..
             {
-                validCostErrorMsg = "No error!"; // No error
+                validCostErrorMsg = "Line Item Cost must be a decimal number!"; // Make error message
             }
 
             return validCostErrorMsg; // Return error message
@@ -110,15 +110,33 @@ namespace InvoiceGenerator.BusinessLogic
 
             if (validParse) // If the parse was successful...
             {
-                validQuantityErrorMsg = "Line Item Cost must be an integer!"; // Make error message
+                validQuantityErrorMsg = "No error!"; // No error
             }
             else // If the parse was not successful...
             {
-                validQuantityErrorMsg = "No error!"; // No error
+                validQuantityErrorMsg = "Line Item Quantity must be an integer!"; // Make error message
             }
 
             return validQuantityErrorMsg; // Return error message
         }
 
+        public string checkVAT(string VAT)
+        {
+            int result;
+            string validVATErrorMsg;
+
+            bool validParse = int.TryParse(VAT, out result); // Try convert VAT input to an int
+
+            if (validParse) // If the parse was successful...
+            {
+                validVATErrorMsg = "No error!"; // No error
+            }
+            else // If the parse was not successful...
+            {
+                validVATErrorMsg = "VAT/Sales Tax must be an integer!"; // Make error message
+            }
+
+            return validVATErrorMsg; // Return error message
+        }
     }
 }

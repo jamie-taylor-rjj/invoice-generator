@@ -37,7 +37,6 @@
             this.lbl_vatOrSalesTax = new System.Windows.Forms.Label();
             this.btn_addLineItem = new System.Windows.Forms.Button();
             this.dtaGridLineItems = new System.Windows.Forms.DataGridView();
-            this.col_invoiceReference = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_lineItemDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_lineItemCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_lineItemQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -167,7 +166,6 @@
             // 
             this.dtaGridLineItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtaGridLineItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.col_invoiceReference,
             this.col_lineItemDescription,
             this.col_lineItemCost,
             this.col_lineItemQuantity,
@@ -177,12 +175,6 @@
             this.dtaGridLineItems.RowTemplate.Height = 25;
             this.dtaGridLineItems.Size = new System.Drawing.Size(547, 265);
             this.dtaGridLineItems.TabIndex = 32;
-            // 
-            // col_invoiceReference
-            // 
-            this.col_invoiceReference.HeaderText = "Invoice Ref.";
-            this.col_invoiceReference.Name = "col_invoiceReference";
-            this.col_invoiceReference.ReadOnly = true;
             // 
             // col_lineItemDescription
             // 
@@ -271,7 +263,7 @@
             this.txt_invoiceRef.Location = new System.Drawing.Point(21, 52);
             this.txt_invoiceRef.Name = "txt_invoiceRef";
             this.txt_invoiceRef.ReadOnly = true;
-            this.txt_invoiceRef.Size = new System.Drawing.Size(317, 35);
+            this.txt_invoiceRef.Size = new System.Drawing.Size(365, 35);
             this.txt_invoiceRef.TabIndex = 25;
             // 
             // lbl_invoiceRef
@@ -364,7 +356,6 @@
         private System.Windows.Forms.TextBox txt_vatOrSalesTax;
         private System.Windows.Forms.Label lbl_vatOrSalesTax;
         private System.Windows.Forms.Button btn_addLineItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn col_invoiceReference;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_lineItemDescription;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_lineItemCost;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_lineItemQuantity;

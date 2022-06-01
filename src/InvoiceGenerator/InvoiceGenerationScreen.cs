@@ -12,17 +12,100 @@ namespace InvoiceGenerator
         private readonly string DEFAULT_SELECT_STRING = "--SELECT--";
 
         private readonly IClientService _clientService;
+
         public InvoiceGenerationScreen(IClientService clientService)
         {
             InitializeComponent();
             _clientService = clientService;
             fillComboBox();
+            equalColumnWidths();
         }
 
         #region ButtonClicks
         private void btn_Generate_Click(object sender, EventArgs e)
         {
-            
+            ValidationUI validationUI = new ValidationUI(); // ValidationUI methods will return the boolean values for the variables, this determines if they are valid or not
+            ValidationBLogic validationBLogic = new ValidationBLogic(); // ValidationBLogic methods will return the error messages for the variables
+
+            bool validVAT = validationUI.checkVAT(txt_vatOrSalesTax.Text);
+            string validVATErrorMsg = validationBLogic.checkVAT(txt_vatOrSalesTax.Text);
+
+            if (validVAT) // If check is passed, do below
+            {
+                showVATErrorMsg(validVAT, validVATErrorMsg); // Make text box white as input is valid
+
+                string caption = "Line Item Details:";
+                int numberOfRows = dtaGridLineItems.Rows.Count; // Get the number of rows in the datagrid
+
+                if (numberOfRows > 1)
+                {
+                    numberOfRows = dtaGridLineItems.Rows.Count - 1;
+                }
+
+                for (int i = 0; i < numberOfRows ; i++) // For every single row in the datagrid, do below
+                {
+                    string description = dtaGridLineItems.Rows[i].Cells[0].Value.ToString(); // Get the line item description
+                    string cost = dtaGridLineItems.Rows[i].Cells[1].Value.ToString();        // Get the line item cost
+                    string quantity = dtaGridLineItems.Rows[i].Cells[2].Value.ToString();    // Get the line item quanity
+                    string total = dtaGridLineItems.Rows[i].Cells[3].Value.ToString();       // Get the line item total
+
+                    MessageBox.Show("Line Item Description: " + description + "\n" + // Display message box for each line item
+                        "Line Item Cost: " + "£" + cost + "\n" +
+                        "Line Item Quantity: " + quantity + "\n" +
+                        "Line Item Total: " + "£" + total, caption, MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
+                }
+
+                string invoiceReference = txt_invoiceRef.Text;
+                string VAT = txt_vatOrSalesTax.Text;
+
+                double totalValue = 0;
+
+                for (int i = 0; i < numberOfRows; i++) // For every single row in the datagrid, do below
+                {
+                    totalValue += double.Parse(dtaGridLineItems.Rows[i].Cells[3].Value.ToString()); // Obtain the total cost of all the line items
+                }
+                totalValue = Math.Round(totalValue, 2); // Round the totalValue to 2 decimal points
+
+                //double invoiceTotal = (Convert.ToDouble(totalValue) + Convert.ToDouble(totalValue) * Convert.ToDouble(VAT)) / 100;
+                double invoiceTotal = totalValue + (totalValue * double.Parse(VAT) / 100); // Calculate invoiceTotal based on totalValue and VAT
+                invoiceTotal = Math.Round(invoiceTotal, 2); // Round invoiceTotal to 2 decimal points
+
+                string issueDate = DateTime.Today.ToString("dd-MM-yyyy"); // Obtain the issue date
+                string dueDate = DateTime.Today.AddMonths(1).ToString("dd-MM-yyyy"); // Obtain the due date (issue date + plus a month)
+
+                MessageBox.Show("Invoice Refrence: " + invoiceReference + "\n" + // Display message box for the invoice
+                    "Total Value: " + "£" + totalValue + "\n" +
+                    "VAT Rate: " + VAT + "%" + "\n" +
+                    "Issue Date: " + issueDate + "\n" +
+                    "Due Date: " + dueDate + "\n" +
+                    "Invoice Total: " + "£" + invoiceTotal, caption, MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+
+                string message = "Do you wish to create another invoice?";
+                caption = "idk";
+                DialogResult dialogResult = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    txt_vatOrSalesTax.Text = "";
+                    clearDataGrid(); // Empty data grid so user can enter new line items
+                    txt_lineItemDescription.Focus(); // Put mouse cursor in the line item description text box
+                    btn_Generate.Hide(); // Hide generation button so user can't generate invoice without entering line items
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    this.Close(); // Close the invoice generation screen
+                }
+                else
+                {
+                    this.Close();
+                }
+            }
+            else // If check is not passed, do below
+            {
+                showVATErrorMsg(validVAT, validVATErrorMsg); // Show error message
+            }
         }
 
         private void btn_addLineItem_Click(object sender, EventArgs e)
@@ -45,6 +128,14 @@ namespace InvoiceGenerator
                 if (validLineItemCost && validLineItemQuantity) // If cost and quantity are valid, add line item to datagrid
                 {
                     showLineItemCostAndQuantityErrorMsgs(validLineItemCost, validLineItemCostErrorMsg, validLineItemQuantity, validLineItemQuantityErrorMsg); // Make text boxes white again as inputs are valid
+
+                    double lineItemTotal = double.Parse(txt_lineItemCost.Text) * int.Parse(txt_lineItemQuantity.Text);
+                    lineItemTotal = Math.Round(lineItemTotal, 2);
+
+                    addRow(txt_lineItemDescription.Text, txt_lineItemCost.Text, txt_lineItemQuantity.Text, lineItemTotal); // Add line items to datagrid
+                    // Clear line item text boxes so user can enter another line item if they want
+                    clearTextBoxes();
+                    btn_Generate.Show(); // Show generate button as user has successfully generated a line item
                 }
                 else // If cost and quantity are not valid, do below...
                 {
@@ -77,6 +168,7 @@ namespace InvoiceGenerator
         }
         #endregion
 
+        #region Miscellaneous
         private void fillComboBox()
         {
             var listOfClients = new List<ClientNameViewModel>()
@@ -98,11 +190,45 @@ namespace InvoiceGenerator
             pnl_invoiceGenerationDetails.Hide();
         }
 
+        private void equalColumnWidths()
+        {
+            // Make all the columns of the datagrid the same size
+            dtaGridLineItems.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dtaGridLineItems.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dtaGridLineItems.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dtaGridLineItems.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void addRow(string lineItemDescription, string lineItemCost, string lineItemQuantity, double lineItemTotal)
+        {
+            // Add line item details to the datagrid
+            String[] row = { lineItemDescription, lineItemCost, lineItemQuantity, lineItemTotal.ToString() };
+            dtaGridLineItems.Rows.Add(row);
+        }
+
+        private void clearDataGrid()
+        {
+            //dtaGridLineItems.DataSource = null; // Useful in data binding scenarios
+            // OR
+            dtaGridLineItems.Rows.Clear(); // Useful when data grid is populated manually
+            dtaGridLineItems.Refresh();
+        }
+
+        private void clearTextBoxes()
+        {
+            // Reset all the textboxes
+            txt_lineItemDescription.Text = String.Empty;
+            txt_lineItemCost.Text = String.Empty;
+            txt_lineItemQuantity.Text = String.Empty;
+            txt_lineItemDescription.Focus(); // Put the mouse cursor in the first text box
+        }
+
         private void combox_clientNames_SelectedValueChanged(object sender, EventArgs e)
         {
             var selectedClientViewModel = (ClientNameViewModel)combox_clientNames.SelectedItem;
             if (string.Equals(DEFAULT_SELECT_STRING, selectedClientViewModel.ClientName, StringComparison.OrdinalIgnoreCase))
             {
+                pnl_invoiceGenerationDetails.Hide();
                 // Drop out here, as the user has selected the default item in the list
                 // OR we're still populating the list
                 // (the SelectedValueChanged and SelectedIndexChanged events fire when the
@@ -110,63 +236,31 @@ namespace InvoiceGenerator
                 return;
             }
 
-            // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            ValidationUI validationUI = new ValidationUI();          // ValidationUI methods will return the boolean values for the variables, this determines if they are actually valid or not
-            ValidationBLogic validationBLogic = new ValidationBLogic();  // ValidationBLogic methods will return the error messages for the variables
-
-            bool validComboBoxChoice = validationUI.validateComboBoxChoice(Convert.ToString(combox_clientNames.SelectedItem));               // Check if user has selected a client
-            string validComboBoxChoiceErrorMsg = validationBLogic.validateComboBoxChoice(Convert.ToString(combox_clientNames.SelectedItem)); // Obtain error message for combo box input
-
-            if (validComboBoxChoice) // If check has passsed, do below...
-            {
-                showComboBoxChoiceErrorMsg(validComboBoxChoice, validComboBoxChoiceErrorMsg); // Make combo box white again as input is valid
-
-                pnl_invoiceGenerationDetails.Show();
-
-                string clientChoice = combox_clientNames.SelectedItem.ToString();
-                string dateToday = DateTime.Today.ToString("dd-mm-yyyy");
-                txt_invoiceRef.Text = $"{clientChoice}-{dateToday}";
-            }
-            else
-            {
-                showComboBoxChoiceErrorMsg(validComboBoxChoice, validComboBoxChoiceErrorMsg); // Show combo box error messages
-            }
-            // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            // Above won't work till combo box error fixes
-
+            // Show generation details panel as user has selected a client
             pnl_invoiceGenerationDetails.Show();
+            // Hide generate button so user cant generate an invoice without entering line items
+            btn_Generate.Hide();
 
             var clientName = selectedClientViewModel.ClientName;
-            var todayAsString = DateTime.Today.ToString("dd-mm-yyyy");
-            txt_invoiceRef.Text = $"RJJ-{clientName}-{todayAsString}";
+            var todayAsString = DateTime.Today.ToString("dd-MM-yyyy");
+            txt_invoiceRef.Text = $"RJJ-{clientName}-{todayAsString}"; // Create invoice reference
+
+            // Change text box size based on invoice reference length
+            Size textBoxSize = TextRenderer.MeasureText(txt_invoiceRef.Text, txt_invoiceRef.Font);
+            txt_invoiceRef.Width = textBoxSize.Width;
+            txt_invoiceRef.Height = textBoxSize.Height;
 
             // You should be able to use selectedClientViewModel to do all the things you need
 
         }
+        #endregion
 
         #region ErrorMessages
-        private void showComboBoxChoiceErrorMsg(bool validComboBoxChoice, string validComboBoxChoiceErrorMsg)
-        {
-            if (validComboBoxChoice == false)   // If user has not selected a client, throw error
-            {
-                combox_clientNames.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA); // Make combo box red to visibly show error
-                combox_clientNames.Focus(); // Put mouse cursor in the combo box
-                string message = validComboBoxChoiceErrorMsg;
-                string caption = "Error!";
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); // Display erorr message box to user
-            }
-            else if (validComboBoxChoice == true)
-            {
-                combox_clientNames.BackColor = Color.White;
-            }
-        }
-
         private void showLineItemDetailsErrorMsgs(bool[] validLineItemDetails, string[] validLineItemDetailsErrorMsgs)
         {
             if (validLineItemDetails[0] == false) // If the line item description is empty, throw error
             {
                 txt_lineItemDescription.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA); // Make line item description text box red to visibly show error
-                txt_lineItemDescription.Focus();    // Put mouse cursor in the client name text box
                 string message = validLineItemDetailsErrorMsgs[0];
                 string caption = "Error!";
                 MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); // Display error messagebox to user
@@ -199,6 +293,24 @@ namespace InvoiceGenerator
             {
                 txt_lineItemQuantity.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
             }
+            // The idea with the if statements below is that if at any point the line item description input is not valid, put the mouse cursor in the line item description text box
+            // This is because the line item description text box is the first text box that the user makes use of to input line items
+            if (validLineItemDetails[0] == false && validLineItemDetails[1] == false && validLineItemDetails[2] == true)
+            {
+                txt_lineItemDescription.Focus(); // Put mouse cursor in line item description text box
+            }
+            else if (validLineItemDetails[0] == false && validLineItemDetails[1] == true && validLineItemDetails[2] == false)
+            {
+                txt_lineItemDescription.Focus();
+            }
+            else if (validLineItemDetails[0] == false && validLineItemDetails[1] == true && validLineItemDetails[2] == true)
+            {
+                txt_lineItemDescription.Focus();
+            }
+            else if (validLineItemDetails[0] == false && validLineItemDetails[1] == false && validLineItemDetails[2] == false)
+            {
+                txt_lineItemDescription.Focus();
+            }
         }
 
         private void showLineItemCostAndQuantityErrorMsgs(bool validLineItemCost, string validLineItemCostErrorMsg, bool validLineItemQuantity, string validLineItemQuantityErrorMsg)
@@ -206,7 +318,6 @@ namespace InvoiceGenerator
             if (validLineItemCost == false)
             {
                 txt_lineItemCost.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
-                txt_lineItemCost.Focus();
                 string message = validLineItemCostErrorMsg;
                 string caption = "Error!";
                 MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -227,17 +338,32 @@ namespace InvoiceGenerator
             {
                 txt_lineItemQuantity.BackColor = Color.White;
             }
+            if (validLineItemCost == false && validLineItemQuantity == true)
+            {
+                txt_lineItemCost.Focus(); // Put mouse cursor in line item cost text box
+            }
+            else if (validLineItemCost == false && validLineItemQuantity == false)
+            {
+                txt_lineItemCost.Focus();
+            }
+        }
+
+        private void showVATErrorMsg(bool validVAT, string validVATErrorMsg)
+        {
+            if (validVAT == false)
+            {
+                txt_vatOrSalesTax.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
+                txt_vatOrSalesTax.Focus(); // Put mouse cursor in VAT text box
+                string message = validVATErrorMsg;
+                string caption = "Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (validVAT == true)
+            {
+                txt_vatOrSalesTax.BackColor = Color.White;
+            }
         }
         #endregion
 
-        //private void combox_clientNames_SelectedValueChanged(object sender, EventArgs e)
-        //{
-        //    var selected = (int)combox_clientNames.SelectedIndex;
-        //    var name = (ClientNameViewModel)combox_clientNames.SelectedItem;
-        //    if (name !=null)
-        //    {
-
-        //    }
-        //}
     }
 }

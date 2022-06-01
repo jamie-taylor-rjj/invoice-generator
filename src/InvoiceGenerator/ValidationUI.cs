@@ -124,5 +124,26 @@ namespace InvoiceGenerator
 
             return validQuantity; // Return boolean value for selection later
         }
+
+        public bool checkVAT(string VAT) // Check if VAT from invoicegenerationscreen is only digits
+        {
+            int result;
+            bool validVAT;
+            validVAT = true;
+
+            bool validParse = int.TryParse(VAT, out result); // Try convert VAT input to an int
+
+            if (validParse) // If the parse was successful...
+            {
+                validVAT = true;
+            }
+            else // If the parse was not successful...
+            {
+                validVAT = false;
+            }
+
+            return validVAT; // Return boolean value for selection later
+        }
     }
+
 }

@@ -118,6 +118,7 @@ namespace InvoiceGenerator
         }
         #endregion
 
+        #region Miscellaneous
         private void onFormLoad(object sender, EventArgs e)
         {
             pnl_enterDetails.Hide();
@@ -136,6 +137,7 @@ namespace InvoiceGenerator
             txt_contactEmail.Text = String.Empty;
             txt_clientName.Focus(); // Put the mouse cursor in the first text box
         }
+        #endregion
 
         #region ErrorMessages
         private void showUserDetailsErrorMsgs(bool[] validDetails, string[] validDetailsErrorMsgs)
@@ -143,7 +145,6 @@ namespace InvoiceGenerator
             if (validDetails[0] == false)   // If the client name is empty, throw error
             {
                 txt_clientName.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);  // Make client name text box red to visibly show error
-                txt_clientName.Focus();     // Put mouse cursor in the client name text box
                 string message = validDetailsErrorMsgs[0];
                 string caption = "Error!";
                 MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); // Display error message box to user
@@ -188,6 +189,34 @@ namespace InvoiceGenerator
             else if (validDetails[3] == true)
             {
                 txt_contactEmail.BackColor = Color.White;
+            }
+            if (validDetails[0] == false && validDetails[1] == false && validDetails[2] == false && validDetails[3] == true)
+            {
+                txt_clientName.Focus(); // Put mouse cursor in the client name text box
+            }
+            else if (validDetails[0] == false && validDetails[1] == false && validDetails[2] == true && validDetails[3] == false)
+            {
+                txt_clientName.Focus();
+            }
+            else if (validDetails[0] == false && validDetails[1] == true && validDetails[2] == false && validDetails[3] == false)
+            {
+                txt_clientName.Focus();
+            }
+            else if (validDetails[0] == false && validDetails[1] == false && validDetails[2] == true && validDetails[3] == true)
+            {
+                txt_clientName.Focus();
+            }
+            else if (validDetails[0] == false && validDetails[1] == true && validDetails[2] == true && validDetails[3] == false)
+            {
+                txt_clientName.Focus();
+            }
+            else if (validDetails[0] == false && validDetails[1] == true && validDetails[2] == true && validDetails[3] == true)
+            {
+                txt_clientName.Focus();
+            }
+            else if (validDetails[0] == false && validDetails[1] == false && validDetails[2] == false && validDetails[3] == false)
+            {
+                txt_clientName.Focus();
             }
         }
 
