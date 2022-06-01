@@ -426,7 +426,9 @@ Commercial system testing tools include froglogic's Squish and Inflectra's Spira
 ##### Availability Testing
 
 [TestMatick-Availability Testing](https://testmatick.com/software-testing-glossary/availability-testing/#:~:text=Availability%20Testing%20which%20is%20also,to%20the%20service%20level%20agreement.)
+
 [Microsoft Documentation-Availability and Resiliency](https://docs.microsoft.com/en-us/azure/architecture/framework/resiliency/testing)
+
 [The Test Therapist-Availability Testing](https://thetesttherapist.com/2021/03/15/availability-testing-what-how-and-why/)
 
 ###### What is Availability Testing?
