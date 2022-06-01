@@ -441,6 +441,41 @@ Availability describes the amount of time when an application runs in a healthy 
 
 The target here is to measure and collect data in case of application/database failure, and to make sure that your application setup is properly configured and with a reasonable downtime which will not affect your customers badly in case of unplanned failures or downtime.
 
+##### Compatibility Testing
+
+[guru99-Compatiblity Testing](https://www.guru99.com/compatibility-testing.html)
+
+###### What is Compatiblity Testing?
+
+Compatiblity Testing is a type of Software testing to check whether your software is capable of running on different hardware, operating systems, applications, network environments or mobile devices.
+
+###### What are some types of Compatibility Tests?
+
+1. Hardware
+   - It checks software to be compatible with different hardware configurations.
+2. Operating Systems
+   - It checks your software to be compatible with different Operating Systems like Windows, Unix, Mac OS etc.
+3. Software
+   - It checks your developed software to be compatible with other software. For example, MS Word application should be compatible with other software like MS Outlook, MS Excel, VBA etc.
+4. Network
+   - Evaluation of performance of a system in a network with varifying parameters such as Bandwidth, Operating speed, Capacity. It also checks the application in different networks with all the parameters mentioned earlier.
+5. Browser
+   - It checks the compatibility of your software with differnt devices like USB port Devices, Printers and Scanners. Other media devices and Bluetooth.
+6. Mobile
+   - Checking your software is compatible with mobile platforms like Android, iOS etc.
+7. Versions of the Software
+   - It is verifying your software application to be compatible with different versions of the software. For instance checking your Microsoft Word to be compatible with Windows 7, Windows 7 SP1, Windows 7 SP2, Windows 7 SP3.
+
+There are two types of version checking in Compatibility Testing:
+
+####### Backward Compatibility Testing
+
+Backward Compatibility Testing is a technique to verify the behaviour and compatiblity of the developed hardware or software with their older versions of the hardware or software. Backward compatibility testing is much more predictable as all the changes from the previous versions are known.
+
+####### Forward Compatibility Testing
+
+Forward Compatibility Testing is a process to verify the behaviour and compatibility of the developed hardware or software with the newer versions of the hardware or software. Forward compatibility testing is a bit harder to predict as the changes that will be made in the newer versions are not known.
+
 #### Front-End Testing
 
 1. Code/Script Performance and Functionality
