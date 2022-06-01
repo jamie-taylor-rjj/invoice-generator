@@ -384,6 +384,38 @@ Disadvantages of bottom-up testing are as follows:
 - Critical modules are tested only in the final stages, so testers may miss some defects and developers may not have enough time to fix found defects
 - It is not possible to create an early prototype
 
+##### System Testing
+
+[Tech Target-System Testing](https://www.techtarget.com/searchsoftwarequality/definition/system-testing#:~:text=System%20testing%2C%20also%20referred%20to,full%2C%20integrated%20system%20or%20application.)
+
+###### What is System Testing?
+
+System testing is the process in which a quality assurance (QA) team evaluates how the various components of an application interact together in the full, integrated system or application.
+
+System testing verifies that an application performs tasks as designed. This step, a kind of black box testing, focuses on the functionality of an application. System testing, for example, might check that every kind of user input produces the intended output across the application.
+
+With system testing, a QA team gauges if an application meets all of its requirements, which includes technical, business and functional requirements. To accomplish this, the QA team might utilise a variety of test types, inclding performance, usability, load testing and functional tests.
+
+With system testing, a QA team determines whether a test case corresponds to each of an application's most crucial requirements and user stories. These individual test cases determine the overall test coverage for an application, and help the team catch critical defects that hamper an application's core functionalities before release. A QA team can log and tabulate each defect per requirement.
+
+Additionally, each individual type of system test reports relevant metrics of a piece of software, including:
+
+- Performance testing: speed, average, stability and peak Response times;
+- Load testing: throughput, number of users, latency; and
+- Usability testing: User error rates, task success rate, time to complete a task, user satisfaction.
+
+###### Phases of System Testing
+
+System testing examines every component of an application to make sure that they work as a complete and unified whole. A QA team typically conducts system testing after it checks individual modules with functional or user-story testing and then each component through integration testing.
+
+If a software build acheives the desired results in system testing, it gets a final check via acceptance testing before it goes to production, where users consume the software. An app-dev team logs all defects, and establishes what kinds and amount of defects are tolerable.
+
+###### System testing tools
+
+Various commercial and open source tools help QA teams, perform and review the results of system testing. These tools can create, manage and automate tests or test cases, and they might also offer features beyond system testing, such as requirements management capabilities.
+
+Commercial system testing tools include froglogic's Squish and Inflectra's SpiraTest, while open source tools include Robotium and SmartBear's SoapUI.
+
 #### Non-Functional Testing
 
 1. Availability Testing
