@@ -468,11 +468,11 @@ Compatiblity Testing is a type of Software testing to check whether your softwar
 
 There are two types of version checking in Compatibility Testing:
 
-####### Backward Compatibility Testing
+Backward Compatibility Testing
 
 Backward Compatibility Testing is a technique to verify the behaviour and compatiblity of the developed hardware or software with their older versions of the hardware or software. Backward compatibility testing is much more predictable as all the changes from the previous versions are known.
 
-####### Forward Compatibility Testing
+Forward Compatibility Testing
 
 Forward Compatibility Testing is a process to verify the behaviour and compatibility of the developed hardware or software with the newer versions of the hardware or software. Forward compatibility testing is a bit harder to predict as the changes that will be made in the newer versions are not known.
 
