@@ -306,10 +306,13 @@ Without smoke tests, it's a waste of time to run other tests. In short, smoke te
 ###### Benefits of Smoke Testing
 
 - System stability
+
 It's incredibly useful to be able to verify, reliably and early on, that your builds are stable. This makes them more usable at later stages, and reduces the amount of work developers have to put into manually searching for and reporting bugs late into the development cycle.
 - Simple process
+
 One of the biggest advantages of smoke tests is that they're very easy to conduct. Due to their simplicity, smoke tests are compatible with just about every testing methodology you could think to combine them with.
 - Identifies bugs easily
+
 The fewer bugs that make it to the users, the better. That's why it's important to catch bugs as early as possible; it gives developers more time to fix them and ensures that the most prominent ones never make it to end-users.
 By smoke testing often, you can ensure that your software is relatively bug-free when it rolls out. At the very least, you can promise your users that you've already caught and fixed any potentially harmful bugs.
 
@@ -512,7 +515,7 @@ Software configuration testing is testing the Application under test with multip
 
 One of the approaches that is followed to test the software configuration is to test on Virtual Machines. Virtual Machine is an Environment that is installed on software and acts like a Physical Hardware and users will have the same feel as of a Physical Machine. Virtual Machines simulates real-time configurations.
 
-Instead of Installing and uninstalling the software in multiple physical machines which is time-consuming, it’s always better to install the application/software in the virtual machine and continue testing. This process can be performed by having multiple virtual machines, which simplifies the job of a tester.
+Instead of installing and uninstalling the software in multiple physical machines which is time-consuming, it’s always better to install the application/software in the virtual machine and continue testing. This process can be performed by having multiple virtual machines, which simplifies the job of a tester.
 
 Software configuration testing can typically begin when:
 
@@ -620,16 +623,22 @@ Automation benefits product development. That's because when software, an app, o
 #### What are the benefits of Automation Testing?
 
 - Detailed reporting capabilites
+
 Automation Testing uses well-crafted test cases for various scenarios. These scripted sequences can be incredibly high in-depth, and provide detailed reports that simply would't be possible when done by a human. Not to mention providing them in a shorter amount of time.
 - Improved bug detection
+
 One of the main reasons to test a product is to detect bugs and other defects. Automation Testing makes this process an easier one. It's also able to analyse a wider test coverage than humans may be able to.
 - Simplifies testing
+
 Testing is a routine part of the operations of most SaaS and tech companies. Making it as simple as possible is key. Using automation is extremely beneficial. When automating test tools, the test scripts and be reused. Manual testing calls for a single code line to be written for the same test case, each time it needs to be run.
 - Speeds up the testing process
+
 Machines and automated technology work faster than humans. Along with improved accuracy, this is why we use them. In turn, this shortens your software development life cycles.
 - Reduces human intervention
+
 Tests can be run at any time of day, even overnight, without needing humans to oversee it. Plus, when it's conducted automatically, this can also reduce the risk of human error.
 - Saves time and money
+
 Testing can be time-consuming. Though automation may require an initial investment, it can save money in the long run to become more cost-effective. Team members use their time in other areas and are no longer required to carry out manual testing in many situations. This improves their workflow.
 
 ### CI/CD Pipeline?
