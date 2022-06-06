@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using InvoiceGenerator.BusinessLogic;
+using System;
 using System.Windows.Forms;
 
 namespace InvoiceGenerator
 {
     public partial class StartScreen : Form
     {
-        public StartScreen()
+        private readonly IClientService _clientService;
+
+        public StartScreen(IClientService clientService)
         {
             InitializeComponent();
+            _clientService = clientService;
         }
 
         #region ButtonClicks
         private void btn_generateInvoice_Click(object sender, EventArgs e)
         {
             // Create an instance of a new form 'NewInvoiceGenerationScreen'
-            InvoiceGenerationScreen NewInvoiceGenerationScreen = new InvoiceGenerationScreen();
+            InvoiceGenerationScreen NewInvoiceGenerationScreen = new InvoiceGenerationScreen(_clientService);
             // Hides the current form 'StartScreen'
             this.Hide();
             // When the 'NewInvoiceGenerationScreen' is closed, close the current form 'StartScreen'
@@ -35,7 +32,7 @@ namespace InvoiceGenerator
         private void btn_enterClientDetails_Click(object sender, EventArgs e)
         {
             // Create an instance of a new form 'NewClientDetailsEntryScreen'
-            ClientDetailsEntryScreen NewClientDetailsEntryScreen = new ClientDetailsEntryScreen();
+            ClientDetailsEntryScreen NewClientDetailsEntryScreen = new ClientDetailsEntryScreen(_clientService);
             // Hides the current form 'Start Screen'
             this.Hide();
             // When the 'NewClientDetailsEntryScreen' is closed, close the current form 'StartScreen'

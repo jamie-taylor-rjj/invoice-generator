@@ -34,14 +34,6 @@
             this.btn_enterDetails = new System.Windows.Forms.Button();
             this.btn_viewDetails = new System.Windows.Forms.Button();
             this.pnl_enterDetails = new System.Windows.Forms.Panel();
-            this.txt_contactEmailError = new System.Windows.Forms.TextBox();
-            this.lbl_contactEmailError = new System.Windows.Forms.Label();
-            this.txt_contactNameError = new System.Windows.Forms.TextBox();
-            this.lbl_contactNameError = new System.Windows.Forms.Label();
-            this.txt_clientAddressError = new System.Windows.Forms.TextBox();
-            this.lbl_clientAddressError = new System.Windows.Forms.Label();
-            this.txt_clientNameError = new System.Windows.Forms.TextBox();
-            this.lbl_clientNameError = new System.Windows.Forms.Label();
             this.txt_contactEmail = new System.Windows.Forms.TextBox();
             this.lbl_contactEmail = new System.Windows.Forms.Label();
             this.txt_contactName = new System.Windows.Forms.TextBox();
@@ -133,14 +125,6 @@
             // pnl_enterDetails
             // 
             this.pnl_enterDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnl_enterDetails.Controls.Add(this.txt_contactEmailError);
-            this.pnl_enterDetails.Controls.Add(this.lbl_contactEmailError);
-            this.pnl_enterDetails.Controls.Add(this.txt_contactNameError);
-            this.pnl_enterDetails.Controls.Add(this.lbl_contactNameError);
-            this.pnl_enterDetails.Controls.Add(this.txt_clientAddressError);
-            this.pnl_enterDetails.Controls.Add(this.lbl_clientAddressError);
-            this.pnl_enterDetails.Controls.Add(this.txt_clientNameError);
-            this.pnl_enterDetails.Controls.Add(this.lbl_clientNameError);
             this.pnl_enterDetails.Controls.Add(this.txt_contactEmail);
             this.pnl_enterDetails.Controls.Add(this.lbl_contactEmail);
             this.pnl_enterDetails.Controls.Add(this.txt_contactName);
@@ -151,90 +135,10 @@
             this.pnl_enterDetails.Controls.Add(this.lbl_clientName);
             this.pnl_enterDetails.Controls.Add(this.btn_Create);
             this.pnl_enterDetails.Controls.Add(this.btn_Exit);
-            this.pnl_enterDetails.Location = new System.Drawing.Point(41, 234);
+            this.pnl_enterDetails.Location = new System.Drawing.Point(41, 230);
             this.pnl_enterDetails.Name = "pnl_enterDetails";
             this.pnl_enterDetails.Size = new System.Drawing.Size(828, 497);
             this.pnl_enterDetails.TabIndex = 12;
-            // 
-            // txt_contactEmailError
-            // 
-            this.txt_contactEmailError.BackColor = System.Drawing.Color.White;
-            this.txt_contactEmailError.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txt_contactEmailError.Location = new System.Drawing.Point(347, 268);
-            this.txt_contactEmailError.Name = "txt_contactEmailError";
-            this.txt_contactEmailError.ReadOnly = true;
-            this.txt_contactEmailError.Size = new System.Drawing.Size(434, 26);
-            this.txt_contactEmailError.TabIndex = 25;
-            // 
-            // lbl_contactEmailError
-            // 
-            this.lbl_contactEmailError.AutoSize = true;
-            this.lbl_contactEmailError.Font = new System.Drawing.Font("Courier New", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_contactEmailError.Location = new System.Drawing.Point(347, 241);
-            this.lbl_contactEmailError.Name = "lbl_contactEmailError";
-            this.lbl_contactEmailError.Size = new System.Drawing.Size(76, 21);
-            this.lbl_contactEmailError.TabIndex = 24;
-            this.lbl_contactEmailError.Text = "Error:";
-            // 
-            // txt_contactNameError
-            // 
-            this.txt_contactNameError.BackColor = System.Drawing.Color.White;
-            this.txt_contactNameError.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txt_contactNameError.Location = new System.Drawing.Point(347, 199);
-            this.txt_contactNameError.Name = "txt_contactNameError";
-            this.txt_contactNameError.ReadOnly = true;
-            this.txt_contactNameError.Size = new System.Drawing.Size(434, 26);
-            this.txt_contactNameError.TabIndex = 23;
-            // 
-            // lbl_contactNameError
-            // 
-            this.lbl_contactNameError.AutoSize = true;
-            this.lbl_contactNameError.Font = new System.Drawing.Font("Courier New", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_contactNameError.Location = new System.Drawing.Point(347, 172);
-            this.lbl_contactNameError.Name = "lbl_contactNameError";
-            this.lbl_contactNameError.Size = new System.Drawing.Size(76, 21);
-            this.lbl_contactNameError.TabIndex = 22;
-            this.lbl_contactNameError.Text = "Error:";
-            // 
-            // txt_clientAddressError
-            // 
-            this.txt_clientAddressError.BackColor = System.Drawing.Color.White;
-            this.txt_clientAddressError.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txt_clientAddressError.Location = new System.Drawing.Point(347, 130);
-            this.txt_clientAddressError.Name = "txt_clientAddressError";
-            this.txt_clientAddressError.ReadOnly = true;
-            this.txt_clientAddressError.Size = new System.Drawing.Size(434, 26);
-            this.txt_clientAddressError.TabIndex = 21;
-            // 
-            // lbl_clientAddressError
-            // 
-            this.lbl_clientAddressError.AutoSize = true;
-            this.lbl_clientAddressError.Font = new System.Drawing.Font("Courier New", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_clientAddressError.Location = new System.Drawing.Point(347, 103);
-            this.lbl_clientAddressError.Name = "lbl_clientAddressError";
-            this.lbl_clientAddressError.Size = new System.Drawing.Size(76, 21);
-            this.lbl_clientAddressError.TabIndex = 20;
-            this.lbl_clientAddressError.Text = "Error:";
-            // 
-            // txt_clientNameError
-            // 
-            this.txt_clientNameError.BackColor = System.Drawing.Color.White;
-            this.txt_clientNameError.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txt_clientNameError.Location = new System.Drawing.Point(347, 63);
-            this.txt_clientNameError.Name = "txt_clientNameError";
-            this.txt_clientNameError.ReadOnly = true;
-            this.txt_clientNameError.Size = new System.Drawing.Size(434, 26);
-            this.txt_clientNameError.TabIndex = 19;
-            // 
-            // lbl_clientNameError
-            // 
-            this.lbl_clientNameError.AutoSize = true;
-            this.lbl_clientNameError.Font = new System.Drawing.Font("Courier New", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_clientNameError.Location = new System.Drawing.Point(347, 36);
-            this.lbl_clientNameError.Name = "lbl_clientNameError";
-            this.lbl_clientNameError.Size = new System.Drawing.Size(76, 21);
-            this.lbl_clientNameError.TabIndex = 18;
-            this.lbl_clientNameError.Text = "Error:";
             // 
             // txt_contactEmail
             // 
@@ -321,7 +225,7 @@
             this.pnl_viewDetails.Controls.Add(this.btn_View);
             this.pnl_viewDetails.Controls.Add(this.dtaGridDetails);
             this.pnl_viewDetails.Controls.Add(this.btn_Exit2);
-            this.pnl_viewDetails.Location = new System.Drawing.Point(41, 234);
+            this.pnl_viewDetails.Location = new System.Drawing.Point(41, 230);
             this.pnl_viewDetails.Name = "pnl_viewDetails";
             this.pnl_viewDetails.Size = new System.Drawing.Size(828, 497);
             this.pnl_viewDetails.TabIndex = 13;
@@ -346,6 +250,7 @@
             this.btn_Next.TabIndex = 20;
             this.btn_Next.Text = ">";
             this.btn_Next.UseVisualStyleBackColor = false;
+            this.btn_Next.Click += new System.EventHandler(this.btn_Next_Click);
             // 
             // btn_Previous
             // 
@@ -357,6 +262,7 @@
             this.btn_Previous.TabIndex = 19;
             this.btn_Previous.Text = "<";
             this.btn_Previous.UseVisualStyleBackColor = false;
+            this.btn_Previous.Click += new System.EventHandler(this.btn_Previous_Click);
             // 
             // btn_View
             // 
@@ -378,7 +284,7 @@
             this.dtaGridDetails.Location = new System.Drawing.Point(37, 34);
             this.dtaGridDetails.Name = "dtaGridDetails";
             this.dtaGridDetails.RowTemplate.Height = 25;
-            this.dtaGridDetails.Size = new System.Drawing.Size(441, 310);
+            this.dtaGridDetails.Size = new System.Drawing.Size(560, 310);
             this.dtaGridDetails.TabIndex = 8;
             // 
             // btn_Exit2
@@ -413,13 +319,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1231, 758);
+            this.ClientSize = new System.Drawing.Size(1247, 758);
             this.Controls.Add(this.btn_Back);
             this.Controls.Add(this.pnl_viewDetails);
             this.Controls.Add(this.pnl_enterDetails);
             this.Controls.Add(this.btn_viewDetails);
             this.Controls.Add(this.btn_enterDetails);
             this.Controls.Add(this.lbl_welcomeToTheClientDetailEntryScreen);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "ClientDetailsEntryScreen";
             this.Text = "ClientDetailsEntry";
@@ -458,13 +365,5 @@
         private System.Windows.Forms.Button btn_Previous;
         private System.Windows.Forms.Button btn_Next;
         private System.Windows.Forms.Label lbl_pageNo;
-        private System.Windows.Forms.TextBox txt_contactEmailError;
-        private System.Windows.Forms.Label lbl_contactEmailError;
-        private System.Windows.Forms.TextBox txt_contactNameError;
-        private System.Windows.Forms.Label lbl_contactNameError;
-        private System.Windows.Forms.TextBox txt_clientAddressError;
-        private System.Windows.Forms.Label lbl_clientAddressError;
-        private System.Windows.Forms.TextBox txt_clientNameError;
-        private System.Windows.Forms.Label lbl_clientNameError;
     }
 }
