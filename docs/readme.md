@@ -280,7 +280,7 @@ Unit Tests can be performed manually or automated. Those employing a manual meth
 
 - The earlier a problem is identified, the fewer compound errors occur.
 - Costs of fixing a problem early can quickly outweigh the cost of fixing it later.
-- Debugging process are made easier.
+- Debugging processes are made easier.
 - Developers can quickly make changes to the code base.
 - Developers can also re-use code, migrating it to new projects
 
@@ -403,8 +403,8 @@ With system testing, a QA team determines whether a test case corresponds to eac
 
 Additionally, each individual type of system test reports relevant metrics of a piece of software, including:
 
-- Performance testing: speed, average, stability and peak Response times;
-- Load testing: throughput, number of users, latency; and
+- Performance testing: speed, average, stability and peak response times.
+- Load testing: throughput, number of users, latency.
 - Usability testing: User error rates, task success rate, time to complete a task, user satisfaction.
 
 ###### Phases of System Testing
@@ -612,7 +612,7 @@ The cycle above is repeated for each new piece of funcionality. Tests should be 
 #### What is Automation Testing?
 
 Automated Testing is the process of testing software and other tech products to ensure it meets strict requirements. Essentially, it's a test to double-check that the equipment or software does exactly what it was designed to do. It tests for bugs. defects and any other issues that can arise with product development.
-Although some types of testing, such as regression or functional testing can be done manually, there are greater benefits of doing it automatically. Automation Testing can be run at any time of the day. It uses scripted sequences to examine the software. It then reports on what's been found, and this information can be compared with earlier test runs. Automation developers generally write in the following programming language: C#, JavaScript and Ruby.
+Although some types of testing, such as regression or functional testing can be done manually, there are greater benefits of doing it automatically. Automation Testing can be run at any time of the day. It uses scripted sequences to examine the software. It then reports on what's been found, and this information can be compared with earlier test runs. Automation developers generally write in the following programming languages: C#, JavaScript and Ruby.
 
 Many software businesses will have an appointed QA (Quality Assurance) automation tester. They design and write the test scripts in the beginning stages. The QA automation tester will work with automation test engineers and product developers to actually test the software and products. They will form a team and control the test automation intiatives and use different types of test automation frameworks to establish the best one for successful test automation.
 
@@ -630,10 +630,10 @@ Automation Testing uses well-crafted test cases for various scenarios. These scr
 One of the main reasons to test a product is to detect bugs and other defects. Automation Testing makes this process an easier one. It's also able to analyse a wider test coverage than humans may be able to.
 - Simplifies testing
 
-Testing is a routine part of the operations of most SaaS and tech companies. Making it as simple as possible is key. Using automation is extremely beneficial. When automating test tools, the test scripts and be reused. Manual testing calls for a single code line to be written for the same test case, each time it needs to be run.
+Testing is a routine part of the operations of most SaaS and tech companies. Making it as simple as possible is key. Using automation is extremely beneficial. With automating test tools, the test scripts and be reused. Manual testing calls for a single code line to be written for the same test case, each time it needs to be run.
 - Speeds up the testing process
 
-Machines and automated technology work faster than humans. Along with improved accuracy, this is why we use them. In turn, this shortens your software development life cycles.
+Machines and automated technology work faster than humans, along with improved accuracy, this is why we use them. In turn, this shortens your software development life cycles.
 - Reduces human intervention
 
 Tests can be run at any time of day, even overnight, without needing humans to oversee it. Plus, when it's conducted automatically, this can also reduce the risk of human error.
@@ -647,7 +647,7 @@ Testing can be time-consuming. Though automation may require an initial investme
 
 A continuous integration and continuous deployment (CI/CD) pipeline is a series of steps that must be performed in order to deliver a new version of software. CI/CD pipelines are a practice focused on improving software delivery throughout the software development life cycle via automation.
 
-By automating Ci/CD throughout development, testing, production and monitoring phases of the software development life cycle, organisations are able to develop higher quality code, faster. Although it's possible to manually execute each of the steps of a CI/CD pipeline, the true value of CI/CD pipiles realised through automation.
+By automating CI/CD throughout development, testing, production and monitoring phases of the software development life cycle, organisations are able to develop higher quality code, faster. Although it's possible to manually execute each of the steps of a CI/CD pipeline, the true value of CI/CD pipiles are realised through automation.
 
 #### What is a CI/CD Pipeline? Explained further
 
