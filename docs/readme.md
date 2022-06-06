@@ -630,7 +630,7 @@ Automation Testing uses well-crafted test cases for various scenarios. These scr
 One of the main reasons to test a product is to detect bugs and other defects. Automation Testing makes this process an easier one. It's also able to analyse a wider test coverage than humans may be able to.
 - Simplifies testing
 
-Testing is a routine part of the operations of most SaaS and tech companies. Making it as simple as possible is key. Using automation is extremely beneficial. With automating test tools, the test scripts and be reused. Manual testing calls for a single code line to be written for the same test case, each time it needs to be run.
+Testing is a routine part of the operations of most SaaS and tech companies. Making it as simple as possible is key. Using automation is extremely beneficial. With automated testing tools, the test scripts and be reused. Manual testing calls for a single code line to be written for the same test case, each time it needs to be run.
 - Speeds up the testing process
 
 Machines and automated technology work faster than humans, along with improved accuracy, this is why we use them. In turn, this shortens your software development life cycles.
