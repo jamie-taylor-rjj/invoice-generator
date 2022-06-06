@@ -48,18 +48,6 @@ namespace InvoiceGenerator.BusinessLogic
             return emailFormatErrorMsg; // Return error message
         }
 
-        public string validateComboBoxChoice(string comboBoxChoice)
-        {
-            string comboBoxChoiceErrorMsg = "No error!";
-
-            if (comboBoxChoice == "Please Select:") // If user has not selexted a client, throw error
-            {
-                comboBoxChoiceErrorMsg = "Please select a client!";    // Make error message
-            }
-
-            return comboBoxChoiceErrorMsg; // Return error message
-        }
-
         public string[] validateLineItemDetails(string lineItemDescription, string lineItemCost, string lineItemQuantity)
         {
             string lineItemDescriptionErrorMsg = "No error!", lineItemCostErrorMsg = "No error!", lineItemQuantityErrorMsg = "No error!";
