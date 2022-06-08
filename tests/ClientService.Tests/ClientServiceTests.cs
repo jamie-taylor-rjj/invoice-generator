@@ -31,13 +31,33 @@ namespace ClientService.Tests
             //MockedRepository.Setup(x => x.Add(client)).Returns(It.IsAny<int>());
 
             var SUT = new InvoiceGenerator.BusinessLogic.ClientService(MockedRepository.Object); // Service Under Tests
-                                                                                                 // Act
+            // Act
             var result = SUT.GetClients();
             // Assert
             Assert.Equal(client.ClientName, result.FirstOrDefault()?.ClientName);
             Assert.Equal(client.ClientAddress, result.FirstOrDefault()?.ClientAddress);
             Assert.Equal(client.ContactName, result.FirstOrDefault()?.ContactName);
             Assert.Equal(client.ContactEmail, result.FirstOrDefault()?.ContactEmail);
+        }
+
+        [Fact]
+        public void Check_If_Created_List_Of_Client_Names_Matches_DataBase_Client_Names()
+        {
+            //Arrange
+            var client = new Client()
+            {
+                ClientId = Guid.NewGuid(),
+                ClientName = "Jim"
+            };
+            var ClientNamesForMock = new List<Client>() { client };
+            var MockedRepository = new Mock<IRepository<Client>>();
+            MockedRepository.Setup(x => x.GetAll()).Returns(ClientNamesForMock);
+
+            var SUT = new InvoiceGenerator.BusinessLogic.ClientService(MockedRepository.Object);
+            // Act
+            var result = SUT.GetClientNames();
+            // Assert
+            Assert.Equal(client.ClientName, result.FirstOrDefault()?.ClientName);
         }
     }
 }
