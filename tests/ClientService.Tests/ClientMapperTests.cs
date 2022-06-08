@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using InvoiceGenerator.Domain;
 using InvoiceGenerator.Domain.Models;
 using InvoiceGenerator.ViewModels;
+using Moq;
 using Xunit;
 
 namespace ClientService.Tests;
@@ -45,4 +49,5 @@ public class ClientMapperTests
     //    // assert
     //    Assert.Equal(expected, result);
     //}
+
 }

@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\InvoiceGenerator.BusinessLogic\InvoiceGenerator.BusinessLogic.csproj" />
     <ProjectReference Include="..\..\src\InvoiceGenerator.ViewModels\InvoiceGenerator.ViewModels.csproj" />
   </ItemGroup>
 
