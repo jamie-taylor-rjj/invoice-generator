@@ -70,7 +70,7 @@ namespace ClientService.Tests
 
             var SUT = new InvoiceGenerator.BusinessLogic.ClientService(MockedRepository.Object);
             // Act
-            var result = SUT.AddClients("Jim", "10 Downing Street", "Bob", "bob@gmail.com");
+            var result = SUT.AddClient("Jim", "10 Downing Street", "Bob", "bob@gmail.com");
             // Assert
             Assert.Equal(expectedObjectsAltered, result);
         }

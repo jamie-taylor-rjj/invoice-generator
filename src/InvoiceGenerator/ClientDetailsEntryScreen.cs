@@ -52,7 +52,7 @@ namespace InvoiceGenerator
                     showEmailFormatErrorMsg(validEmailFormatErrorMsg, index);
 
                     // Here we are using the injected class which matches the IClientService interface
-                    _clientService.AddClients(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text); // Call method in business logic layer to add a new client
+                    _clientService.AddClient(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text); // Call method in business logic layer to add a new client
 
                     string message = "Client created successfully!";
                     string caption = "Success!";

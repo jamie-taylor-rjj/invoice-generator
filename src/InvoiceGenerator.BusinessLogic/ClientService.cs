@@ -42,7 +42,7 @@ namespace InvoiceGenerator.BusinessLogic
             return nameModels;
         }
 
-        public int AddClients(string clientName, string clientAddress, string contactName, string contactEmail)
+        public int AddClient(string clientName, string clientAddress, string contactName, string contactEmail)
         {
 
             var client = new Client     // Acts as an intialiser

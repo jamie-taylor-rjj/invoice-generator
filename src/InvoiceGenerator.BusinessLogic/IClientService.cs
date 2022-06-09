@@ -5,7 +5,7 @@ namespace InvoiceGenerator.BusinessLogic
 {
     public interface IClientService
     {
-        int AddClients(string clientName, string clientAddress, string contactName, string contactEmail);
+        int AddClient(string clientName, string clientAddress, string contactName, string contactEmail);
         List<ClientNameViewModel> GetClientNames();
         List<ClientViewModel> GetClients();
     }
