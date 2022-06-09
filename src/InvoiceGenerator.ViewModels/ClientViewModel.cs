@@ -19,5 +19,16 @@ namespace InvoiceGenerator.ViewModels
                 ContactEmail = dbModel.ContactEmail
             };
         }
+
+        public static Client ToDbModel(ClientViewModel viewModel)
+        {
+            return new Client
+            {
+                ClientName = viewModel.ClientName,
+                ClientAddress = viewModel.ClientAddress,
+                ContactName = viewModel.ContactName,
+                ContactEmail = viewModel.ContactEmail
+            };
+        }
     }
 }
