@@ -59,5 +59,20 @@ namespace ClientService.Tests
             // Assert
             Assert.Equal(client.ClientName, result.FirstOrDefault()?.ClientName);
         }
+
+        [Fact]
+        public void Check_If_Client_Details_Are_Added_To_Database()
+        {
+            // Arrange
+            var expectedObjectsAltered = 1;
+            var MockedRepository = new Mock<IRepository<Client>>();
+            MockedRepository.Setup(x => x.Add(It.IsAny<Client>())).Returns(expectedObjectsAltered);
+
+            var SUT = new InvoiceGenerator.BusinessLogic.ClientService(MockedRepository.Object);
+            // Act
+            var result = SUT.AddClients("Jim", "10 Downing Street", "Bob", "bob@gmail.com");
+            // Assert
+            Assert.Equal(expectedObjectsAltered, result);
+        }
     }
 }
