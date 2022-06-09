@@ -1,4 +1,5 @@
 ﻿using InvoiceGenerator.BusinessLogic;
+using InvoiceGenerator.ViewModels;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -52,7 +53,14 @@ namespace InvoiceGenerator
                     showEmailFormatErrorMsg(validEmailFormatErrorMsg, index);
 
                     // Here we are using the injected class which matches the IClientService interface
-                    _clientService.AddClient(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text); // Call method in business logic layer to add a new client
+                    var viewModel = new ClientViewModel()
+                    {
+                        ClientName = txt_clientName.Text,
+                        ClientAddress = txt_clientAddress.Text,
+                        ContactName = txt_contactName.Text,
+                        ContactEmail = txt_contactEmail.Text
+                    };
+                    _clientService.AddClient(viewModel); // Call method in business logic layer to add a new client
 
                     string message = "Client created successfully!";
                     string caption = "Success!";

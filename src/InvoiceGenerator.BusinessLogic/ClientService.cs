@@ -42,16 +42,16 @@ namespace InvoiceGenerator.BusinessLogic
             return nameModels;
         }
 
-        public int AddClient(string clientName, string clientAddress, string contactName, string contactEmail)
+        public int AddClient(ClientViewModel viewModel)
         {
 
             var client = new Client     // Acts as an intialiser
             {
                 // Set client details to the text box inputs on the client details entry screen
-                ClientName = clientName,
-                ClientAddress = clientAddress,
-                ContactName = contactName,
-                ContactEmail = contactEmail,
+                ClientName = viewModel.ClientName,
+                ClientAddress = viewModel.ClientAddress,
+                ContactName = viewModel.ContactName,
+                ContactEmail = viewModel.ContactEmail,
             };
 
             var recordsChanged = _clientRepository.Add(client);

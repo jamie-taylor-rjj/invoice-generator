@@ -65,12 +65,19 @@ namespace ClientService.Tests
         {
             // Arrange
             var expectedObjectsAltered = 1;
+            var viewModel = new ClientViewModel()
+            {
+                ClientName = "Jim",
+                ClientAddress = "10 Downing Street",
+                ContactName = "Bob",
+                ContactEmail = "bob@gmail.com"
+            };
             var MockedRepository = new Mock<IRepository<Client>>();
             MockedRepository.Setup(x => x.Add(It.IsAny<Client>())).Returns(expectedObjectsAltered);
 
             var SUT = new InvoiceGenerator.BusinessLogic.ClientService(MockedRepository.Object);
             // Act
-            var result = SUT.AddClient("Jim", "10 Downing Street", "Bob", "bob@gmail.com");
+            var result = SUT.AddClient(viewModel);
             // Assert
             Assert.Equal(expectedObjectsAltered, result);
         }
