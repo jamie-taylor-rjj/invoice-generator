@@ -38,28 +38,29 @@ namespace InvoiceGenerator
             ValidationUI validationUI = new ValidationUI();          // ValidationUI methods will return the boolean values for the variables, this determines if they are actually valid or not
             ValidationBLogic validationBLogic = new ValidationBLogic();  // ValidationBLogic methods will return the error messages for the variables
 
-            bool[] validDetails = validationUI.validateUserDetails(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text, out index);      // Check for white space or null values for all inputs
-            string[] validDetailsErrorMsgs = validationBLogic.validateUserDetails(txt_clientName.Text, txt_clientAddress.Text, txt_contactName.Text, txt_contactEmail.Text);  // Obtain error messages for all inputs
+            var viewModel = new ClientViewModel()
+            {
+                ClientName = txt_clientName.Text,
+                ClientAddress = txt_clientAddress.Text,
+                ContactName = txt_contactName.Text,
+                ContactEmail = txt_contactEmail.Text
+            };
+
+            bool[] validDetails = validationUI.validateUserDetails(viewModel, out index);      // Check for white space or null values for all inputs
+            string[] validDetailsErrorMsgs = validationBLogic.validateUserDetails(viewModel);  // Obtain error messages for all inputs
 
             if (validDetails[0] && validDetails[1] && validDetails[2] && validDetails[3]) // If all checks are passed, do below
             {
                 showUserDetailsErrorMsgs(validDetailsErrorMsgs, index); // Make text boxes white again as they are valid
 
-                bool validEmailFormat = validationUI.validateEmailFormat(txt_contactEmail.Text, out index);     // Check if the email input is of the correct format
-                string validEmailFormatErrorMsg = validationBLogic.validateEmailFormat(txt_contactEmail.Text);  // Obtain error message for the email input
+                bool validEmailFormat = validationUI.validateEmailFormat(viewModel, out index);     // Check if the email input is of the correct format
+                string validEmailFormatErrorMsg = validationBLogic.validateEmailFormat(viewModel);  // Obtain error message for the email input
 
                 if (validEmailFormat)   // If the email is valid and user details are valid, insert new client
                 {
                     showEmailFormatErrorMsg(validEmailFormatErrorMsg, index);
 
                     // Here we are using the injected class which matches the IClientService interface
-                    var viewModel = new ClientViewModel()
-                    {
-                        ClientName = txt_clientName.Text,
-                        ClientAddress = txt_clientAddress.Text,
-                        ContactName = txt_contactName.Text,
-                        ContactEmail = txt_contactEmail.Text
-                    };
                     _clientService.AddClient(viewModel); // Call method in business logic layer to add a new client
 
                     string message = "Client created successfully!";

@@ -1,32 +1,33 @@
-﻿using System;
+﻿using InvoiceGenerator.ViewModels;
+using System;
 using System.Net.Mail;
 
 namespace InvoiceGenerator
 {
     public class ValidationUI
     {
-        public bool[] validateUserDetails(string clientName, string clientAddress, string contactName, string contactEmail, out int index) // Validate all inputs on clientdetailsentryscreen
+        public bool[] validateUserDetails(ClientViewModel viewModel, out int index) // Validate all inputs on clientdetailsentryscreen
         {
             bool clientNameValid, clientAddressValid, contactNameValid, contactEmailValid;
             clientNameValid = clientAddressValid = contactNameValid = contactEmailValid = true; // Set all values to 'true'
             index = 0;
 
-            if (String.IsNullOrWhiteSpace(contactEmail)) // If the contact email is empty, or a bunch of spaces, error
+            if (String.IsNullOrWhiteSpace(viewModel.ContactEmail)) // If the contact email is empty, or a bunch of spaces, error
             {
                 contactEmailValid = false; // Set contactEmailValid to false as contact email was not valid
                 index = 4;
             }
-            if (String.IsNullOrWhiteSpace(contactName))
+            if (String.IsNullOrWhiteSpace(viewModel.ContactName))
             {
                 contactNameValid = false;
                 index = 3;
             }
-            if (string.IsNullOrWhiteSpace(clientAddress))
+            if (string.IsNullOrWhiteSpace(viewModel.ClientAddress))
             {
                 clientAddressValid = false;
                 index = 2;
             }
-            if (String.IsNullOrWhiteSpace(clientName))
+            if (String.IsNullOrWhiteSpace(viewModel.ClientName))
             {
                 clientNameValid = false;
                 index = 1;
@@ -37,14 +38,14 @@ namespace InvoiceGenerator
             return validDetails; // Return all the boolean values for selection later
         }
 
-        public bool validateEmailFormat(string contactEmail, out int index)    // Validate the contact email to see if its of the correct format
+        public bool validateEmailFormat(ClientViewModel viewModel, out int index)    // Validate the contact email to see if its of the correct format
         {
             bool emailFormatValid;
             index = 0;
 
             try
             {
-                MailAddress mailAddress = new MailAddress(contactEmail); // Validate the email using an email checker
+                MailAddress mailAddress = new MailAddress(viewModel.ContactEmail); // Validate the email using an email checker
                 emailFormatValid = true; // Set emailFormatValid to true as email is of the correct format
             }
             catch (FormatException) // Catch error so program doesn't crash

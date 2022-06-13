@@ -1,27 +1,28 @@
-﻿using System;
+﻿using InvoiceGenerator.ViewModels;
+using System;
 using System.Net.Mail;
 
 namespace InvoiceGenerator.BusinessLogic
 {
     public class ValidationBLogic
     {
-        public string[] validateUserDetails(string clientName, string clientAddress, string contactName, string contactEmail) // Validate all user inputs on client details entry screen
+        public string[] validateUserDetails(ClientViewModel viewModel) // Validate all user inputs on client details entry screen
         {
             string clientNameErrorMsg = "No error!", clientAddressErrorMsg = "No error!", contactNameErrorMsg = "No error!", contactEmailErrorMsg = "No error!";
 
-            if (String.IsNullOrWhiteSpace(clientName))  // If client name is null or white space
+            if (string.IsNullOrWhiteSpace(viewModel.ClientName))  // If client name is null or white space
             {
                 clientNameErrorMsg = "Client Name must not be empty!"; // Make error message
             }
-            if (String.IsNullOrWhiteSpace(clientAddress))
+            if (string.IsNullOrWhiteSpace(viewModel.ClientAddress))
             {
                 clientAddressErrorMsg = "Client Address must not be empty!";
             }
-            if (String.IsNullOrWhiteSpace(contactName))
+            if (string.IsNullOrWhiteSpace(viewModel.ContactName))
             {
                 contactNameErrorMsg = "Contact Name must not be empty!";
             }
-            if (String.IsNullOrWhiteSpace(contactEmail))
+            if (string.IsNullOrWhiteSpace(viewModel.ContactEmail))
             {
                 contactEmailErrorMsg = "Contact Email must not be empty!";
             }
@@ -31,13 +32,13 @@ namespace InvoiceGenerator.BusinessLogic
             return errorMessages; // Return all the error messages
         }
 
-        public string validateEmailFormat(string contactEmail)  // Validate contact email input to see if it is of the correct format
+        public string validateEmailFormat(ClientViewModel viewModel)  // Validate contact email input to see if it is of the correct format
         {
             string emailFormatErrorMsg;
 
             try
             {
-                MailAddress mailAddress = new MailAddress(contactEmail); // Validate email with an email checker
+                MailAddress mailAddress = new MailAddress(viewModel.ContactEmail); // Validate email with an email checker
                 emailFormatErrorMsg = "No error!";
             }
             catch (FormatException) // Catch error so program does not crash

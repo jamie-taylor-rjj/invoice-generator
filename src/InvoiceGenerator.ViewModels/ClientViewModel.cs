@@ -4,10 +4,10 @@ namespace InvoiceGenerator.ViewModels
 {
     public class ClientViewModel
     {
-        public string? ClientName { get; set; }
-        public string? ClientAddress { get; set; }
-        public string? ContactName { get; set; }
-        public string? ContactEmail { get; set; }
+        public string ClientName { get; set; } = string.Empty;
+        public string ClientAddress { get; set; } = string.Empty;
+        public string ContactName { get; set; } = string.Empty;
+        public string ContactEmail { get; set; } = string.Empty;
 
         public static ClientViewModel FromDbModel(Client dbModel)
         {

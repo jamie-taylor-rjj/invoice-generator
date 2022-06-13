@@ -7,7 +7,7 @@ namespace InvoiceGenerator.ViewModels
         // It'll be easier to ratify the client chosen in the drop down against the
         // list of clients in the database later if we do this now
         public Guid Id { get; set; }
-        public string ClientName { get; set; }
+        public string ClientName { get; set; } = string.Empty;
 
         public static ClientNameViewModel FromDbModel(Client dbModel)
         {
