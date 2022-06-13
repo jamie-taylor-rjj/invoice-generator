@@ -6,47 +6,44 @@ namespace InvoiceGenerator.BusinessLogic
 {
     public class ValidationBLogic
     {
-        public string[] validateUserDetails(ClientViewModel viewModel) // Validate all user inputs on client details entry screen
+        public ClientViewModelValidationResult validateUserDetails(ClientViewModel viewModel) // Validate all user inputs on client details entry screen
         {
-            string clientNameErrorMsg = "No error!", clientAddressErrorMsg = "No error!", contactNameErrorMsg = "No error!", contactEmailErrorMsg = "No error!";
+            var result = new ClientViewModelValidationResult();
 
             if (string.IsNullOrWhiteSpace(viewModel.ClientName))  // If client name is null or white space
             {
-                clientNameErrorMsg = "Client Name must not be empty!"; // Make error message
+                result.ClientNameValidationMessage = "Client Name must not be empty!"; // Make error message
             }
             if (string.IsNullOrWhiteSpace(viewModel.ClientAddress))
             {
-                clientAddressErrorMsg = "Client Address must not be empty!";
+                result.ClientAddressValidationMessage = "Client Address must not be empty!";
             }
             if (string.IsNullOrWhiteSpace(viewModel.ContactName))
             {
-                contactNameErrorMsg = "Contact Name must not be empty!";
+                result.ContactNameValidationMessage = "Contact Name must not be empty!";
             }
             if (string.IsNullOrWhiteSpace(viewModel.ContactEmail))
             {
-                contactEmailErrorMsg = "Contact Email must not be empty!";
+                result.ContactEmailValidationMessage = "Contact Email must not be empty!";
             }
 
-            string[] errorMessages = { clientNameErrorMsg, clientAddressErrorMsg, contactNameErrorMsg, contactEmailErrorMsg };
-
-            return errorMessages; // Return all the error messages
+            return result; // Return all the error messages
         }
 
-        public string validateEmailFormat(ClientViewModel viewModel)  // Validate contact email input to see if it is of the correct format
+        public ClientViewModelValidationResult validateEmailFormat(ClientViewModel viewModel)  // Validate contact email input to see if it is of the correct format
         {
-            string emailFormatErrorMsg;
+            var result = new ClientViewModelValidationResult();
 
             try
             {
                 MailAddress mailAddress = new MailAddress(viewModel.ContactEmail); // Validate email with an email checker
-                emailFormatErrorMsg = "No error!";
             }
             catch (FormatException) // Catch error so program does not crash
             {
-                emailFormatErrorMsg = "Contact Email must be formatted correctly!"; // Make error message
+                result.ContactEmailFormatValidationMessage = "Contact Email must be formatted correctly!"; // Make error message
             }
 
-            return emailFormatErrorMsg; // Return error message
+            return result; // Return error message
         }
 
         public string[] validateLineItemDetails(string lineItemDescription, string lineItemCost, string lineItemQuantity)

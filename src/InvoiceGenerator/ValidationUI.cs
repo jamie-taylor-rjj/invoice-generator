@@ -6,31 +6,26 @@ namespace InvoiceGenerator
 {
     public class ValidationUI
     {
-        public bool[] validateUserDetails(ClientViewModel viewModel, out int index) // Validate all inputs on clientdetailsentryscreen
+        public bool[] validateUserDetails(ClientViewModel viewModel) // Validate all inputs on clientdetailsentryscreen
         {
             bool clientNameValid, clientAddressValid, contactNameValid, contactEmailValid;
             clientNameValid = clientAddressValid = contactNameValid = contactEmailValid = true; // Set all values to 'true'
-            index = 0;
 
             if (String.IsNullOrWhiteSpace(viewModel.ContactEmail)) // If the contact email is empty, or a bunch of spaces, error
             {
                 contactEmailValid = false; // Set contactEmailValid to false as contact email was not valid
-                index = 4;
             }
             if (String.IsNullOrWhiteSpace(viewModel.ContactName))
             {
                 contactNameValid = false;
-                index = 3;
             }
             if (string.IsNullOrWhiteSpace(viewModel.ClientAddress))
             {
                 clientAddressValid = false;
-                index = 2;
             }
             if (String.IsNullOrWhiteSpace(viewModel.ClientName))
             {
                 clientNameValid = false;
-                index = 1;
             }
 
             bool[] validDetails = { clientNameValid, clientAddressValid, contactNameValid, contactEmailValid };
@@ -38,10 +33,9 @@ namespace InvoiceGenerator
             return validDetails; // Return all the boolean values for selection later
         }
 
-        public bool validateEmailFormat(ClientViewModel viewModel, out int index)    // Validate the contact email to see if its of the correct format
+        public bool validateEmailFormat(ClientViewModel viewModel)    // Validate the contact email to see if its of the correct format
         {
             bool emailFormatValid;
-            index = 0;
 
             try
             {
@@ -51,7 +45,6 @@ namespace InvoiceGenerator
             catch (FormatException) // Catch error so program doesn't crash
             {
                 emailFormatValid = false; // Set emailFormatValid to false as email is not of the correct format
-                index = 5;
             }
 
             return emailFormatValid; // Return boolean value for selection later

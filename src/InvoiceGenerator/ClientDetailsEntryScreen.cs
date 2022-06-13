@@ -10,8 +10,6 @@ namespace InvoiceGenerator
     {
         private readonly IClientService _clientService;
 
-        private int index;
-
         // We're asking the DI container to find a class which satisfies the
         // IClientService interface and inject it in here.
         public ClientDetailsEntryScreen(IClientService clientService)
@@ -46,19 +44,19 @@ namespace InvoiceGenerator
                 ContactEmail = txt_contactEmail.Text
             };
 
-            bool[] validDetails = validationUI.validateUserDetails(viewModel, out index);      // Check for white space or null values for all inputs
-            string[] validDetailsErrorMsgs = validationBLogic.validateUserDetails(viewModel);  // Obtain error messages for all inputs
+            bool[] validDetails = validationUI.validateUserDetails(viewModel);      // Check for white space or null values for all inputs
+            ClientViewModelValidationResult validationResult = validationBLogic.validateUserDetails(viewModel);  // Obtain error messages for all inputs
 
-            if (validDetails[0] && validDetails[1] && validDetails[2] && validDetails[3]) // If all checks are passed, do below
+            if (validationResult.IsValid()) // If all checks are passed, do below
             {
-                showUserDetailsErrorMsgs(validDetailsErrorMsgs, index); // Make text boxes white again as they are valid
+                showUserDetailsErrorMsgs(validationResult); // Make text boxes white again as they are valid
 
-                bool validEmailFormat = validationUI.validateEmailFormat(viewModel, out index);     // Check if the email input is of the correct format
-                string validEmailFormatErrorMsg = validationBLogic.validateEmailFormat(viewModel);  // Obtain error message for the email input
+                bool validEmailFormat = validationUI.validateEmailFormat(viewModel);     // Check if the email input is of the correct format
+                ClientViewModelValidationResult validationEmailFormatResult = validationBLogic.validateEmailFormat(viewModel);  // Obtain error message for the email input
 
-                if (validEmailFormat)   // If the email is valid and user details are valid, insert new client
+                if (validationEmailFormatResult.IsValidEmail())   // If the email is valid and user details are valid, insert new client
                 {
-                    showEmailFormatErrorMsg(validEmailFormatErrorMsg, index);
+                    showEmailFormatErrorMsg(validationEmailFormatResult);
 
                     // Here we are using the injected class which matches the IClientService interface
                     _clientService.AddClient(viewModel); // Call method in business logic layer to add a new client
@@ -74,12 +72,12 @@ namespace InvoiceGenerator
                 }
                 else    // If email is not valid, do below...
                 {
-                    showEmailFormatErrorMsg(validEmailFormatErrorMsg, index);
+                    showEmailFormatErrorMsg(validationEmailFormatResult);
                 }
             }
             else    // If any checks are failed, show error messages
             {
-                showUserDetailsErrorMsgs(validDetailsErrorMsgs, index); // Show error messages
+                showUserDetailsErrorMsgs(validationResult); // Show error messages
             }
         }
 
@@ -151,67 +149,92 @@ namespace InvoiceGenerator
         #endregion
 
         #region ErrorMessages
-        private void showUserDetailsErrorMsgs(string[] validDetailsErrorMsgs, int index)
+        private void showUserDetailsErrorMsgs(ClientViewModelValidationResult validDetailsErrorMsgs)
         {
             string message;
             string caption;
 
-            switch (index)
+            if (validDetailsErrorMsgs.IsValid())
             {
-                case 1:
-                    txt_clientName.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA); // Set the colour of the client name text box to red to visibly show error
-                    txt_clientName.Focus();                                            // Put mouse cursor in the client name text box
-                    message = validDetailsErrorMsgs[0];
-                    caption = "Client Name Error!";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); // Display error message box to user
-                    break;
-                case 2:
-                    txt_clientAddress.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
-                    txt_clientAddress.Focus();
-                    message = validDetailsErrorMsgs[1];
-                    caption = "client Address Error!";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
-                case 3:
-                    txt_contactName.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
-                    txt_contactName.Focus();
-                    message = validDetailsErrorMsgs[2];
-                    caption = "Contact Name Error!";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
-                case 4:
-                    txt_contactEmail.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
-                    txt_contactEmail.Focus();
-                    message = validDetailsErrorMsgs[3];
-                    caption = "Contact Email Error!";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
-                default:
-                    txt_clientName.BackColor = Color.White;
-                    txt_clientAddress.BackColor = Color.White;
-                    txt_contactName.BackColor = Color.White;
-                    txt_contactEmail.BackColor = Color.White;
-                    break;
+                txt_clientName.BackColor = Color.White;
+                txt_clientAddress.BackColor = Color.White;
+                txt_contactName.BackColor = Color.White;
+                txt_contactEmail.BackColor = Color.White;
+                return;
+            }
+
+            if (!validDetailsErrorMsgs.ClientNameIsValid())
+            {
+                txt_clientName.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA); // Set the colour of the client name text box to red to visibly show error
+                txt_clientName.Focus();                                            // Put mouse cursor in the client name text box
+                message = validDetailsErrorMsgs.ClientNameValidationMessage;
+                caption = "Client Name Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); // Display error message box to user
+            }
+            else if (validDetailsErrorMsgs.ClientNameIsValid())
+            {
+                txt_clientName.BackColor = Color.White;
+            }
+            if (!validDetailsErrorMsgs.ClientAddressIsValid())
+            {
+                txt_clientAddress.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
+                txt_clientAddress.Focus();
+                message = validDetailsErrorMsgs.ClientAddressValidationMessage;
+                caption = "client Address Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (validDetailsErrorMsgs.ClientAddressIsValid())
+            {
+                txt_clientAddress.BackColor = Color.White;
+            }
+            if (!validDetailsErrorMsgs.ContactNameIsValid())
+            {
+                txt_contactName.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
+                txt_contactName.Focus();
+                message = validDetailsErrorMsgs.ContactNameValidationMessage;
+                caption = "Contact Name Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (validDetailsErrorMsgs.ContactNameIsValid())
+            {
+                txt_contactName.BackColor = Color.White;
+            }
+            if (!validDetailsErrorMsgs.ContactEmailIsValid())
+            {
+                txt_contactEmail.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
+                txt_contactEmail.Focus();
+                message = validDetailsErrorMsgs.ContactEmailValidationMessage;
+                caption = "Contact Email Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (validDetailsErrorMsgs.ContactEmailIsValid())
+            {
+                txt_contactEmail.BackColor = Color.White;
             }
         }
 
-        private void showEmailFormatErrorMsg(string validEmailFormatErrorMsg, int index)
+        private void showEmailFormatErrorMsg(ClientViewModelValidationResult validEmailFormatErrorMsg)
         {
             string message;
             string caption;
 
-            switch (index)
+            if (validEmailFormatErrorMsg.IsValidEmail())
             {
-                case 5:
-                    txt_contactEmail.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
-                    txt_contactEmail.Focus();
-                    message = validEmailFormatErrorMsg;
-                    caption = "Contact Email Error!";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
-                default:
-                    txt_contactEmail.BackColor = Color.White;
-                    break;
+                txt_contactEmail.BackColor = Color.White;
+                return;
+            }
+
+            if (!validEmailFormatErrorMsg.ContactEmailFormatIsValid())
+            {
+                txt_contactEmail.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
+                txt_contactEmail.Focus();
+                message = validEmailFormatErrorMsg.ContactEmailFormatValidationMessage;
+                caption = "Contact Email Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (validEmailFormatErrorMsg.ContactEmailFormatIsValid())
+            {
+                txt_contactEmail.BackColor = Color.White;
             }
         }
         #endregion
