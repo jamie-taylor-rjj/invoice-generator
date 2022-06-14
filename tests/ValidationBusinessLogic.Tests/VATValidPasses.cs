@@ -12,7 +12,7 @@ namespace ValidationBusinessLogic.Tests
     public class VATValidPasses
     {
         [Fact]
-        public void Check_If_NoError_Is_Returned_When_Valid_Details_Input()
+        public void Check_If_NoError_Is_Returned_When_Valid_VAT_Input()
         {
             // Arrange
             var expectedResult = new InvoiceViewModelValidationResult()
