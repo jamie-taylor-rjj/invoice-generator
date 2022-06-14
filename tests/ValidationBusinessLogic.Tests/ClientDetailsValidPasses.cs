@@ -1,6 +1,5 @@
 using InvoiceGenerator.BusinessLogic;
 using InvoiceGenerator.ViewModels;
-using System.Collections.Generic;
 using Xunit;
 
 namespace ValidationBusinessLogic.Tests;
