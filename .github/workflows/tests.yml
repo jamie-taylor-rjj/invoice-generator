@@ -1,11 +1,14 @@
-name: 'Build and publish pipeline'
+name: 'Run all tests'
 
-# Only trigger, when the tests workflow succeeded
+## Only runs when someone pushes to main or PRs against main or develop
 on:
-  workflow_run:
-    workflows: ["Run all tests"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      - develop
 
 jobs:
 
@@ -33,7 +36,7 @@ jobs:
     ## env variables are variables that we can refer to in different parts of our
     ## build pipeline
     env:
-      working-directory: ./src/InvoiceGenerator
+      working-directory: ./src/InvoiceGenerator/InvoiceGenerator
 
     ## The Steps section is where we define the steps required to run this job on
     ## the target machine.
@@ -82,42 +85,52 @@ jobs:
     ## packages. This is a time saving operation, as we restored them in the
     ## previous step.
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --no-restore
       working-directory: ${{env.working-directory}}
     
-    ## Now that we have the binary built, we want to publish it. A publish
-    ## action takes the built binary, grabs any runtime required libraries,
-    ## then copies everything to the output directory.
-    ## In this command we're:
-    ##  - Hardcoding the release format to Windows 64 bit (-r win-x64)
-    ##  - Ensuring that we can boot the application without having to install
-    ##    a .NET runtime (--sc)
-    ##  - Copying the output to a directory called "publish" in the root of the
-    ##    source directory (-o publish) 
-    ##  -  Ensuring that the packaged version of the application is the Release
-    ##     build only (-c Release)
-    ##  - Ensuring that the .NET tooling doesn't waste time restoring any NuGet
-    ##    packages before publishing, as we've already done this
-    - name: publish
-      run: dotnet publish -r win-x64 --sc -o ../../../publish -c Release
+    ## Run all of the discovered tests for this repository, telling the dotnet
+    ## tooling to not waste time building (--no-build), use the Release config
+    ## (--configuration Release), and only print the normal amount of logs to
+    ## the screen (--verbosity normal).
+    ## We also want it to collect cross platform readable code coverage stats
+    ## (--collect: "XPlat Code Coverage") and store them in a known location
+    ## (-- results-directory ./coverage)
+    ## The code coverage stats will show us how much of the code base is covered
+    ## by our tests. This can be useful to identify which areas are NOT covered
+    ## by our tests, and it can help us to identify where we should spend our
+    ## personal and technical bandwidth in shoring up the test coverage. 
+    - name: Run tests
+      run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
       working-directory: ${{env.working-directory}}
     
-    ## Now that we have everything built and packaged, we want to create a build
-    ## artifact. A build artifact is something that a user/consumer can download
-    ## as a result of the build.
-    ## Build artifacts will always be available to download on the GitHub actions
-    ## results page.
-    ## This means that we don't have to build the code ourself and ship it to the
-    ## user. They can simply head to the download page and grab the zip file
-    ## called "invoice-generator", and it will have everything that they need to
-    ## run the app.
-    - uses: actions/upload-artifact@v2
-      if: ${{ success() }}
+    ## We are about to use a GitHub action called Code Coverage Summary to get a
+    ## human readable summary of the code coverage stuff from the previous step.
+    ## The Code Coverage Summary action requires the code coverage stuff to be
+    ## in a predictable location, so let's copy those files right now.
+    - name: Copy Coverage To Known Location
+      run: copy /v /y coverage/**/coverage.cobertura.xml coverage.cobertura.xml
+
+    ## Generate a Code Coverage report based on the code coverage we've gotten
+    ## in the previous steps.
+    ## This will create a file on disk, but not in the repo. So we'll need to
+    ## create a PR off the back of this action to add that file to the repo.
+    - name: Code Coverage Summary Report
+      uses: irongut/CodeCoverageSummary@v1.2.0
       with:
-        name: invoice-generator
-        path: ${{ github.workspace }}/publish/*
+        filename: coverage.cobertura.xml
+        badge: true
+        fail_below_min: true
+        format: markdown
+        hide_branch_rate: false
+        hide_complexity: true
+        indicators: true
+        output: both
+        thresholds: '60 80'
     
-    ## In future versions of this pipeline, we'll create a GitHub Release and put
-    ## the invoice-generator zip file there. Releases are show on the repo homepage
-    ## on the right-hand side (assuming a left-to-right culture).
-    ## However, this build pipeline will do for now.
+    ## Create the PR to add the Code Coverage Summary to the repo
+    - name: Add Coverage PR Comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: code-coverage-results.md
