@@ -30,11 +30,6 @@ jobs:
     ## to build WinForms applications on anything but Windows
     runs-on: windows-latest
 
-    ## env variables are variables that we can refer to in different parts of our
-    ## build pipeline
-    env:
-      working-directory: ./src/InvoiceGenerator
-
     ## The Steps section is where we define the steps required to run this job on
     ## the target machine.
     steps:
@@ -69,7 +64,6 @@ jobs:
     ## or run the application
     - name: Install code level dependencies
       run: dotnet restore
-      working-directory: ${{env.working-directory}}
     
     ## Building is next. Note the use of both the --configuration and
     ## --no-restore flags.
@@ -83,7 +77,6 @@ jobs:
     ## previous step.
     - name: Build
       run: dotnet build --configuration Release --no-restore
-      working-directory: ${{env.working-directory}}
     
     ## Now that we have the binary built, we want to publish it. A publish
     ## action takes the built binary, grabs any runtime required libraries,
@@ -100,7 +93,6 @@ jobs:
     ##    packages before publishing, as we've already done this
     - name: publish
       run: dotnet publish -r win-x64 --sc -o ../../../publish -c Release
-      working-directory: ${{env.working-directory}}
     
     ## Now that we have everything built and packaged, we want to create a build
     ## artifact. A build artifact is something that a user/consumer can download

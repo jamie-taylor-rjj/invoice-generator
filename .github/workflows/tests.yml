@@ -33,11 +33,6 @@ jobs:
     ## to build WinForms applications on anything but Windows
     runs-on: windows-latest
 
-    ## env variables are variables that we can refer to in different parts of our
-    ## build pipeline
-    env:
-      working-directory: ./src/InvoiceGenerator/InvoiceGenerator
-
     ## The Steps section is where we define the steps required to run this job on
     ## the target machine.
     steps:
@@ -72,7 +67,6 @@ jobs:
     ## or run the application
     - name: Install code level dependencies
       run: dotnet restore
-      working-directory: ${{env.working-directory}}
     
     ## Building is next. Note the use of both the --configuration and
     ## --no-restore flags.
@@ -86,7 +80,6 @@ jobs:
     ## previous step.
     - name: Build
       run: dotnet build --no-restore
-      working-directory: ${{env.working-directory}}
     
     ## Run all of the discovered tests for this repository, telling the dotnet
     ## tooling to not waste time building (--no-build), use the Release config
@@ -101,14 +94,13 @@ jobs:
     ## personal and technical bandwidth in shoring up the test coverage. 
     - name: Run tests
       run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
-      working-directory: ${{env.working-directory}}
     
     ## We are about to use a GitHub action called Code Coverage Summary to get a
     ## human readable summary of the code coverage stuff from the previous step.
     ## The Code Coverage Summary action requires the code coverage stuff to be
     ## in a predictable location, so let's copy those files right now.
     - name: Copy Coverage To Known Location
-      run: copy /v /y coverage/**/coverage.cobertura.xml coverage.cobertura.xml
+      run: cp coverage/**/coverage.cobertura.xml coverage.cobertura.xml
 
     ## Generate a Code Coverage report based on the code coverage we've gotten
     ## in the previous steps.
