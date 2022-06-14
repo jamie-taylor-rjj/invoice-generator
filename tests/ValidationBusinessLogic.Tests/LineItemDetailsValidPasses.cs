@@ -35,5 +35,43 @@ namespace ValidationBusinessLogic.Tests
             Assert.Equal(expectedResult.LineItemCostValidationMessage, result.LineItemCostValidationMessage);
             Assert.Equal(expectedResult.LineItemQuantityValidationMessage, result.LineItemQuantityValidationMessage);
         }
+
+        [Fact]
+        public void Check_If_NoError_Is_Returned_When_Valid_Cost_Input()
+        {
+            // Arrange
+            var expectedResult = new LineItemViewModelValidationResult()
+            {
+                LineItemCheckCostValidationMessage = "No error!"
+            };
+            var viewModel = new LineItemViewModel()
+            {
+                CostPer = "1.65"
+            };
+            var SUT = new ValidationBLogic();
+            // Act
+            var result = SUT.checkCost(viewModel);
+            // Assert
+            Assert.Equal(expectedResult.LineItemCheckCostValidationMessage, result.LineItemCheckCostValidationMessage);
+        }
+
+        [Fact]
+        public void Check_If_NoError_Is_Returned_When_Valid_Quantity_Input()
+        {
+            // Arrange
+            var expectedResult = new LineItemViewModelValidationResult()
+            {
+                LineItemCheckQuantityValidationMessage = "No error!"
+            };
+            var viewModel = new LineItemViewModel()
+            {
+                Quantity = "3"
+            };
+            var SUT = new ValidationBLogic();
+            // Act
+            var result = SUT.checkQuantity(viewModel);
+            // Assert
+            Assert.Equal(expectedResult.LineItemCheckQuantityValidationMessage, result.LineItemCheckQuantityValidationMessage);
+        }
     }
 }
