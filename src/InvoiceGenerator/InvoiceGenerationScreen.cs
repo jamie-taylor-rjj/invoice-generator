@@ -29,12 +29,17 @@ namespace InvoiceGenerator
             ValidationUI validationUI = new ValidationUI(); // ValidationUI methods will return the boolean values for the variables, this determines if they are valid or not
             ValidationBLogic validationBLogic = new ValidationBLogic(); // ValidationBLogic methods will return the error messages for the variables
 
-            bool validVAT = validationUI.checkVAT(txt_vatOrSalesTax.Text, out index);
-            string validVATErrorMsg = validationBLogic.checkVAT(txt_vatOrSalesTax.Text);
-
-            if (validVAT) // If check is passed, do below...
+            var viewModel = new InvoiceViewModel()
             {
-                showVATErrorMsg(validVATErrorMsg, index); // Make text box white as input is valid
+                VatRate = txt_vatOrSalesTax.Text,
+            };
+
+            bool validVAT = validationUI.checkVAT(txt_vatOrSalesTax.Text, out index);
+            InvoiceViewModelValidationResult validationResult = validationBLogic.checkVAT(viewModel);
+
+            if (validationResult.IsValidVAT()) // If check is passed, do below...
+            {
+                showVATErrorMsg(validationResult); // Make text box white as input is valid
 
                 string caption = "Line Item Details:";
                 int numberOfRows = dtaGridLineItems.Rows.Count; // Get the number of rows in the datagrid
@@ -106,7 +111,7 @@ namespace InvoiceGenerator
             }
             else // If check is not passed, do below...
             {
-                showVATErrorMsg(validVATErrorMsg, index); // Show error message
+                showVATErrorMsg(validationResult); // Show error message
             }
         }
 
@@ -376,23 +381,28 @@ namespace InvoiceGenerator
             }
         }
 
-        private void showVATErrorMsg(string validVATErrorMsg, int index)
+        private void showVATErrorMsg(InvoiceViewModelValidationResult validVATErrorMsg)
         {
             string message;
             string caption;
 
-            switch (index)
+            if (validVATErrorMsg.IsValidVAT())
             {
-                case 6:
-                    txt_vatOrSalesTax.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
-                    txt_vatOrSalesTax.Focus();
-                    message = validVATErrorMsg;
-                    caption = "VAT/Salex Tax Error!";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
-                default:
-                    txt_vatOrSalesTax.BackColor = Color.White;
-                    break;
+                txt_vatOrSalesTax.BackColor = Color.White;
+                return;
+            }
+
+            if (!validVATErrorMsg.VATIsValid())
+            {
+                txt_vatOrSalesTax.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
+                txt_vatOrSalesTax.Focus();
+                message = validVATErrorMsg.VATValidationMessage;
+                caption = "VAT/Salex Tax Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (validVATErrorMsg.VATIsValid())
+            {
+                txt_vatOrSalesTax.BackColor = Color.White;
             }
         }
         #endregion

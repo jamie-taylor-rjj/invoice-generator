@@ -104,23 +104,23 @@ namespace InvoiceGenerator.BusinessLogic
             return result; // Return error message
         }
 
-        public string checkVAT(string VAT)
+        public InvoiceViewModelValidationResult checkVAT(InvoiceViewModel viewModel)
         {
-            int result;
-            string validVATErrorMsg;
+            int outcome;
+            var result = new InvoiceViewModelValidationResult();
 
-            bool validParse = int.TryParse(VAT, out result); // Try convert VAT input to an int
+            bool validParse = int.TryParse(viewModel.VatRate, out outcome); // Try convert VAT input to an int
 
             if (validParse) // If the parse was successful...
             {
-                validVATErrorMsg = "No error!"; // No error
+                result.VATValidationMessage = "No error!"; // No error
             }
             else // If the parse was not successful...
             {
-                validVATErrorMsg = "VAT/Sales Tax must be an integer!"; // Make error message
+                result.VATValidationMessage = "VAT/Sales Tax must be an integer!"; // Make error message
             }
 
-            return validVATErrorMsg; // Return error message
+            return result; // Return error message
         }
     }
 }
