@@ -115,26 +115,33 @@ namespace InvoiceGenerator
             ValidationUI validationUI = new ValidationUI();          // ValidationUI methods will return the boolean values for the variables, this determines if they are actually valid or not
             ValidationBLogic validationBLogic = new ValidationBLogic();  // ValidationBLogic methods will return the error messages for the variables
 
-            bool[] validLineItemDetails = validationUI.validateLineItemDetails(txt_lineItemDescription.Text, txt_lineItemCost.Text, txt_lineItemQuantity.Text, out index);     // Check for white space or null values for all inputs
-            string[] validLineItemDetailsErrorMsgs = validationBLogic.validateLineItemDetails(txt_lineItemDescription.Text, txt_lineItemCost.Text, txt_lineItemQuantity.Text); // Obtain error messages for all the inputs
-
-            if (validLineItemDetails[0] && validLineItemDetails[1] && validLineItemDetails[2]) // If all checks are passed, do below
+            var viewModel = new LineItemViewModel()
             {
-                showLineItemDetailsErrorMsgs(validLineItemDetailsErrorMsgs, index); // Make text boxes white again as they are valid
+                Description = txt_lineItemDescription.Text,
+                CostPer = txt_lineItemCost.Text,
+                Quantity = txt_lineItemQuantity.Text,
+            };
+
+            bool[] validLineItemDetails = validationUI.validateLineItemDetails(txt_lineItemDescription.Text, txt_lineItemCost.Text, txt_lineItemQuantity.Text, out index);     // Check for white space or null values for all inputs
+            LineItemViewModelValidationResult validationResult = validationBLogic.validateLineItemDetails(viewModel); // Obtain error messages for all the inputs
+
+            if (validationResult.IsValid()) // If all checks are passed, do below
+            {
+                showLineItemDetailsErrorMsgs(validationResult); // Make text boxes white again as they are valid
 
                 bool validLineItemCost = validationUI.checkCost(txt_lineItemCost.Text, out index);
-                string validLineItemCostErrorMsg = validationBLogic.checkCost(txt_lineItemCost.Text);
+                LineItemViewModelValidationResult validationResultCheckCost = validationBLogic.checkCost(viewModel);
 
-                if (validLineItemCost) // If cost is valid, do below...
+                if (validationResultCheckCost.IsValidCost()) // If cost is valid, do below...
                 {
-                    showLineItemCostErrorMsg(validLineItemCostErrorMsg, index); // Make text box white again as input is valid
+                    showLineItemCostErrorMsg(validationResultCheckCost); // Make text box white again as input is valid
 
                     bool validLineItemQuantity = validationUI.checkQuantity(txt_lineItemQuantity.Text, out index);
-                    string validLineItemQuantityErrorMsg = validationBLogic.checkQuantity(txt_lineItemQuantity.Text);
+                    LineItemViewModelValidationResult validationResultCheckQuantity = validationBLogic.checkQuantity(viewModel);
 
-                    if (validLineItemQuantity) // If quantity is valid, add line items to datagrid
+                    if (validationResultCheckQuantity.IsValidQuantity()) // If quantity is valid, add line items to datagrid
                     {
-                        showLineItemQuantityErrorMsg(validLineItemQuantityErrorMsg, index); // Make text box white again as input is valid
+                        showLineItemQuantityErrorMsg(validationResultCheckQuantity); // Make text box white again as input is valid
 
                         double lineItemTotal = double.Parse(txt_lineItemCost.Text) * int.Parse(txt_lineItemQuantity.Text);
                         lineItemTotal = Math.Round(lineItemTotal, 2);
@@ -146,17 +153,17 @@ namespace InvoiceGenerator
                     }
                     else // If quantity is not valid, do below...
                     {
-                        showLineItemQuantityErrorMsg(validLineItemQuantityErrorMsg, index); // Show error message
+                        showLineItemQuantityErrorMsg(validationResultCheckQuantity); // Show error message
                     }
                 }
                 else // If cost is not valid, do below...
                 {
-                    showLineItemCostErrorMsg(validLineItemCostErrorMsg, index); // Show error message
+                    showLineItemCostErrorMsg(validationResultCheckCost); // Show error message
                 }
             }
             else // If any checks are failed, show error messages
             {
-                showLineItemDetailsErrorMsgs(validLineItemDetailsErrorMsgs, index); // Show error messages
+                showLineItemDetailsErrorMsgs(validationResult); // Show error messages
             }
         }
 
@@ -268,79 +275,104 @@ namespace InvoiceGenerator
         #endregion
 
         #region ErrorMessages
-        private void showLineItemDetailsErrorMsgs(string[] validLineItemDetailsErrorMsgs, int index)
+        private void showLineItemDetailsErrorMsgs(LineItemViewModelValidationResult validLineItemDetailsErrorMsgs)
         {
             string message;
             string caption;
 
-            switch (index)
+            if (validLineItemDetailsErrorMsgs.IsValid())
             {
-                case 1:
-                    txt_lineItemDescription.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA); // Set colour of line item description text box to visibly show error
-                    txt_lineItemDescription.Focus();        // Put mouse cursor in to the line item description text box
-                    message = validLineItemDetailsErrorMsgs[0];
-                    caption = "Line Item Description Error!";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); // Display error message box to user
-                    break;
-                case 2:
-                    txt_lineItemCost.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
-                    txt_lineItemCost.Focus();
-                    message = validLineItemDetailsErrorMsgs[1];
-                    caption = "Line Item Cost Error!";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
-                case 3:
-                    txt_lineItemQuantity.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
-                    txt_lineItemQuantity.Focus();
-                    message = validLineItemDetailsErrorMsgs[2];
-                    caption = "Line Item Quantity Error!";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
-                default:
-                    txt_lineItemDescription.BackColor = Color.White;
-                    txt_lineItemCost.BackColor = Color.White;
-                    txt_lineItemQuantity.BackColor = Color.White;
-                    break;
+                txt_lineItemDescription.BackColor = Color.White;
+                txt_lineItemCost.BackColor = Color.White;
+                txt_lineItemQuantity.BackColor = Color.White;
+                return;
+            }
+
+            if (!validLineItemDetailsErrorMsgs.LineItemDescriptionIsValid())
+            {
+                txt_lineItemDescription.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA); // Set colour of line item description text box to visibly show error
+                txt_lineItemDescription.Focus();        // Put mouse cursor in to the line item description text box
+                message = validLineItemDetailsErrorMsgs.LineItemDescriptionValidationMessage;
+                caption = "Line Item Description Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation); // Display error message box to user
+            }
+            else if (validLineItemDetailsErrorMsgs.LineItemDescriptionIsValid())
+            {
+                txt_lineItemDescription.BackColor = Color.White;
+            }
+            if (!validLineItemDetailsErrorMsgs.LineItemCostIsValid())
+            {
+                txt_lineItemCost.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
+                txt_lineItemCost.Focus();
+                message = validLineItemDetailsErrorMsgs.LineItemCostValidationMessage;
+                caption = "Line Item Cost Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (validLineItemDetailsErrorMsgs.LineItemCostIsValid())
+            {
+                txt_lineItemCost.BackColor = Color.White;
+            }
+            if (!validLineItemDetailsErrorMsgs.LineItemQuantityIsValid())
+            {
+                txt_lineItemQuantity.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
+                txt_lineItemQuantity.Focus();
+                message = validLineItemDetailsErrorMsgs.LineItemQuantityValidationMessage;
+                caption = "Line Item Quantity Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (validLineItemDetailsErrorMsgs.LineItemQuantityIsValid())
+            {
+                txt_lineItemQuantity.BackColor = Color.White;
             }
         }
 
-        private void showLineItemCostErrorMsg(string validLineItemCostErrorMsg, int index)
+        private void showLineItemCostErrorMsg(LineItemViewModelValidationResult validLineItemCostErrorMsg)
         {
             string message;
             string caption;
 
-            switch (index)
+            if (validLineItemCostErrorMsg.IsValidCost())
             {
-                case 4:
-                    txt_lineItemCost.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
-                    txt_lineItemCost.Focus();
-                    message = validLineItemCostErrorMsg;
-                    caption = "Line Item Cost Error!";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
-                default:
-                    txt_lineItemCost.BackColor = Color.White;
-                    break;
+                txt_lineItemCost.BackColor = Color.White;
+                return;
+            }
+
+            if (!validLineItemCostErrorMsg.LineItemCheckCostIsValid())
+            {
+                txt_lineItemCost.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
+                txt_lineItemCost.Focus();
+                message = validLineItemCostErrorMsg.LineItemCheckCostValidationMessage;
+                caption = "Line Item Cost Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (validLineItemCostErrorMsg.LineItemCheckCostIsValid())
+            {
+                txt_lineItemCost.BackColor = Color.White;
             }
         }
 
-        private void showLineItemQuantityErrorMsg(string validLineItemQuantityErrorMsg, int index)
+        private void showLineItemQuantityErrorMsg(LineItemViewModelValidationResult validLineItemQuantityErrorMsg)
         {
             string message;
             string caption;
 
-            switch (index)
+            if (validLineItemQuantityErrorMsg.IsValidQuantity())
             {
-                case 5:
-                    txt_lineItemQuantity.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
-                    txt_lineItemQuantity.Focus();
-                    message = validLineItemQuantityErrorMsg;
-                    caption = "Line Item Quantity Error!";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    break;
-                default:
-                    txt_lineItemQuantity.BackColor = Color.White;
-                    break;
+                txt_lineItemQuantity.BackColor = Color.White;
+                return;
+            }
+
+            if (!validLineItemQuantityErrorMsg.LineItemCheckQuantityIsValid())
+            {
+                txt_lineItemQuantity.BackColor = Color.FromArgb(0xFF, 0xFF, 0xCA, 0xCA);
+                txt_lineItemQuantity.Focus();
+                message = validLineItemQuantityErrorMsg.LineItemCheckQuantityValidationMessage;
+                caption = "Line Item Quantity Error!";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else if (validLineItemQuantityErrorMsg.LineItemCheckQuantityIsValid())
+            {
+                txt_lineItemQuantity.BackColor = Color.White;
             }
         }
 

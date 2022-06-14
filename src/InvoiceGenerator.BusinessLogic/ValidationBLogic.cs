@@ -46,64 +46,62 @@ namespace InvoiceGenerator.BusinessLogic
             return result; // Return error message
         }
 
-        public string[] validateLineItemDetails(string lineItemDescription, string lineItemCost, string lineItemQuantity)
+        public LineItemViewModelValidationResult validateLineItemDetails(LineItemViewModel viewModel)
         {
-            string lineItemDescriptionErrorMsg = "No error!", lineItemCostErrorMsg = "No error!", lineItemQuantityErrorMsg = "No error!";
+            var result = new LineItemViewModelValidationResult();
             
-            if (String.IsNullOrWhiteSpace(lineItemDescription)) // If the line item description is empty, throw error
+            if (String.IsNullOrWhiteSpace(viewModel.Description)) // If the line item description is empty, throw error
             {
-                lineItemDescriptionErrorMsg = "Line Item Description must not be empty!"; // Make error message
+                result.LineItemDescriptionValidationMessage = "Line Item Description must not be empty!"; // Make error message
             }
-            if (String.IsNullOrWhiteSpace(lineItemCost))
+            if (String.IsNullOrWhiteSpace(viewModel.CostPer))
             {
-                lineItemCostErrorMsg = "Line Item Cost must not be empty!";
+                result.LineItemCostValidationMessage = "Line Item Cost must not be empty!";
             }
-            if (String.IsNullOrWhiteSpace(lineItemQuantity))
+            if (String.IsNullOrWhiteSpace(viewModel.Quantity))
             {
-                lineItemQuantityErrorMsg = "Line Item Quantity must not be empty!";
+                result.LineItemQuantityValidationMessage = "Line Item Quantity must not be empty!";
             }
 
-            string[] errorMessages = { lineItemDescriptionErrorMsg, lineItemCostErrorMsg, lineItemQuantityErrorMsg };
-
-            return errorMessages;   // Return all the error messages
+            return result;   // Return all the error messages
         }
 
-        public string checkCost(string lineItemCost)
+        public LineItemViewModelValidationResult checkCost(LineItemViewModel viewModel)
         {
-            double result;
-            string validCostErrorMsg;
+            double outcome;
+            var result = new LineItemViewModelValidationResult();
 
-            bool validParse = double.TryParse(lineItemCost, out result); // Try convert lineItemCost input to a double
+            bool validParse = double.TryParse(viewModel.CostPer, out outcome); // Try convert lineItemCost input to a double
 
             if (validParse) // If the parse was successful...
             {
-                validCostErrorMsg = "No error!"; // No error
+                result.LineItemCheckCostValidationMessage = "No error!"; // No error
             }
             else // If the parse was not successful..
             {
-                validCostErrorMsg = "Line Item Cost must be a decimal number!"; // Make error message
+                result.LineItemCheckCostValidationMessage = "Line Item Cost must be a decimal number!"; // Make error message
             }
 
-            return validCostErrorMsg; // Return error message
+            return result; // Return error message
         }
 
-        public string checkQuantity(string lineItemQuantity)
+        public LineItemViewModelValidationResult checkQuantity(LineItemViewModel viewModel)
         {
-            int result;
-            string validQuantityErrorMsg;
+            int outcome;
+            var result = new LineItemViewModelValidationResult();
 
-            bool validParse = int.TryParse(lineItemQuantity, out result); // Try convert lineItemQuantity input to an int
+            bool validParse = int.TryParse(viewModel.Quantity, out outcome); // Try convert lineItemQuantity input to an int
 
             if (validParse) // If the parse was successful...
             {
-                validQuantityErrorMsg = "No error!"; // No error
+                result.LineItemCheckQuantityValidationMessage = "No error!"; // No error
             }
             else // If the parse was not successful...
             {
-                validQuantityErrorMsg = "Line Item Quantity must be an integer!"; // Make error message
+                result.LineItemCheckQuantityValidationMessage = "Line Item Quantity must be an integer!"; // Make error message
             }
 
-            return validQuantityErrorMsg; // Return error message
+            return result; // Return error message
         }
 
         public string checkVAT(string VAT)
