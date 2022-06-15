@@ -44,10 +44,7 @@ namespace ValidationBusinessLogic.Tests
             // Arrange
             var expectedResult = new ClientViewModelValidationResult()
             {
-                ClientNameValidationMessage = "Client Name must not be empty!",
-                ClientAddressValidationMessage = "No error!",
-                ContactNameValidationMessage = "No error!",
-                ContactEmailValidationMessage = "No error!"
+                ClientNameValidationMessage = "Client Name must not be empty!"
             };
             var input = new ClientViewModel()
             {
@@ -74,10 +71,7 @@ namespace ValidationBusinessLogic.Tests
             // Arrange
             var expectedResult = new ClientViewModelValidationResult()
             {
-                ClientNameValidationMessage = "No error!",
-                ClientAddressValidationMessage = "Client Address must not be empty!",
-                ContactNameValidationMessage = "No error!",
-                ContactEmailValidationMessage = "No error!"
+                ClientAddressValidationMessage = "Client Address must not be empty!"
             };
             var input = new ClientViewModel()
             {
@@ -104,10 +98,7 @@ namespace ValidationBusinessLogic.Tests
             // Arrange
             var expectedResult = new ClientViewModelValidationResult()
             {
-                ClientNameValidationMessage = "No error!",
-                ClientAddressValidationMessage = "No error!",
-                ContactNameValidationMessage = "Contact Name must not be empty!",
-                ContactEmailValidationMessage = "No error!"
+                ContactNameValidationMessage = "Contact Name must not be empty!"
             };
             var input = new ClientViewModel()
             {
@@ -134,9 +125,6 @@ namespace ValidationBusinessLogic.Tests
             // Arrange
             var expectedResult = new ClientViewModelValidationResult()
             {
-                ClientNameValidationMessage = "No error!",
-                ClientAddressValidationMessage = "No error!",
-                ContactNameValidationMessage = "No error!",
                 ContactEmailValidationMessage = "Contact Email must not be empty!"
             };
             var input = new ClientViewModel()

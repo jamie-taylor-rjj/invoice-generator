@@ -50,15 +50,15 @@ namespace InvoiceGenerator.BusinessLogic
         {
             var result = new LineItemViewModelValidationResult();
             
-            if (String.IsNullOrWhiteSpace(viewModel.Description)) // If the line item description is empty, throw error
+            if (string.IsNullOrWhiteSpace(viewModel.Description)) // If the line item description is empty, throw error
             {
                 result.LineItemDescriptionValidationMessage = "Line Item Description must not be empty!"; // Make error message
             }
-            if (String.IsNullOrWhiteSpace(viewModel.CostPer))
+            if (string.IsNullOrWhiteSpace(viewModel.CostPer))
             {
                 result.LineItemCostValidationMessage = "Line Item Cost must not be empty!";
             }
-            if (String.IsNullOrWhiteSpace(viewModel.Quantity))
+            if (string.IsNullOrWhiteSpace(viewModel.Quantity))
             {
                 result.LineItemQuantityValidationMessage = "Line Item Quantity must not be empty!";
             }
@@ -71,13 +71,11 @@ namespace InvoiceGenerator.BusinessLogic
             double outcome;
             var result = new LineItemViewModelValidationResult();
 
-            bool validParse = double.TryParse(viewModel.CostPer, out outcome); // Try convert lineItemCost input to a double
-
-            if (validParse) // If the parse was successful...
+            if (double.TryParse(viewModel.CostPer, out outcome))    // Try convert lineItemCost input to a double, if the parse was successful, do below...
             {
                 result.LineItemCheckCostValidationMessage = "No error!"; // No error
             }
-            else // If the parse was not successful..
+            else // If the parse wasn't successful, do below...
             {
                 result.LineItemCheckCostValidationMessage = "Line Item Cost must be a decimal number!"; // Make error message
             }
@@ -90,13 +88,11 @@ namespace InvoiceGenerator.BusinessLogic
             int outcome;
             var result = new LineItemViewModelValidationResult();
 
-            bool validParse = int.TryParse(viewModel.Quantity, out outcome); // Try convert lineItemQuantity input to an int
-
-            if (validParse) // If the parse was successful...
+            if (int.TryParse(viewModel.Quantity, out outcome)) // Try convert lineItemQuantity input to an int, if the parse was successful, do below...
             {
                 result.LineItemCheckQuantityValidationMessage = "No error!"; // No error
             }
-            else // If the parse was not successful...
+            else // If the parse wasn't successful, do below...
             {
                 result.LineItemCheckQuantityValidationMessage = "Line Item Quantity must be an integer!"; // Make error message
             }
@@ -109,13 +105,11 @@ namespace InvoiceGenerator.BusinessLogic
             int outcome;
             var result = new InvoiceViewModelValidationResult();
 
-            bool validParse = int.TryParse(viewModel.VatRate, out outcome); // Try convert VAT input to an int
-
-            if (validParse) // If the parse was successful...
+            if (int.TryParse(viewModel.VatRate, out outcome)) // Try convert VAT input to an int, if the parse was successful, do below...
             {
                 result.VATValidationMessage = "No error!"; // No error
             }
-            else // If the parse was not successful...
+            else // If the parse wasn't successful, do below...
             {
                 result.VATValidationMessage = "VAT/Sales Tax must be an integer!"; // Make error message
             }

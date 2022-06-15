@@ -4,7 +4,7 @@ using Xunit;
 
 namespace ValidationBusinessLogic.Tests
 {
-    public class VATValidPasses
+    public class InvoiceValidPasses
     {
         [Fact]
         public void Check_If_NoError_Is_Returned_When_Valid_VAT_Input()

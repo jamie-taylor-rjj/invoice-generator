@@ -27,9 +27,6 @@ namespace ClientService.Tests
             var MockedRepository = new Mock<IRepository<Client>>();
             MockedRepository.Setup(x => x.GetAll()).Returns(ClientsForMock);
 
-            //hint for later - for AddClients
-            //MockedRepository.Setup(x => x.Add(client)).Returns(It.IsAny<int>());
-
             var SUT = new InvoiceGenerator.BusinessLogic.ClientService(MockedRepository.Object); // Service Under Tests
             // Act
             var result = SUT.GetClients();

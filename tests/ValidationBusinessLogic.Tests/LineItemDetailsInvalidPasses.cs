@@ -41,9 +41,7 @@ namespace ValidationBusinessLogic.Tests
             // Arrange
             var expectedResult = new LineItemViewModelValidationResult()
             {
-                LineItemDescriptionValidationMessage = "Line Item Description must not be empty!",
-                LineItemCostValidationMessage = "No error!",
-                LineItemQuantityValidationMessage = "No error!"
+                LineItemDescriptionValidationMessage = "Line Item Description must not be empty!"
             };
             var input = new LineItemViewModel()
             {
@@ -68,9 +66,7 @@ namespace ValidationBusinessLogic.Tests
             // Arrange
             var expectedResult = new LineItemViewModelValidationResult()
             {
-                LineItemDescriptionValidationMessage = "No error!",
-                LineItemCostValidationMessage = "Line Item Cost must not be empty!",
-                LineItemQuantityValidationMessage = "No error!"
+                LineItemCostValidationMessage = "Line Item Cost must not be empty!"
             };
             var input = new LineItemViewModel()
             {
@@ -95,8 +91,6 @@ namespace ValidationBusinessLogic.Tests
             // Arrange
             var expectedResult = new LineItemViewModelValidationResult()
             {
-                LineItemDescriptionValidationMessage = "No error!",
-                LineItemCostValidationMessage = "No error!",
                 LineItemQuantityValidationMessage = "Line Item Quantity must not be empty!"
             };
             var input = new LineItemViewModel()
