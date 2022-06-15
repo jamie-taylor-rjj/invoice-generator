@@ -1,130 +1,120 @@
-﻿using System;
+﻿using InvoiceGenerator.ViewModels;
+using System;
 using System.Net.Mail;
 
 namespace InvoiceGenerator.BusinessLogic
 {
     public class ValidationBLogic
     {
-        public string[] validateUserDetails(string clientName, string clientAddress, string contactName, string contactEmail) // Validate all user inputs on client details entry screen
+        public ClientViewModelValidationResult validateUserDetails(ClientViewModel viewModel) // Validate all user inputs on client details entry screen
         {
-            string clientNameErrorMsg = "No error!", clientAddressErrorMsg = "No error!", contactNameErrorMsg = "No error!", contactEmailErrorMsg = "No error!";
+            var result = new ClientViewModelValidationResult();
 
-            if (String.IsNullOrWhiteSpace(clientName))  // If client name is null or white space
+            if (string.IsNullOrWhiteSpace(viewModel.ClientName))  // If client name is null or white space
             {
-                clientNameErrorMsg = "Client Name must not be empty!"; // Make error message
+                result.ClientNameValidationMessage = "Client Name must not be empty!"; // Make error message
             }
-            if (String.IsNullOrWhiteSpace(clientAddress))
+            if (string.IsNullOrWhiteSpace(viewModel.ClientAddress))
             {
-                clientAddressErrorMsg = "Client Address must not be empty!";
+                result.ClientAddressValidationMessage = "Client Address must not be empty!";
             }
-            if (String.IsNullOrWhiteSpace(contactName))
+            if (string.IsNullOrWhiteSpace(viewModel.ContactName))
             {
-                contactNameErrorMsg = "Contact Name must not be empty!";
+                result.ContactNameValidationMessage = "Contact Name must not be empty!";
             }
-            if (String.IsNullOrWhiteSpace(contactEmail))
+            if (string.IsNullOrWhiteSpace(viewModel.ContactEmail))
             {
-                contactEmailErrorMsg = "Contact Email must not be empty!";
+                result.ContactEmailValidationMessage = "Contact Email must not be empty!";
             }
 
-            string[] errorMessages = { clientNameErrorMsg, clientAddressErrorMsg, contactNameErrorMsg, contactEmailErrorMsg };
-
-            return errorMessages; // Return all the error messages
+            return result; // Return all the error messages
         }
 
-        public string validateEmailFormat(string contactEmail)  // Validate contact email input to see if it is of the correct format
+        public ClientViewModelValidationResult validateEmailFormat(ClientViewModel viewModel)  // Validate contact email input to see if it is of the correct format
         {
-            string emailFormatErrorMsg;
+            var result = new ClientViewModelValidationResult();
 
             try
             {
-                MailAddress mailAddress = new MailAddress(contactEmail); // Validate email with an email checker
-                emailFormatErrorMsg = "No error!";
+                MailAddress mailAddress = new MailAddress(viewModel.ContactEmail); // Validate email with an email checker
             }
             catch (FormatException) // Catch error so program does not crash
             {
-                emailFormatErrorMsg = "Contact Email must be formatted correctly!"; // Make error message
+                result.ContactEmailFormatValidationMessage = "Contact Email must be formatted correctly!"; // Make error message
             }
 
-            return emailFormatErrorMsg; // Return error message
+            return result; // Return error message
         }
 
-        public string[] validateLineItemDetails(string lineItemDescription, string lineItemCost, string lineItemQuantity)
+        public LineItemViewModelValidationResult validateLineItemDetails(LineItemViewModel viewModel)
         {
-            string lineItemDescriptionErrorMsg = "No error!", lineItemCostErrorMsg = "No error!", lineItemQuantityErrorMsg = "No error!";
+            var result = new LineItemViewModelValidationResult();
             
-            if (String.IsNullOrWhiteSpace(lineItemDescription)) // If the line item description is empty, throw error
+            if (string.IsNullOrWhiteSpace(viewModel.Description)) // If the line item description is empty, throw error
             {
-                lineItemDescriptionErrorMsg = "Line Item Description must not be empty!"; // Make error message
+                result.LineItemDescriptionValidationMessage = "Line Item Description must not be empty!"; // Make error message
             }
-            if (String.IsNullOrWhiteSpace(lineItemCost))
+            if (string.IsNullOrWhiteSpace(viewModel.CostPer))
             {
-                lineItemCostErrorMsg = "Line Item Cost must not be empty!";
+                result.LineItemCostValidationMessage = "Line Item Cost must not be empty!";
             }
-            if (String.IsNullOrWhiteSpace(lineItemQuantity))
+            if (string.IsNullOrWhiteSpace(viewModel.Quantity))
             {
-                lineItemQuantityErrorMsg = "Line Item Quantity must not be empty!";
+                result.LineItemQuantityValidationMessage = "Line Item Quantity must not be empty!";
             }
 
-            string[] errorMessages = { lineItemDescriptionErrorMsg, lineItemCostErrorMsg, lineItemQuantityErrorMsg };
-
-            return errorMessages;   // Return all the error messages
+            return result;   // Return all the error messages
         }
 
-        public string checkCost(string lineItemCost)
+        public LineItemViewModelValidationResult checkCost(LineItemViewModel viewModel)
         {
-            double result;
-            string validCostErrorMsg;
+            double outcome;
+            var result = new LineItemViewModelValidationResult();
 
-            bool validParse = double.TryParse(lineItemCost, out result); // Try convert lineItemCost input to a double
-
-            if (validParse) // If the parse was successful...
+            if (double.TryParse(viewModel.CostPer, out outcome))    // Try convert lineItemCost input to a double, if the parse was successful, do below...
             {
-                validCostErrorMsg = "No error!"; // No error
+                result.LineItemCheckCostValidationMessage = "No error!"; // No error
             }
-            else // If the parse was not successful..
+            else // If the parse wasn't successful, do below...
             {
-                validCostErrorMsg = "Line Item Cost must be a decimal number!"; // Make error message
+                result.LineItemCheckCostValidationMessage = "Line Item Cost must be a decimal number!"; // Make error message
             }
 
-            return validCostErrorMsg; // Return error message
+            return result; // Return error message
         }
 
-        public string checkQuantity(string lineItemQuantity)
+        public LineItemViewModelValidationResult checkQuantity(LineItemViewModel viewModel)
         {
-            int result;
-            string validQuantityErrorMsg;
+            int outcome;
+            var result = new LineItemViewModelValidationResult();
 
-            bool validParse = int.TryParse(lineItemQuantity, out result); // Try convert lineItemQuantity input to an int
-
-            if (validParse) // If the parse was successful...
+            if (int.TryParse(viewModel.Quantity, out outcome)) // Try convert lineItemQuantity input to an int, if the parse was successful, do below...
             {
-                validQuantityErrorMsg = "No error!"; // No error
+                result.LineItemCheckQuantityValidationMessage = "No error!"; // No error
             }
-            else // If the parse was not successful...
+            else // If the parse wasn't successful, do below...
             {
-                validQuantityErrorMsg = "Line Item Quantity must be an integer!"; // Make error message
+                result.LineItemCheckQuantityValidationMessage = "Line Item Quantity must be an integer!"; // Make error message
             }
 
-            return validQuantityErrorMsg; // Return error message
+            return result; // Return error message
         }
 
-        public string checkVAT(string VAT)
+        public InvoiceViewModelValidationResult checkVAT(InvoiceViewModel viewModel)
         {
-            int result;
-            string validVATErrorMsg;
+            int outcome;
+            var result = new InvoiceViewModelValidationResult();
 
-            bool validParse = int.TryParse(VAT, out result); // Try convert VAT input to an int
-
-            if (validParse) // If the parse was successful...
+            if (int.TryParse(viewModel.VatRate, out outcome)) // Try convert VAT input to an int, if the parse was successful, do below...
             {
-                validVATErrorMsg = "No error!"; // No error
+                result.VATValidationMessage = "No error!"; // No error
             }
-            else // If the parse was not successful...
+            else // If the parse wasn't successful, do below...
             {
-                validVATErrorMsg = "VAT/Sales Tax must be an integer!"; // Make error message
+                result.VATValidationMessage = "VAT/Sales Tax must be an integer!"; // Make error message
             }
 
-            return validVATErrorMsg; // Return error message
+            return result; // Return error message
         }
     }
 }
