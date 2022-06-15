@@ -38,6 +38,7 @@ namespace InvoiceGenerator
                 // Here we are saying that whenever a constructor calls for an IClientService, the
                 // DI Container should create a new instance of the ClientService and pass that in
                 .AddTransient<IClientService, ClientService>()
+                .AddTransient(typeof(IRepository<>), typeof(Repository<>))
                 .AddDbContext<InvoiceDbContext>(options => options.UseSqlServer(connectionString));
         }
 

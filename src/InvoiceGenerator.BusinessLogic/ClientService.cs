@@ -8,16 +8,16 @@ namespace InvoiceGenerator.BusinessLogic
 {
     public class ClientService : IClientService
     {
-        private readonly InvoiceDbContext _invoiceDbContext;
+        private readonly IRepository<Client> _clientRepository;
 
-        public ClientService(InvoiceDbContext invoiceDbContext)
+        public ClientService(IRepository<Client> clientRepository)
         {
-            _invoiceDbContext = invoiceDbContext;
+            _clientRepository = clientRepository;
         }
 
         public List<ClientViewModel> GetClients()
         {
-            var clients = _invoiceDbContext.Clients.ToList(); // Assign a bunch of client objects to a list
+            var clients = _clientRepository.GetAll(); // Assign a bunch of client objects to a list
 
             var viewModels = new List<ClientViewModel>();
 
@@ -31,7 +31,7 @@ namespace InvoiceGenerator.BusinessLogic
         public List<ClientNameViewModel> GetClientNames()
         {
 
-            var clientNames = _invoiceDbContext.Clients.ToList();
+            var clientNames = _clientRepository.GetAll();
 
             var nameModels = new List<ClientNameViewModel>();
 
@@ -42,21 +42,13 @@ namespace InvoiceGenerator.BusinessLogic
             return nameModels;
         }
 
-        public void AddClients(string clientName, string clientAddress, string contactName, string contactEmail)
+        public int AddClient(ClientViewModel viewModel)
         {
 
-            var client = new Client     // Acts as an intialiser
-            {
-                // Set client details to the text box inputs on the client details entry screen
-                ClientName = clientName,
-                ClientAddress = clientAddress,
-                ContactName = contactName,
-                ContactEmail = contactEmail,
-            };
+            var client = ClientViewModel.ToDbModel(viewModel);
 
-            _invoiceDbContext.Clients.Add(client); // Add client details to the database
-
-            _invoiceDbContext.SaveChanges();  // Save the changes made to the database
+            var recordsChanged = _clientRepository.Add(client);
+            return recordsChanged;
         }
     }
 }
