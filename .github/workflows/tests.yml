@@ -127,7 +127,7 @@ jobs:
         hide_complexity: true
         indicators: true
         output: both
-        thresholds: '60 80'
+        thresholds: '0 60'
     
     ## Create the PR to add the Code Coverage Summary to the repo
     - name: Add Coverage PR Comment
