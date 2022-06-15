@@ -92,36 +92,4 @@ jobs:
     ## by our tests, and it can help us to identify where we should spend our
     ## personal and technical bandwidth in shoring up the test coverage. 
     - name: Run tests
-      run: dotnet test --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./coverage
-    
-    ## We are about to use a GitHub action called Code Coverage Summary to get a
-    ## human readable summary of the code coverage stuff from the previous step.
-    ## The Code Coverage Summary action requires the code coverage stuff to be
-    ## in a predictable location, so let's copy those files right now.
-    - name: Copy Coverage To Known Location
-      run: cp coverage/**/coverage.cobertura.xml coverage.cobertura.xml
-
-    ## Generate a Code Coverage report based on the code coverage we've gotten
-    ## in the previous steps.
-    ## This will create a file on disk, but not in the repo. So we'll need to
-    ## create a PR off the back of this action to add that file to the repo.
-    - name: Code Coverage Summary Report
-      uses: irongut/CodeCoverageSummary@v1.2.0
-      with:
-        filename: coverage.cobertura.xml
-        badge: true
-        fail_below_min: true
-        format: markdown
-        hide_branch_rate: false
-        hide_complexity: true
-        indicators: true
-        output: both
-        thresholds: '0 60'
-    
-    ## Create the PR to add the Code Coverage Summary to the repo
-    - name: Add Coverage PR Comment
-      uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
-      with:
-        recreate: true
-        path: code-coverage-results.md
+      run: dotnet test --configuration Release --no-build
