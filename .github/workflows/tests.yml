@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+      - develop
+      - feature/*
     ## Builds not be run if the following files are the ones which are
     ## changed in a push to main
     ## see: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-excluding-paths
@@ -23,20 +25,7 @@ on:
 jobs:
 
   ## Create a build job
-  build:
-
-    ## The first two sections (strategy and runs-on) define a machine and operating
-    ## system to run this CI/CD pipeline on.
-    ## Each kob uses it's own strategy.
-
-    ## We want to make sure that our build image runs only on x64 architecture.
-    ## This is because we only want an x64 build of the application (as can be
-    ## seen in our build and publish steps below)
-    strategy:
-      ## The matrix value here allows us to provide a number of different values.
-      ## But for our purposes, we only need to supply the CPU architecture
-      matrix:
-        targetplatform: [x64]
+  test:
     
     ## We want out build image to run Windows vLatest
     ## This will change, once we migrate away from WinForms. It's not possible
@@ -89,7 +78,7 @@ jobs:
     ## packages. This is a time saving operation, as we restored them in the
     ## previous step.
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --configuration Release
     
     ## Run all of the discovered tests for this repository, telling the dotnet
     ## tooling to not waste time building (--no-build), use the Release config
@@ -103,7 +92,7 @@ jobs:
     ## by our tests, and it can help us to identify where we should spend our
     ## personal and technical bandwidth in shoring up the test coverage. 
     - name: Run tests
-      run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+      run: dotnet test --configuration Release --no-build --collect:"XPlat Code Coverage" --results-directory ./coverage
     
     ## We are about to use a GitHub action called Code Coverage Summary to get a
     ## human readable summary of the code coverage stuff from the previous step.
