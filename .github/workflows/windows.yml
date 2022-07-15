@@ -10,13 +10,13 @@ on:
     paths-ignore:
       - '**/*.md'
       - '**/*.gitignore'
-      - 'WinForms/*'
+      - 'WinForms/**'
   pull_request:
     ## Run on all PRs to main
     branches: [ main ]
     ## Ignore any PRs which only have changes to markdown and git files
     paths-ignore:
-      - 'WinForms/*'
+      - 'WinForms/**'
   ## Allow builds to be run from the Actions view
   workflow_dispatch:
 ## Provide read-only access to the repo
