@@ -1,4 +1,4 @@
-name: 'Run all tests'
+name: 'WinForms - Run all tests'
 
 ## Only runs when someone pushes to main or PRs against main or develop
 on:
@@ -12,6 +12,7 @@ on:
     ## see: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-excluding-paths
     paths-ignore:
       - '**/*.md'
+      - 'NET-Maui/*'
   pull_request:
     branches:
       - main
@@ -21,6 +22,7 @@ on:
     ## see: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-excluding-paths
     paths-ignore:
       - '**/*.md'
+      - 'NET-Maui/*'
 
 jobs:
 
@@ -65,7 +67,7 @@ jobs:
     ## Now we need to restore any NuGet packages that we rely on in order to build
     ## or run the application
     - name: Install code level dependencies
-      run: dotnet restore
+      run: dotnet restore .\WinForms\
     
     ## Building is next. Note the use of both the --configuration and
     ## --no-restore flags.
@@ -78,7 +80,7 @@ jobs:
     ## packages. This is a time saving operation, as we restored them in the
     ## previous step.
     - name: Build
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build .\WinForms\ --no-restore --configuration Release
     
     ## Run all of the discovered tests for this repository, telling the dotnet
     ## tooling to not waste time building (--no-build), use the Release config
@@ -92,4 +94,4 @@ jobs:
     ## by our tests, and it can help us to identify where we should spend our
     ## personal and technical bandwidth in shoring up the test coverage. 
     - name: Run tests
-      run: dotnet test --configuration Release --no-build
+      run: dotnet test .\WinForms\ --configuration Release --no-build

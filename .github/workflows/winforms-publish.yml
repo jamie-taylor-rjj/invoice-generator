@@ -3,7 +3,7 @@ name: 'Build and publish pipeline'
 # Only trigger, when the tests workflow succeeded
 on:
   workflow_run:
-    workflows: ["Run all tests"]
+    workflows: ["WinForms - Run all tests"]
     types:
       - completed
 
@@ -63,7 +63,7 @@ jobs:
     ## Now we need to restore any NuGet packages that we rely on in order to build
     ## or run the application
     - name: Install code level dependencies
-      run: dotnet restore
+      run: dotnet restore .\WinForms\
     
     ## Building is next. Note the use of both the --configuration and
     ## --no-restore flags.
@@ -76,7 +76,7 @@ jobs:
     ## packages. This is a time saving operation, as we restored them in the
     ## previous step.
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build .\WinForms\ --configuration Release --no-restore
     
     ## Now that we have the binary built, we want to publish it. A publish
     ## action takes the built binary, grabs any runtime required libraries,
@@ -92,7 +92,7 @@ jobs:
     ##  - Ensuring that the .NET tooling doesn't waste time restoring any NuGet
     ##    packages before publishing, as we've already done this
     - name: publish
-      run: dotnet publish -r win-x64 --sc -o ../../../publish -c Release
+      run: dotnet publish .\WinForms\ -r win-x64 --sc -o ../../../WinFormsPublish -c Release
     
     ## Now that we have everything built and packaged, we want to create a build
     ## artifact. A build artifact is something that a user/consumer can download
@@ -107,7 +107,7 @@ jobs:
       if: ${{ success() }}
       with:
         name: invoice-generator
-        path: ${{ github.workspace }}/publish/*
+        path: ${{ github.workspace }}/WinFormsPublish/*
     
     ## In future versions of this pipeline, we'll create a GitHub Release and put
     ## the invoice-generator zip file there. Releases are show on the repo homepage
