@@ -254,6 +254,3 @@ paket-files/
 
 # Mac OS chaff
 .DS_Store
-
-## Application config
-appsettings.json
